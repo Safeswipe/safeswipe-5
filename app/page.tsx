@@ -12,21 +12,22 @@ export default function Home() {
   const plan = params?.get('plan');
 
   useEffect(() => {
-    const savedInput = localStorage.getItem('safeswipe_input');
-    const savedImage = localStorage.getItem('safeswipe_image');
-    const usedOneTime = localStorage.getItem('safeswipe_used_once');
+  const savedInput = localStorage.getItem('safeswipe_input');
+  const savedImage = localStorage.getItem('safeswipe_image');
+  const usedOneTime = localStorage.getItem('safeswipe_used_once');
 
-    if (savedInput && isPaid && plan === 'onetime' && usedOneTime !== 'true') {
-      setInputValue(savedInput);
-      setImagePreview(savedImage);
-      setShowResult(true);
+  const isReturningWithPaidLink = isPaid && (plan === 'unlimited' || (plan === 'onetime' && usedOneTime !== 'true'));
+
+  if (savedInput && savedImage && isReturningWithPaidLink) {
+    setInputValue(savedInput);
+    setImagePreview(savedImage);
+    setShowResult(true);
+
+    if (plan === 'onetime') {
       localStorage.setItem('safeswipe_used_once', 'true');
-    } else if (savedInput && isPaid && plan === 'unlimited') {
-      setInputValue(savedInput);
-      setImagePreview(savedImage);
-      setShowResult(true);
     }
-  }, []);
+  }
+}, [isPaid, plan]);
 
   const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
@@ -77,28 +78,6 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 py-20 space-y-32 min-h-screen text-center">
-      
-      {/* Hero / CTA */}
-      <section className="space-y-6 max-w-3xl mb-10">
-        <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Image & Identity Lookups</h1>
-        <p className="text-xl text-gray-700">
-          Instantly uncover profiles, photos, and public data across the internet. SafeSwipe is your AI-powered truth engine.
-        </p>
-        <div className="space-x-4">
-          <a href="https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited" target="_blank" rel="noopener noreferrer">
-            <button className="text-lg px-6 py-4 bg-purple-600 hover:bg-purple-700 text-white shadow-md rounded">
-              Get Unlimited Access – $19.99
-            </button>
-          </a>
-          <a href="https://buy.stripe.com/7sIeW5bZ6ch18ve4gi?plan=onetime" target="_blank" rel="noopener noreferrer">
-            <button className="text-lg px-6 py-4 text-purple-700 border border-purple-500 rounded">
-              One-Time Report – $4.99
-            </button>
-          </a>
-        </div>
-      </section>
-
-      {/* Upload + Scan */}
       <section className="max-w-3xl w-full">
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={(e) => e.preventDefault()}>
           <label className="block text-purple-800 font-semibold text-lg">Upload a Photo or Enter a Username, Email or Phone Number:</label>
@@ -161,7 +140,7 @@ export default function Home() {
         )}
       </section>
 
-      {/* What You’ll Discover Section */}
+      {/* What You’ll Discover Section - Cards */}
       <section className="max-w-6xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">What You’ll Discover</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
