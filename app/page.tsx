@@ -79,6 +79,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 py-20 space-y-32 min-h-screen text-center">
+
+      {/* Hero & Scan Form */}
       <section className="space-y-6 max-w-3xl">
         <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Image & Identity Lookups</h1>
         <p className="text-xl text-gray-700">Instantly uncover profiles, photos, and public data across the internet. SafeSwipe is your AI-powered truth engine.</p>
@@ -104,19 +106,45 @@ export default function Home() {
         </form>
       </section>
 
-      {/* What You’ll Discover Section */}
-      <section className="max-w-4xl text-left space-y-6">
-        <h2 className="text-3xl font-bold text-purple-800">What You’ll Discover</h2>
-        <ul className="list-disc text-lg text-gray-700 pl-6 space-y-2">
-          <li>Connected social media profiles</li>
-          <li>Publicly available dating profiles</li>
-          <li>Reverse image match history</li>
-          <li>Alias usernames and emails</li>
-          <li>Linked phone numbers</li>
-        </ul>
+      {/* What You’ll Discover Section in Bubbles */}
+      <section className="max-w-6xl w-full space-y-6">
+        <h2 className="text-3xl font-bold text-purple-800 text-center">What You’ll Discover</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+          {[
+            {
+              title: "Social Media Matches",
+              desc: "Find linked Instagram, Facebook, and dating profiles tied to a photo or name."
+            },
+            {
+              title: "Reverse Image Hits",
+              desc: "Detect if someone's photo appears elsewhere using our AI + database checks."
+            },
+            {
+              title: "Alias Accounts",
+              desc: "Uncover alternative usernames, email aliases, and suspicious duplicates."
+            },
+            {
+              title: "Connected Phone Numbers",
+              desc: "See what profiles and apps are tied to the number you searched."
+            },
+            {
+              title: "Email Footprints",
+              desc: "Check if an email is tied to known social or scam activity online."
+            },
+            {
+              title: "Dating Profile Detection",
+              desc: "Reveal hidden profiles on Tinder, Bumble, Hinge, and more."
+            }
+          ].map((item, i) => (
+            <div key={i} className="bg-white rounded-2xl shadow-md p-6 text-left border border-purple-100 hover:shadow-lg transition-all">
+              <h4 className="text-lg font-semibold text-purple-700 mb-2">{item.title}</h4>
+              <p className="text-gray-700 text-sm">{item.desc}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* Testimonials */}
       <section className="max-w-4xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800">We Help Thousands of People Daily</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
