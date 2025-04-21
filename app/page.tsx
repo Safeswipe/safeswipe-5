@@ -6,16 +6,27 @@ export default function Home() {
   const [showResult, setShowResult] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const isPaid = typeof window !== 'undefined' && window.location.search.includes('paid=true');
+  const [hasUsedOneTime, setHasUsedOneTime] = useState(false);
 
-  // Restore input and image after payment redirect
+  const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+  const isPaid = params?.get('paid') === 'true';
+  const plan = params?.get('plan');
+
   useEffect(() => {
     const savedInput = localStorage.getItem('safeswipe_input');
     const savedImage = localStorage.getItem('safeswipe_image');
-    if (savedInput && isPaid) {
+    const usedOneTime = localStorage.getItem('safeswipe_used_once');
+
+    if (savedInput && isPaid && plan === 'onetime' && usedOneTime !== 'true') {
+      setInputValue(savedInput);
+      setShowResult(true);
+      setHasUsedOneTime(true);
+      localStorage.setItem('safeswipe_used_once', 'true');
+    } else if (savedInput && isPaid && plan === 'unlimited') {
       setInputValue(savedInput);
       setShowResult(true);
     }
+
     if (savedImage && isPaid) {
       setImagePreview(savedImage);
     }
@@ -49,7 +60,12 @@ export default function Home() {
       btn.innerText = 'Scan Now';
       btn.disabled = false;
       btn.classList.remove('animate-pulse');
-      setShowResult(true);
+
+      if (plan === 'onetime' && hasUsedOneTime) {
+        alert("You've already used your one-time report.");
+      } else {
+        setShowResult(true);
+      }
     }, 3000);
   };
 
@@ -60,21 +76,18 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 py-20 space-y-32 min-h-screen text-center">
-      
-      {/* Hero Section */}
       <section className="space-y-6 max-w-3xl">
         <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Image & Identity Lookups</h1>
         <p className="text-xl text-gray-700">Instantly uncover profiles, photos, and public data across the internet. SafeSwipe is your AI-powered truth engine.</p>
         <div className="space-x-4">
-          <a href="https://buy.stripe.com/aEU9BL4wEep9fXGeUX" target="_blank" rel="noopener noreferrer">
+          <a href="https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited" target="_blank" rel="noopener noreferrer">
             <button className="text-lg px-6 py-4 bg-purple-600 hover:bg-purple-700 text-white shadow-md rounded">Get Unlimited Access – $19.99</button>
           </a>
-          <a href="https://buy.stripe.com/7sIeW5bZ6ch18ve4gi" target="_blank" rel="noopener noreferrer">
+          <a href="https://buy.stripe.com/7sIeW5bZ6ch18ve4gi?plan=onetime" target="_blank" rel="noopener noreferrer">
             <button className="text-lg px-6 py-4 text-purple-700 border border-purple-500 rounded">One-Time Report – $4.99</button>
           </a>
         </div>
 
-        {/* Form */}
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left mt-10" onSubmit={(e) => e.preventDefault()}>
           <label className="block text-purple-800 font-semibold text-lg">Upload a Photo or Enter a Username, Email or Phone Number:</label>
           <input type="file" accept="image/*" onChange={handleImageUpload} className="w-full px-4 py-2 border rounded-md" />
@@ -91,15 +104,11 @@ export default function Home() {
             <div className='mt-6 w-full bg-white border border-purple-300 rounded-md shadow-md p-6 space-y-4'>
               <h3 className="text-xl font-bold text-purple-800">Scan Results</h3>
               <div className={`space-y-4 ${isPaid ? '' : 'blur-sm'}`}>
-                
-                {/* Uploaded Image Preview */}
                 {imagePreview && (
                   <div className="flex justify-center">
                     <img src={imagePreview} alt="Uploaded" className="max-w-xs rounded-xl border" />
                   </div>
                 )}
-
-                {/* Fake SafeSwipe Reverse Image Result */}
                 <div className="text-left text-gray-700 space-y-2">
                   <p><strong>0 matches</strong></p>
                   <p>
@@ -112,8 +121,6 @@ export default function Home() {
                     Using SafeSwipe is private. We do not save your uploaded images.
                   </p>
                 </div>
-
-                {/* Optional: Username/Email/Phone logic (can be removed if needed) */}
                 {isUsername && (
                   <div className="pt-4 text-left">
                     <p className="text-gray-700">Additional matches found tied to username <strong>{inputValue}</strong>:</p>
@@ -130,11 +137,10 @@ export default function Home() {
                   <p className="text-gray-700">No public data linked to phone number <strong>{inputValue}</strong>.</p>
                 )}
               </div>
-
               {!isPaid && (
                 <div className='flex flex-col md:flex-row gap-4 pt-4'>
-                  <a href='https://buy.stripe.com/aEU9BL4wEep9fXGeUX' target='_blank' rel='noopener noreferrer' className='block w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow'>Unlock Unlimited – $19.99</a>
-                  <a href='https://buy.stripe.com/7sIeW5bZ6ch18ve4gi' target='_blank' rel='noopener noreferrer' className='block w-full px-6 py-3 border border-purple-500 text-purple-700 text-center rounded-md font-semibold shadow'>One-Time Report – $4.99</a>
+                  <a href='https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited' target='_blank' rel='noopener noreferrer' className='block w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow'>Unlock Unlimited – $19.99</a>
+                  <a href='https://buy.stripe.com/7sIeW5bZ6ch18ve4gi?plan=onetime' target='_blank' rel='noopener noreferrer' className='block w-full px-6 py-3 border border-purple-500 text-purple-700 text-center rounded-md font-semibold shadow'>One-Time Report – $4.99</a>
                 </div>
               )}
             </div>
