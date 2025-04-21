@@ -28,8 +28,16 @@ export default function Home() {
           <p class='text-purple-800 font-medium mb-4'>${paid ? 'This person appears on 4+ dating platforms and may be using different names or photos.' : 'Results found. Please unlock the full report to view details.'}</p>
           ${!paid ? `
           <div class='flex flex-col md:flex-row gap-4'>
-            <a href='https://buy.stripe.com/test_28o7vobPJ4nld1u7ss' target='_blank' rel='noopener noreferrer' class='block w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow'>Unlock Unlimited – $19.99</a>
-            <a href='https://buy.stripe.com/test_7sIeXQaLFcTR7Ha4gh' target='_blank' rel='noopener noreferrer' class='block w-full px-6 py-3 border border-purple-500 text-purple-700 text-center rounded-md font-semibold shadow'>One-Time Report – $4.99</a>
+           <a href="https://buy.stripe.com/aEU9BL4wEep9fXGeUX" target="_blank" rel="noopener noreferrer">
+  <button className="text-lg px-6 py-4 bg-purple-600 hover:bg-purple-700 text-white shadow-md rounded">
+    Get Unlimited Access – $19.99
+  </button>
+</a>
+            <a href="https://buy.stripe.com/your-new-onetime-link" target="_blank" rel="noopener noreferrer">
+  <button className="text-lg px-6 py-4 text-purple-700 border border-purple-500 rounded">
+    One-Time Report – $4.99
+  </button>
+</a>
           </div>` : ''}
         </div>`;
     }, 3000);
