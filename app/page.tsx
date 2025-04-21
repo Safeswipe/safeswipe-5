@@ -30,7 +30,7 @@ export default function Home() {
     if (savedInput) setInputValue(savedInput);
     if (savedImage) setImagePreview(savedImage);
 
-    const isReturningWithPaidLink = isPaid && (plan === 'unlimited' || (plan === 'onetime' && usedOneTime !== 'true'));
+    const isReturningWithPaidLink = paidParam && (plan === 'unlimited' || (plan === 'onetime' && usedOneTime !== 'true'));
 
     if (savedInput && savedImage && isReturningWithPaidLink) {
       setShowResult(true);
