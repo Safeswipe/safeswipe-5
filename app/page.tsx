@@ -75,7 +75,7 @@ export default function Home() {
     <div className="flex flex-col items-center px-6 pt-32 pb-20 space-y-32 min-h-screen text-center bg-gradient-to-br from-purple-100 via-white to-blue-100">
       
       {/* Sticky Header */}
-     <header className="fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-r from-white via-purple-50 to-blue-50 shadow-lg">
+     <header className="fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-r from-white via-purple-50 to-blue-50 shadow-lg pt-safe-top">
   <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-8 py-3 flex justify-center sm:justify-start items-center">
     <img
       src="/Safe Swipe.png"
@@ -84,6 +84,7 @@ export default function Home() {
     />
   </div>
 </header>
+
 
       {/* Hero Section */}
       <section className="space-y-6 max-w-3xl">
