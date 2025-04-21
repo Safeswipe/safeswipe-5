@@ -90,7 +90,6 @@ export default function Home() {
             <button className="text-lg px-6 py-4 text-purple-700 border border-purple-500 rounded">One-Time Report – $4.99</button>
           </a>
         </div>
-
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left mt-10" onSubmit={(e) => e.preventDefault()}>
           <label className="block text-purple-800 font-semibold text-lg">Upload a Photo or Enter a Username, Email or Phone Number:</label>
           <input type="file" accept="image/*" onChange={handleImageUpload} className="w-full px-4 py-2 border rounded-md" />
@@ -103,6 +102,49 @@ export default function Home() {
           />
           <button id="scanButton" type="button" className="w-full py-3 text-lg font-medium rounded-md shadow-md text-white bg-purple-600 hover:bg-purple-700" onClick={handleScan}>Scan Now</button>
         </form>
+      </section>
+
+      {/* What You’ll Discover Section */}
+      <section className="max-w-4xl text-left space-y-6">
+        <h2 className="text-3xl font-bold text-purple-800">What You’ll Discover</h2>
+        <ul className="list-disc text-lg text-gray-700 pl-6 space-y-2">
+          <li>Connected social media profiles</li>
+          <li>Publicly available dating profiles</li>
+          <li>Reverse image match history</li>
+          <li>Alias usernames and emails</li>
+          <li>Linked phone numbers</li>
+        </ul>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="max-w-4xl w-full space-y-6">
+        <h2 className="text-3xl font-bold text-purple-800">We Help Thousands of People Daily</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {[
+            {
+              name: "Jessica M.",
+              review: "I found out my boyfriend had multiple dating profiles. SafeSwipe saved me months of lies!"
+            },
+            {
+              name: "Aaron T.",
+              review: "This gave me instant clarity on who I was really talking to. 100% recommend."
+            },
+            {
+              name: "Nina D.",
+              review: "I used it before a date and turns out he was using a fake identity. Lifesaver!"
+            },
+            {
+              name: "Connor W.",
+              review: "Very easy to use and worth the price. Helped me make a safe decision."
+            }
+          ].map((t, i) => (
+            <div key={i} className="bg-white shadow-md rounded-xl p-6 border border-gray-200">
+              <div className="text-yellow-400 text-xl mb-2">★★★★★</div>
+              <p className="text-gray-700 italic">“{t.review}”</p>
+              <p className="mt-2 font-semibold text-purple-800">– {t.name}</p>
+            </div>
+          ))}
+        </div>
       </section>
     </div>
   );
