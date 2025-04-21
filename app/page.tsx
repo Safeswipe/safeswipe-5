@@ -17,12 +17,13 @@ export default function Home() {
     const plan = params.get('plan');
     const usedOneTime = localStorage.getItem('safeswipe_used_once');
 
-    if (!paidParam) {
-      localStorage.removeItem('safeswipe_input');
-      localStorage.removeItem('safeswipe_image');
-      sessionStorage.removeItem('safeswipe_input');
-      sessionStorage.removeItem('safeswipe_image');
-    }
+    const savedInput = localStorage.getItem('safeswipe_input') || sessionStorage.getItem('safeswipe_input');
+    const savedImage = localStorage.getItem('safeswipe_image') || sessionStorage.getItem('safeswipe_image');
+
+    if (savedInput) setInputValue(savedInput);
+    if (savedImage) setImagePreview(savedImage);
+
+    
 
     const savedInput = localStorage.getItem('safeswipe_input') || sessionStorage.getItem('safeswipe_input');
     const savedImage = localStorage.getItem('safeswipe_image') || sessionStorage.getItem('safeswipe_image');
@@ -37,6 +38,12 @@ export default function Home() {
       if (plan === 'onetime') {
         localStorage.setItem('safeswipe_used_once', 'true');
       }
+    } else {
+      localStorage.removeItem('safeswipe_input');
+      localStorage.removeItem('safeswipe_image');
+      sessionStorage.removeItem('safeswipe_input');
+      sessionStorage.removeItem('safeswipe_image');
+    }
     }
   }, []);
 
