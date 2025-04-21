@@ -17,7 +17,7 @@ export default function Home() {
     const plan = params.get('plan');
     const usedOneTime = localStorage.getItem('safeswipe_used_once');
 
-    if (!isPaid) {
+    if (!paidParam) {
       localStorage.removeItem('safeswipe_input');
       localStorage.removeItem('safeswipe_image');
       sessionStorage.removeItem('safeswipe_input');
