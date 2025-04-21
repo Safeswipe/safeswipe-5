@@ -6,7 +6,7 @@ import './globals.css';
 export default function Home() {
   const handleScan = (e) => {
     e.preventDefault();
-    const btn = document.querySelector('#scanButton') as HTMLElement;
+    const btn = document.querySelector('#scanButton') as HTMLButtonElement;
     const result = document.querySelector('#scanResult') as HTMLElement;
     if (!btn || !result) return;
 
