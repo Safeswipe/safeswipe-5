@@ -5,14 +5,15 @@ import './globals.css';
 
 
 export default function Home() {
+  const [isPaid, setIsPaid] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const isPaid = params.get('paid') === 'true';
-    const plan = params.get('plan');
+    const paidParam = params.get('paid') === 'true';
+    setIsPaid(paidParam);
     const plan = params.get('plan');
     const usedOneTime = localStorage.getItem('safeswipe_used_once');
 
