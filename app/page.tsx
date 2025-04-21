@@ -12,10 +12,7 @@ export default function Home() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const isPaid = params.get('paid') === 'true';
-    const params = new URLSearchParams(window.location.search);
-    const paidParam = params.get('paid') === 'true';
-    setIsPaid(paidParam);
-    const params = new URLSearchParams(window.location.search);
+    const plan = params.get('plan');
     const plan = params.get('plan');
     const usedOneTime = localStorage.getItem('safeswipe_used_once');
 
