@@ -12,22 +12,22 @@ export default function Home() {
   const plan = params?.get('plan');
 
   useEffect(() => {
-  const savedInput = localStorage.getItem('safeswipe_input');
-  const savedImage = localStorage.getItem('safeswipe_image');
-  const usedOneTime = localStorage.getItem('safeswipe_used_once');
+    const savedInput = localStorage.getItem('safeswipe_input');
+    const savedImage = localStorage.getItem('safeswipe_image');
+    const usedOneTime = localStorage.getItem('safeswipe_used_once');
 
-  if (savedInput) setInputValue(savedInput);
-  if (savedImage) setImagePreview(savedImage);
+    if (savedInput) setInputValue(savedInput);
+    if (savedImage) setImagePreview(savedImage);
 
-  const isReturningWithPaidLink = isPaid && (plan === 'unlimited' || (plan === 'onetime' && usedOneTime !== 'true'));
+    const isReturningWithPaidLink = isPaid && (plan === 'unlimited' || (plan === 'onetime' && usedOneTime !== 'true'));
 
-  if (savedInput && savedImage && isReturningWithPaidLink) {
-    setShowResult(true);
-    if (plan === 'onetime') {
-      localStorage.setItem('safeswipe_used_once', 'true');
+    if (savedInput && savedImage && isReturningWithPaidLink) {
+      setShowResult(true);
+      if (plan === 'onetime') {
+        localStorage.setItem('safeswipe_used_once', 'true');
+      }
     }
-  }
-}, [isPaid, plan]);
+  }, [isPaid, plan]);
 
   const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
@@ -58,16 +58,11 @@ export default function Home() {
       btn.disabled = false;
       btn.classList.remove('animate-pulse');
 
-      const usedOneTime = localStorage.getItem('safeswipe_used_once');
-
-      if (plan === 'onetime' && usedOneTime === 'true') {
-        alert("You've already used your one-time report.");
-      } else {
-        if (plan === 'onetime') {
-          localStorage.setItem('safeswipe_used_once', 'true');
-        }
-        setShowResult(true);
+      if (plan === 'onetime') {
+        localStorage.setItem('safeswipe_used_once', 'true');
       }
+
+      setShowResult(true);
     }, 3000);
   };
 
@@ -78,26 +73,29 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 py-20 space-y-32 min-h-screen text-center">
+      
+      {/* Hero Section */}
       <section className="space-y-6 max-w-3xl mb-10">
-  <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Image & Identity Lookups</h1>
-  <p className="text-xl text-gray-700">
-    Instantly uncover profiles, photos, and public data across the internet. SafeSwipe is your AI-powered truth engine.
-  </p>
-  <div className="space-x-4">
-    <a href="https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited" target="_blank" rel="noopener noreferrer">
-      <button className="text-lg px-6 py-4 bg-purple-600 hover:bg-purple-700 text-white shadow-md rounded">
-        Get Unlimited Access – $19.99
-      </button>
-    </a>
-    <a href="https://buy.stripe.com/7sIeW5bZ6ch18ve4gi?plan=onetime" target="_blank" rel="noopener noreferrer">
-      <button className="text-lg px-6 py-4 text-purple-700 border border-purple-500 rounded">
-        One-Time Report – $4.99
-      </button>
-    </a>
-  </div>
-</section>
+        <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Image & Identity Lookups</h1>
+        <p className="text-xl text-gray-700">
+          Instantly uncover profiles, photos, and public data across the internet. SafeSwipe is your AI-powered truth engine.
+        </p>
+        <div className="space-x-4">
+          <a href="https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited" target="_blank" rel="noopener noreferrer">
+            <button className="text-lg px-6 py-4 bg-purple-600 hover:bg-purple-700 text-white shadow-md rounded">
+              Get Unlimited Access – $19.99
+            </button>
+          </a>
+          <a href="https://buy.stripe.com/7sIeW5bZ6ch18ve4gi?plan=onetime" target="_blank" rel="noopener noreferrer">
+            <button className="text-lg px-6 py-4 text-purple-700 border border-purple-500 rounded">
+              One-Time Report – $4.99
+            </button>
+          </a>
+        </div>
+      </section>
 
-<section className="max-w-3xl w-full">
+      {/* Upload & Scan */}
+      <section className="max-w-3xl w-full">
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={(e) => e.preventDefault()}>
           <label className="block text-purple-800 font-semibold text-lg">Upload a Photo or Enter a Username, Email or Phone Number:</label>
           <input type="file" accept="image/*" onChange={handleImageUpload} className="w-full px-4 py-2 border rounded-md" />
@@ -105,7 +103,10 @@ export default function Home() {
             type="text"
             placeholder="e.g. @username, john@email.com, or 0412345678"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => {
+              setInputValue(e.target.value);
+              localStorage.setItem('safeswipe_input', e.target.value);
+            }}
             className="w-full px-4 py-2 border rounded-md"
           />
           <button id="scanButton" type="button" className="w-full py-3 text-lg font-medium rounded-md shadow-md text-white bg-purple-600 hover:bg-purple-700" onClick={handleScan}>Scan Now</button>
@@ -159,7 +160,7 @@ export default function Home() {
         )}
       </section>
 
-      {/* What You’ll Discover Section - Cards */}
+      {/* What You’ll Discover Section */}
       <section className="max-w-6xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">What You’ll Discover</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
