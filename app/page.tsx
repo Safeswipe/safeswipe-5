@@ -87,3 +87,4 @@ export default function Home() {
       {/* You can paste your full layout JSX here again, or let me know and I’ll reinsert the full layout */}
     </div>
   );
+ }
