@@ -72,21 +72,21 @@ export default function Home() {
   const isUsername = !isEmail && !isPhone && inputValue.trim() !== '';
 
   return (
-    <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 py-20 space-y-32 min-h-screen text-center">
+    <div className="flex flex-col items-center px-6 pt-32 pb-20 space-y-32 min-h-screen text-center bg-gradient-to-br from-purple-100 via-white to-blue-100">
       
-      {/* Header */}
-      <header className="w-full bg-white shadow-md py-4 mb-10">
-        <div className="flex justify-center">
+      {/* Sticky Header */}
+      <header className="fixed top-0 left-0 right-0 bg-white shadow-md z-50 w-full">
+        <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-8 py-3 flex items-center">
           <img
             src="/Safe Swipe.png"
             alt="Safe Swipe Logo"
-            className="h-12 object-contain"
+            className="h-10 object-contain"
           />
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="space-y-6 max-w-3xl mb-10">
+      <section className="space-y-6 max-w-3xl">
         <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Image & Identity Lookups</h1>
         <p className="text-xl text-gray-700">
           Instantly uncover profiles, photos, and public data across the internet. SafeSwipe is your AI-powered truth engine.
