@@ -6,8 +6,8 @@ import './globals.css';
 export default function Home() {
   const handleScan = (e) => {
     e.preventDefault();
-    const btn = document.querySelector('#scanButton');
-    const result = document.querySelector('#scanResult');
+    const btn = document.querySelector('#scanButton') as HTMLElement;
+    const result = document.querySelector('#scanResult') as HTMLElement;
     if (!btn || !result) return;
 
     btn.innerText = 'Scanning...';
