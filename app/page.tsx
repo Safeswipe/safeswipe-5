@@ -39,24 +39,32 @@ export default function Home() {
           </a>
         </div>
 
-        {/* Form */}
+        {/* Scan Form */}
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left mt-10" onSubmit={(e) => e.preventDefault()}>
           <label className="block text-purple-800 font-semibold text-lg">Upload a Photo or Enter a Username:</label>
           <input type="file" accept="image/*" className="w-full px-4 py-2 border rounded-md" id="imageInput" />
           <input type="text" placeholder="Or enter a username, email, or phone number" className="w-full px-4 py-2 border rounded-md" />
           <button id="scanButton" type="button" className="w-full py-3 text-lg font-medium rounded-md shadow-md text-white bg-purple-600 hover:bg-purple-700" onClick={handleScan}>Scan Now</button>
 
-          {/* Result */}
+          {/* Scan Result */}
           {(showResult || isPaid) && (
-            <div className='mt-4 w-full bg-white border border-purple-300 rounded-md shadow-md p-4'>
-              <div className={`w-full h-32 bg-gradient-to-br from-gray-200 to-gray-300 rounded mb-4 ${isPaid ? '' : 'blur-sm'}`}></div>
-              <p className="text-purple-800 font-medium mb-4">
-                {isPaid
-                  ? 'This person appears on 4+ dating platforms and may be using different names or photos.'
-                  : 'Results found. Please unlock the full report to view details.'}
-              </p>
+            <div className='mt-6 w-full bg-white border border-purple-300 rounded-md shadow-md p-6 space-y-4'>
+              <h3 className="text-xl font-bold text-purple-800">Match Results</h3>
+              <div className={`space-y-4 ${isPaid ? '' : 'blur-sm'}`}>
+                <ul className="text-left text-gray-700 list-disc pl-6 space-y-1">
+                  <li><strong>Name:</strong> Ashley T.</li>
+                  <li><strong>Known Aliases:</strong> ash_tinder, ashley.sydney</li>
+                  <li><strong>Emails:</strong> ash.t123@gmail.com</li>
+                  <li><strong>Phone Activity:</strong> Linked to WhatsApp and Telegram</li>
+                  <li><strong>Profiles:</strong> Tinder, Bumble, Facebook Dating, Instagram</li>
+                </ul>
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  <img src="https://randomuser.me/api/portraits/women/44.jpg" className="rounded-xl border" />
+                  <img src="https://randomuser.me/api/portraits/women/45.jpg" className="rounded-xl border" />
+                </div>
+              </div>
               {!isPaid && (
-                <div className='flex flex-col md:flex-row gap-4'>
+                <div className='flex flex-col md:flex-row gap-4 pt-4'>
                   <a href='https://buy.stripe.com/aEU9BL4wEep9fXGeUX' target='_blank' rel='noopener noreferrer' className='block w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow'>Unlock Unlimited – $19.99</a>
                   <a href='https://buy.stripe.com/7sIeW5bZ6ch18ve4gi' target='_blank' rel='noopener noreferrer' className='block w-full px-6 py-3 border border-purple-500 text-purple-700 text-center rounded-md font-semibold shadow'>One-Time Report – $4.99</a>
                 </div>
