@@ -1,5 +1,5 @@
 'use client';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import './globals.css';
 
 export default function Home() {
@@ -7,10 +7,21 @@ export default function Home() {
   const [inputValue, setInputValue] = useState('');
   const isPaid = typeof window !== 'undefined' && window.location.search.includes('paid=true');
 
+  // 🧠 Restore input from localStorage after Stripe redirect
+  useEffect(() => {
+    const savedInput = localStorage.getItem('safeswipe_input');
+    if (savedInput && window.location.search.includes('paid=true')) {
+      setInputValue(savedInput);
+      setShowResult(true);
+    }
+  }, []);
+
   const handleScan = (e) => {
     e.preventDefault();
     const btn = document.querySelector('#scanButton') as HTMLButtonElement;
     if (!btn) return;
+
+    localStorage.setItem('safeswipe_input', inputValue); // 💾 Save input
 
     btn.innerText = 'Scanning...';
     btn.disabled = true;
@@ -31,7 +42,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 py-20 space-y-32 min-h-screen text-center">
       
-      {/* Hero Section */}
+      {/* Hero */}
       <section className="space-y-6 max-w-3xl">
         <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Image & Identity Lookups</h1>
         <p className="text-xl text-gray-700">Instantly uncover profiles, photos, and public data across the internet. SafeSwipe is your AI-powered truth engine.</p>
@@ -44,7 +55,7 @@ export default function Home() {
           </a>
         </div>
 
-        {/* Input Form */}
+        {/* Form */}
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left mt-10" onSubmit={(e) => e.preventDefault()}>
           <label className="block text-purple-800 font-semibold text-lg">Upload a Photo or Enter a Username, Email or Phone Number:</label>
           <input type="file" accept="image/*" className="w-full px-4 py-2 border rounded-md" />
@@ -57,7 +68,7 @@ export default function Home() {
           />
           <button id="scanButton" type="button" className="w-full py-3 text-lg font-medium rounded-md shadow-md text-white bg-purple-600 hover:bg-purple-700" onClick={handleScan}>Scan Now</button>
 
-          {/* Scan Result */}
+          {/* Result */}
           {(showResult || isPaid) && (
             <div className='mt-6 w-full bg-white border border-purple-300 rounded-md shadow-md p-6 space-y-4'>
               <h3 className="text-xl font-bold text-purple-800">Scan Results</h3>
