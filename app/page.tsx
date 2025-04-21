@@ -7,21 +7,22 @@ export default function Home() {
   const [inputValue, setInputValue] = useState('');
   const isPaid = typeof window !== 'undefined' && window.location.search.includes('paid=true');
 
-  // 🧠 Restore input from localStorage after Stripe redirect
+  // Restore input after redirect
   useEffect(() => {
     const savedInput = localStorage.getItem('safeswipe_input');
-    if (savedInput && window.location.search.includes('paid=true')) {
+    if (savedInput && isPaid) {
       setInputValue(savedInput);
       setShowResult(true);
     }
   }, []);
 
+  // Save and trigger scan
   const handleScan = (e) => {
     e.preventDefault();
     const btn = document.querySelector('#scanButton') as HTMLButtonElement;
     if (!btn) return;
 
-    localStorage.setItem('safeswipe_input', inputValue); // 💾 Save input
+    localStorage.setItem('safeswipe_input', inputValue);
 
     btn.innerText = 'Scanning...';
     btn.disabled = true;
@@ -35,14 +36,15 @@ export default function Home() {
     }, 3000);
   };
 
-  const isEmail = inputValue.includes('@');
-  const isPhone = /^\d{6,}$/.test(inputValue);
+  // Input Type Detection
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isEmail = emailRegex.test(inputValue.trim());
+  const isPhone = /^\d{6,}$/.test(inputValue.trim());
   const isUsername = !isEmail && !isPhone && inputValue.trim() !== '';
 
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 py-20 space-y-32 min-h-screen text-center">
       
-      {/* Hero */}
       <section className="space-y-6 max-w-3xl">
         <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Image & Identity Lookups</h1>
         <p className="text-xl text-gray-700">Instantly uncover profiles, photos, and public data across the internet. SafeSwipe is your AI-powered truth engine.</p>
@@ -55,7 +57,6 @@ export default function Home() {
           </a>
         </div>
 
-        {/* Form */}
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left mt-10" onSubmit={(e) => e.preventDefault()}>
           <label className="block text-purple-800 font-semibold text-lg">Upload a Photo or Enter a Username, Email or Phone Number:</label>
           <input type="file" accept="image/*" className="w-full px-4 py-2 border rounded-md" />
@@ -68,7 +69,6 @@ export default function Home() {
           />
           <button id="scanButton" type="button" className="w-full py-3 text-lg font-medium rounded-md shadow-md text-white bg-purple-600 hover:bg-purple-700" onClick={handleScan}>Scan Now</button>
 
-          {/* Result */}
           {(showResult || isPaid) && (
             <div className='mt-6 w-full bg-white border border-purple-300 rounded-md shadow-md p-6 space-y-4'>
               <h3 className="text-xl font-bold text-purple-800">Scan Results</h3>
@@ -82,15 +82,12 @@ export default function Home() {
                     </ul>
                   </>
                 )}
-
                 {isEmail && (
                   <p className="text-gray-700">No information was found tied to <strong>{inputValue}</strong>.</p>
                 )}
-
                 {isPhone && (
                   <p className="text-gray-700">No public data was found for phone number <strong>{inputValue}</strong>.</p>
                 )}
-
                 {!inputValue && (
                   <>
                     <ul className="text-left text-gray-700 list-disc pl-6 space-y-1">
