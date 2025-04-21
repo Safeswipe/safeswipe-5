@@ -76,14 +76,14 @@ export default function Home() {
       
       {/* Sticky Header */}
       <header className="fixed top-0 left-0 right-0 bg-white shadow-md z-50 w-full">
-        <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-8 py-3 flex items-center">
-          <img
-            src="/Safe Swipe.png"
-            alt="Safe Swipe Logo"
-            className="h-10 object-contain"
-          />
-        </div>
-      </header>
+  <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-8 py-3 flex justify-center sm:justify-start items-center">
+    <img
+      src="/Safe Swipe.png"
+      alt="Safe Swipe Logo"
+      className="h-10 object-contain"
+    />
+  </div>
+</header>
 
       {/* Hero Section */}
       <section className="space-y-6 max-w-3xl">
