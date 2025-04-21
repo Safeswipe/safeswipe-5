@@ -13,40 +13,10 @@ export default function Home() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const paidParam = params.get('paid') === 'true';
-    const plan = params.get('plan');
-    const usedOneTime = localStorage.getItem('safeswipe_used_once');
-
-    
-
-    
-
     setIsPaid(paidParam);
-    const plan = params.get('plan');
-    const usedOneTime = localStorage.getItem('safeswipe_used_once');
-
-    
-
-    const isReturningWithPaidLink = paidParam && (plan === 'unlimited' || (plan === 'onetime' && usedOneTime !== 'true'));
-
-    if (savedInput && savedImage && isReturningWithPaidLink) {
-      setShowResult(true);
-      if (plan === 'onetime') {
-        localStorage.setItem('safeswipe_used_once', 'true');
-      }
-    } else {
-      localStorage.removeItem('safeswipe_input');
-      localStorage.removeItem('safeswipe_image');
-      sessionStorage.removeItem('safeswipe_input');
-      sessionStorage.removeItem('safeswipe_image');
-    }
-    }
   }, []);
 
-    const savedInput = localStorage.getItem('safeswipe_input') || sessionStorage.getItem('safeswipe_input');
-    const savedImage = localStorage.getItem('safeswipe_image') || sessionStorage.getItem('safeswipe_image');
-
-    if (savedInput) setInputValue(savedInput);
-    if (savedImage) setImagePreview(savedImage);
+    
 
     
 
