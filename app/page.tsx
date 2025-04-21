@@ -19,20 +19,23 @@ export default function Home() {
 
     if (savedInput && isPaid && plan === 'onetime' && usedOneTime !== 'true') {
       setInputValue(savedInput);
+      setImagePreview(savedImage);
       setShowResult(true);
       setHasUsedOneTime(true);
       localStorage.setItem('safeswipe_used_once', 'true');
     } else if (savedInput && isPaid && plan === 'unlimited') {
       setInputValue(savedInput);
-      setShowResult(true);
-    }
-
-    if (savedImage && isPaid) {
       setImagePreview(savedImage);
+      setShowResult(true);
     }
   }, []);
 
   const handleImageUpload = (e) => {
+    if (plan === 'onetime' && localStorage.getItem('safeswipe_used_once') === 'true') {
+      alert("You've already used your one-time report. Please upgrade for unlimited access.");
+      return;
+    }
+
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -99,52 +102,6 @@ export default function Home() {
             className="w-full px-4 py-2 border rounded-md"
           />
           <button id="scanButton" type="button" className="w-full py-3 text-lg font-medium rounded-md shadow-md text-white bg-purple-600 hover:bg-purple-700" onClick={handleScan}>Scan Now</button>
-
-          {(showResult || isPaid) && (
-            <div className='mt-6 w-full bg-white border border-purple-300 rounded-md shadow-md p-6 space-y-4'>
-              <h3 className="text-xl font-bold text-purple-800">Scan Results</h3>
-              <div className={`space-y-4 ${isPaid ? '' : 'blur-sm'}`}>
-                {imagePreview && (
-                  <div className="flex justify-center">
-                    <img src={imagePreview} alt="Uploaded" className="max-w-xs rounded-xl border" />
-                  </div>
-                )}
-                <div className="text-left text-gray-700 space-y-2">
-                  <p><strong>0 matches</strong></p>
-                  <p>
-                    SafeSwipe searched over <strong>74.6 billion images</strong> but didn’t find any matches for your uploaded photo.
-                  </p>
-                  <p>
-                    That’s probably because we haven’t crawled any pages where this image appears yet. SafeSwipe is always expanding its scan database, so try again soon.
-                  </p>
-                  <p className="text-sm italic text-gray-500">
-                    Using SafeSwipe is private. We do not save your uploaded images.
-                  </p>
-                </div>
-                {isUsername && (
-                  <div className="pt-4 text-left">
-                    <p className="text-gray-700">Additional matches found tied to username <strong>{inputValue}</strong>:</p>
-                    <ul className="list-disc pl-6 space-y-1">
-                      <li>Instagram: <a className="text-purple-700 underline" href={`https://instagram.com/${inputValue.replace('@', '')}`} target="_blank">@{inputValue.replace('@', '')}</a></li>
-                      <li>Facebook: <a className="text-purple-700 underline" href={`https://facebook.com/${inputValue.replace('@', '')}`} target="_blank">{inputValue.replace('@', '')}</a></li>
-                    </ul>
-                  </div>
-                )}
-                {isEmail && (
-                  <p className="text-gray-700">No additional public information found for <strong>{inputValue}</strong>.</p>
-                )}
-                {isPhone && (
-                  <p className="text-gray-700">No public data linked to phone number <strong>{inputValue}</strong>.</p>
-                )}
-              </div>
-              {!isPaid && (
-                <div className='flex flex-col md:flex-row gap-4 pt-4'>
-                  <a href='https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited' target='_blank' rel='noopener noreferrer' className='block w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow'>Unlock Unlimited – $19.99</a>
-                  <a href='https://buy.stripe.com/7sIeW5bZ6ch18ve4gi?plan=onetime' target='_blank' rel='noopener noreferrer' className='block w-full px-6 py-3 border border-purple-500 text-purple-700 text-center rounded-md font-semibold shadow'>One-Time Report – $4.99</a>
-                </div>
-              )}
-            </div>
-          )}
         </form>
       </section>
     </div>
