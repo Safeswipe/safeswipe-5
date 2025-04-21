@@ -2,8 +2,7 @@
 import { useEffect, useState } from "react";
 import './globals.css';
 
-const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
-const isPaid = params?.get('paid') === 'true';
+const [isPaid, setIsPaid] = useState(false);
 
 export default function Home() {
   const [showResult, setShowResult] = useState(false);
@@ -11,6 +10,9 @@ export default function Home() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const paidParam = params.get('paid') === 'true';
+    setIsPaid(paidParam);
     const params = new URLSearchParams(window.location.search);
     const plan = params.get('plan');
     const usedOneTime = localStorage.getItem('safeswipe_used_once');
