@@ -17,11 +17,7 @@ export default function Home() {
     const plan = params.get('plan');
     const usedOneTime = localStorage.getItem('safeswipe_used_once');
 
-    const savedInput = localStorage.getItem('safeswipe_input') || sessionStorage.getItem('safeswipe_input');
-    const savedImage = localStorage.getItem('safeswipe_image') || sessionStorage.getItem('safeswipe_image');
-
-    if (savedInput) setInputValue(savedInput);
-    if (savedImage) setImagePreview(savedImage);
+    
 
     const isReturningWithPaidLink = paidParam && (plan === 'unlimited' || (plan === 'onetime' && usedOneTime !== 'true'));
 
@@ -35,6 +31,7 @@ export default function Home() {
       localStorage.removeItem('safeswipe_image');
       sessionStorage.removeItem('safeswipe_input');
       sessionStorage.removeItem('safeswipe_image');
+    }
     }
   }, []);
 
