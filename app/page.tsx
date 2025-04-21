@@ -13,6 +13,13 @@ export default function Home() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const paidParam = params.get('paid') === 'true';
+    const plan = params.get('plan');
+    const usedOneTime = localStorage.getItem('safeswipe_used_once');
+
+    
+
+    
+
     setIsPaid(paidParam);
     const plan = params.get('plan');
     const usedOneTime = localStorage.getItem('safeswipe_used_once');
