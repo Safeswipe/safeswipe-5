@@ -2,6 +2,9 @@
 import { useEffect, useState } from "react";
 import './globals.css';
 
+const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+const isPaid = params?.get('paid') === 'true';
+
 export default function Home() {
   const [showResult, setShowResult] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -9,7 +12,6 @@ export default function Home() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const isPaid = params.get('paid') === 'true';
     const plan = params.get('plan');
     const usedOneTime = localStorage.getItem('safeswipe_used_once');
 
