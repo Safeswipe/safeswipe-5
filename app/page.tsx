@@ -16,13 +16,13 @@ export default function Home() {
   const savedImage = localStorage.getItem('safeswipe_image');
   const usedOneTime = localStorage.getItem('safeswipe_used_once');
 
+  if (savedInput) setInputValue(savedInput);
+  if (savedImage) setImagePreview(savedImage);
+
   const isReturningWithPaidLink = isPaid && (plan === 'unlimited' || (plan === 'onetime' && usedOneTime !== 'true'));
 
   if (savedInput && savedImage && isReturningWithPaidLink) {
-    setInputValue(savedInput);
-    setImagePreview(savedImage);
     setShowResult(true);
-
     if (plan === 'onetime') {
       localStorage.setItem('safeswipe_used_once', 'true');
     }
@@ -78,7 +78,26 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 py-20 space-y-32 min-h-screen text-center">
-      <section className="max-w-3xl w-full">
+      <section className="space-y-6 max-w-3xl mb-10">
+  <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Image & Identity Lookups</h1>
+  <p className="text-xl text-gray-700">
+    Instantly uncover profiles, photos, and public data across the internet. SafeSwipe is your AI-powered truth engine.
+  </p>
+  <div className="space-x-4">
+    <a href="https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited" target="_blank" rel="noopener noreferrer">
+      <button className="text-lg px-6 py-4 bg-purple-600 hover:bg-purple-700 text-white shadow-md rounded">
+        Get Unlimited Access – $19.99
+      </button>
+    </a>
+    <a href="https://buy.stripe.com/7sIeW5bZ6ch18ve4gi?plan=onetime" target="_blank" rel="noopener noreferrer">
+      <button className="text-lg px-6 py-4 text-purple-700 border border-purple-500 rounded">
+        One-Time Report – $4.99
+      </button>
+    </a>
+  </div>
+</section>
+
+<section className="max-w-3xl w-full">
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={(e) => e.preventDefault()}>
           <label className="block text-purple-800 font-semibold text-lg">Upload a Photo or Enter a Username, Email or Phone Number:</label>
           <input type="file" accept="image/*" onChange={handleImageUpload} className="w-full px-4 py-2 border rounded-md" />
