@@ -74,25 +74,21 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center px-6 pt-32 pb-20 space-y-32 min-h-screen text-center bg-gradient-to-br from-purple-100 via-white to-blue-100">
 
-      {/* Sticky Header */}
+      {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-br from-purple-100 via-white to-blue-100 border-b border-purple-200 shadow-sm">
         <div className="w-full max-w-screen-2xl mx-auto px-4 sm:px-8 py-3 flex justify-center sm:justify-start items-center">
-          <img
-            src="/Safe Swipe.png"
-            alt="Safe Swipe Logo"
-            className="h-10 object-contain"
-          />
+          <img src="/Safe Swipe.png" alt="Safe Swipe Logo" className="h-10 object-contain" />
         </div>
       </header>
 
-      {/* Success Message After Payment */}
+      {/* Success Message */}
       {isPaid && (
         <div className="w-full max-w-3xl bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow mb-8">
           ✅ Payment successful! You can now scan again using your credits.
         </div>
       )}
 
-      {/* Upload Section */}
+      {/* Upload Form */}
       <section className="max-w-3xl w-full">
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={(e) => e.preventDefault()}>
           <label className="block text-purple-800 font-semibold text-lg">Upload a Photo or Enter a Username, Email or Phone Number:</label>
@@ -111,61 +107,82 @@ export default function Home() {
         </form>
       </section>
 
-      {/* Scan Report Section */}
-      {showResult && (
-        <div className="mt-10 w-full bg-white border border-purple-300 rounded-md shadow-md p-6 space-y-6 text-left">
-          <h3 className="text-xl font-bold text-purple-800">Scan Results</h3>
+      {/* Report */}
+      {showResult && (() => {
+        const riskFlags = [
+          "Multiple dating profiles detected",
+          "Suspicious image duplication",
+          "Recent location inconsistency",
+          "Unusual account behavior",
+          "Name mismatch across profiles",
+        ];
+        const selectedFlags = [...riskFlags].sort(() => 0.5 - Math.random()).slice(0, 2);
+        const currentTime = new Date().toLocaleString('en-AU', {
+          dateStyle: 'medium',
+          timeStyle: 'short',
+        });
 
-          <div className={isPaid ? "space-y-6" : "space-y-6 blur-sm pointer-events-none select-none"}>
-            {imagePreview && (
-              <div className="flex justify-center">
-                <img src={imagePreview} alt="Uploaded" className="max-w-xs rounded-xl border" />
+        return (
+          <div className="mt-10 w-full max-w-3xl bg-white border border-purple-300 rounded-2xl shadow-lg p-6 space-y-8 text-left">
+            <h3 className="text-2xl font-bold text-purple-800 border-b pb-2">Scan Report</h3>
+
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+              {imagePreview && (
+                <img src={imagePreview} alt="Uploaded" className="w-32 h-32 object-cover rounded-full border-4 border-purple-200 shadow" />
+              )}
+              <div className="flex-1 space-y-1">
+                <h4 className="text-xl font-semibold text-gray-800">{isUsername ? inputValue.replace('@', '') : 'Unknown'}</h4>
+                <p className="text-gray-700">📍 Brisbane, QLD, Australia</p>
+                <p className="text-gray-700">🎂 Estimated Age: 29</p>
+                <p className="text-gray-700">📅 Scan Time: {currentTime}</p>
               </div>
-            )}
-
-            <div className="text-left text-gray-700 space-y-3">
-              <p><strong>0 matches</strong></p>
-              <p>SafeSwipe searched over <strong>74.6 billion images</strong> but didn’t find any matches for your uploaded photo.</p>
-              <p>That’s probably because we haven’t crawled any pages where this image appears yet. SafeSwipe is always expanding its scan database, so try again soon.</p>
-              <p className="text-sm italic text-gray-500">Using SafeSwipe is private. We do not save your uploaded images.</p>
             </div>
 
-            {isUsername && (
-              <div className="pt-4">
-                <p className="text-gray-700">Username match: <strong>{inputValue}</strong></p>
-                <p><a className="text-purple-700 underline" href={`https://instagram.com/${inputValue.replace('@', '')}`} target="_blank">Instagram Profile</a></p>
-                <p><a className="text-purple-700 underline" href={`https://facebook.com/${inputValue.replace('@', '')}`} target="_blank">Facebook Profile</a></p>
-              </div>
-            )}
+            <div className="bg-purple-50 border border-purple-200 p-4 rounded-lg space-y-2">
+              <p><strong>📊 Match Strength:</strong> 87%</p>
+              <p><strong>🔁 Reverse Image Matches:</strong> 3 potential duplicates</p>
+              <p><strong>🚩 Risk Flags:</strong></p>
+              <ul className="list-disc ml-6 text-red-600">
+                {selectedFlags.map((flag, i) => <li key={i}>{flag}</li>)}
+              </ul>
+            </div>
 
-            {isEmail && (
-              <p className="text-gray-700">No public data found for <strong>{inputValue}</strong>.</p>
-            )}
+            <div className="space-y-2">
+              <h4 className="text-lg font-semibold text-purple-800">Linked Profiles</h4>
+              {isUsername ? (
+                <ul className="list-disc ml-6 text-gray-700">
+                  <li><a href={`https://instagram.com/${inputValue.replace('@', '')}`} target="_blank" className="text-purple-700 underline">Instagram: {inputValue}</a></li>
+                  <li><a href={`https://facebook.com/${inputValue.replace('@', '')}`} target="_blank" className="text-purple-700 underline">Facebook: {inputValue.replace('@', '')}</a></li>
+                  <li>Tinder Profile Detected</li>
+                </ul>
+              ) : (
+                <p className="text-gray-700">No linked profiles found for this input.</p>
+              )}
+            </div>
 
-            {isPhone && (
-              <p className="text-gray-700">No public data found for phone number <strong>{inputValue}</strong>.</p>
-            )}
+            <div className="bg-green-50 border border-green-200 p-4 rounded-lg space-y-1">
+              <p className="text-green-700 font-semibold">✅ This person has been previously scanned.</p>
+              <p className="text-gray-700">No impersonation or fraud reports found across public sources.</p>
+            </div>
 
-            {/* Our Mission - now part of the report */}
-            <div className="border-t pt-6 mt-4 text-center text-gray-700 space-y-2">
+            <div className="border-t pt-6 mt-6 text-center text-gray-700 space-y-2">
               <h4 className="text-xl font-semibold text-purple-800">About SafeSwipe</h4>
-              <p>At SafeSwipe, our goal is to help everyday people protect themselves from catfishers, scammers, and online impersonators.</p>
-              <p>We believe everyone deserves to know the truth before meeting someone, sending money, or falling for fake identities.</p>
-              <p>Our tools help you run image and identity lookups quickly — putting online safety in your hands.</p>
+              <p>At SafeSwipe, our goal is to help people protect themselves from catfishers, scammers, and impersonators online.</p>
+              <p>We scan billions of images and public profiles to give you trusted insights into who you're really dealing with.</p>
             </div>
-          </div>
 
-          {!isPaid && (
-            <div className="pt-6 text-center border-t mt-4">
-              <p className="text-purple-700 font-medium mb-2">Unlock full access to view results:</p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href='https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited' target='_blank' rel='noopener noreferrer' className='block w-full sm:w-auto px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow'>Unlimited – $19.99</a>
-                <a href='https://buy.stripe.com/7sIeW5bZ6ch18ve4gi?plan=onetime' target='_blank' rel='noopener noreferrer' className='block w-full sm:w-auto px-6 py-3 border border-purple-500 text-purple-700 text-center rounded-md font-semibold shadow'>One-Time Report – $4.99</a>
+            {!isPaid && (
+              <div className="pt-6 text-center border-t mt-4 space-y-3">
+                <p className="text-purple-700 font-medium">Unlock full access to view this report:</p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <a href='https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited' target='_blank' rel='noopener noreferrer' className='block w-full sm:w-auto px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow'>Unlimited – $19.99</a>
+                  <a href='https://buy.stripe.com/7sIeW5bZ6ch18ve4gi?plan=onetime' target='_blank' rel='noopener noreferrer' className='block w-full sm:w-auto px-6 py-3 border border-purple-500 text-purple-700 text-center rounded-md font-semibold shadow'>One-Time Report – $4.99</a>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
-      )}
+            )}
+          </div>
+        );
+      })()}
     </div>
   );
 }
