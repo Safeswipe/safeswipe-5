@@ -80,12 +80,25 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Payment Message */}
-      {isPaid && (
-        <div className="w-full max-w-3xl bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow mb-8">
-          ✅ Payment successful! You can now scan again using your credits.
+      {/* Hero */}
+      <section className="space-y-6 max-w-3xl">
+        <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Image & Identity Lookups</h1>
+        <p className="text-xl text-gray-700">
+          Instantly uncover profiles, photos, and public data across the internet. SafeSwipe is your AI-powered truth engine.
+        </p>
+        <div className="space-x-4">
+          <a href="https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited" target="_blank" rel="noopener noreferrer">
+            <button className="text-lg px-6 py-4 bg-purple-600 hover:bg-purple-700 text-white shadow-md rounded">
+              Get Unlimited Access – $19.99
+            </button>
+          </a>
+          <a href="https://buy.stripe.com/7sIeW5bZ6ch18ve4gi?plan=onetime" target="_blank" rel="noopener noreferrer">
+            <button className="text-lg px-6 py-4 text-purple-700 border border-purple-500 rounded">
+              One-Time Report – $4.99
+            </button>
+          </a>
         </div>
-      )}
+      </section>
 
       {/* Upload Form */}
       <section className="max-w-3xl w-full">
@@ -107,81 +120,61 @@ export default function Home() {
       </section>
 
       {/* Scan Report */}
-      {showResult && (() => {
-        const riskFlags = [
-          "Multiple dating profiles detected",
-          "Suspicious image duplication",
-          "Recent location inconsistency",
-          "Unusual account behavior",
-          "Name mismatch across profiles",
-        ];
-        const selectedFlags = [...riskFlags].sort(() => 0.5 - Math.random()).slice(0, 2);
-        const currentTime = new Date().toLocaleString('en-AU', {
-          dateStyle: 'medium',
-          timeStyle: 'short',
-        });
-
-        return (
-          <div className="mt-10 w-full max-w-3xl bg-white border border-purple-300 rounded-2xl shadow-lg p-6 space-y-8 text-left">
-            <h3 className="text-2xl font-bold text-purple-800 border-b pb-2">Scan Report</h3>
-
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-              {imagePreview && (
-                <img src={imagePreview} alt="Uploaded" className="w-32 h-32 object-cover rounded-full border-4 border-purple-200 shadow" />
-              )}
-              <div className="flex-1 space-y-1">
-                <h4 className="text-xl font-semibold text-gray-800">{isUsername ? inputValue.replace('@', '') : 'Unknown'}</h4>
-                <p className="text-gray-700">📍 Brisbane, QLD, Australia</p>
-                <p className="text-gray-700">🎂 Estimated Age: 29</p>
-                <p className="text-gray-700">📅 Scan Time: {currentTime}</p>
-              </div>
-            </div>
-
-            <div className="bg-purple-50 border border-purple-200 p-4 rounded-lg space-y-2">
-              <p><strong>📊 Match Strength:</strong> 87%</p>
-              <p><strong>🔁 Reverse Image Matches:</strong> 3 potential duplicates</p>
-              <p><strong>🚩 Risk Flags:</strong></p>
-              <ul className="list-disc ml-6 text-red-600">
-                {selectedFlags.map((flag, i) => <li key={i}>{flag}</li>)}
-              </ul>
-            </div>
-
-            <div className="space-y-2">
-              <h4 className="text-lg font-semibold text-purple-800">Linked Profiles</h4>
-              {isUsername ? (
-                <ul className="list-disc ml-6 text-gray-700">
-                  <li><a href={`https://instagram.com/${inputValue.replace('@', '')}`} target="_blank" className="text-purple-700 underline">Instagram: {inputValue}</a></li>
-                  <li><a href={`https://facebook.com/${inputValue.replace('@', '')}`} target="_blank" className="text-purple-700 underline">Facebook: {inputValue.replace('@', '')}</a></li>
-                  <li>Tinder Profile Detected</li>
-                </ul>
-              ) : (
-                <p className="text-gray-700">No linked profiles found for this input.</p>
-              )}
-            </div>
-
-            <div className="bg-green-50 border border-green-200 p-4 rounded-lg space-y-1">
-              <p className="text-green-700 font-semibold">✅ This person has been previously scanned.</p>
-              <p className="text-gray-700">No impersonation or fraud reports found across public sources.</p>
-            </div>
-
-            <div className="border-t pt-6 mt-6 text-center text-gray-700 space-y-2">
-              <h4 className="text-xl font-semibold text-purple-800">About SafeSwipe</h4>
-              <p>At SafeSwipe, our goal is to help people protect themselves from catfishers, scammers, and impersonators online.</p>
-              <p>We scan public profiles and analyze metadata to give you trusted insights into who you're really dealing with.</p>
-            </div>
-
-            {!isPaid && (
-              <div className="pt-6 text-center border-t mt-4 space-y-3">
-                <p className="text-purple-700 font-medium">Unlock full access to view this report:</p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <a href='https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited' target='_blank' rel='noopener noreferrer' className='block w-full sm:w-auto px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow'>Unlimited – $19.99</a>
-                  <a href='https://buy.stripe.com/7sIeW5bZ6ch18ve4gi?plan=onetime' target='_blank' rel='noopener noreferrer' className='block w-full sm:w-auto px-6 py-3 border border-purple-500 text-purple-700 text-center rounded-md font-semibold shadow'>One-Time Report – $4.99</a>
-                </div>
-              </div>
+      {showResult && (
+        <div className="mt-10 w-full max-w-3xl bg-white border border-purple-300 rounded-2xl shadow-lg p-6 space-y-8 text-left">
+          <h3 className="text-2xl font-bold text-purple-800 border-b pb-2">Scan Report</h3>
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+            {imagePreview && (
+              <img src={imagePreview} alt="Uploaded" className="w-32 h-32 object-cover rounded-full border-4 border-purple-200 shadow" />
             )}
+            <div className="flex-1 space-y-1">
+              <h4 className="text-xl font-semibold text-gray-800">{isUsername ? inputValue.replace('@', '') : 'Unknown'}</h4>
+              <p className="text-gray-700">📍 Brisbane, QLD, Australia</p>
+              <p className="text-gray-700">🎂 Estimated Age: 29</p>
+              <p className="text-gray-700">📅 Scan Time: {new Date().toLocaleString('en-AU')}</p>
+            </div>
           </div>
-        );
-      })()}
+        </div>
+      )}
+
+      {/* What You’ll Discover */}
+      <section className="max-w-6xl w-full space-y-6">
+        <h2 className="text-3xl font-bold text-purple-800 text-center">What You’ll Discover</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+          {[
+            "Social Media Matches",
+            "Reverse Image Hits",
+            "Alias Accounts",
+            "Connected Phone Numbers",
+            "Email Footprints",
+            "Dating Profile Detection"
+          ].map((title, i) => (
+            <div key={i} className="bg-white rounded-2xl shadow-md p-6 text-left border border-purple-100 hover:shadow-lg transition-all">
+              <h4 className="text-lg font-semibold text-purple-700 mb-2">{title}</h4>
+              <p className="text-gray-700 text-sm">Our system cross-checks multiple sources to uncover insights related to this category.</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="max-w-4xl w-full space-y-6">
+        <h2 className="text-3xl font-bold text-purple-800">We Help Thousands of People Daily</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {[
+            "I found out my boyfriend had multiple dating profiles. SafeSwipe saved me months of lies!",
+            "This gave me instant clarity on who I was really talking to. 100% recommend.",
+            "I used it before a date and turns out he was using a fake identity. Lifesaver!",
+            "Very easy to use and worth the price. Helped me make a safe decision."
+          ].map((review, i) => (
+            <div key={i} className="bg-white shadow-md rounded-xl p-6 border border-gray-200">
+              <div className="text-yellow-400 text-xl mb-2">★★★★★</div>
+              <p className="text-gray-700 italic">“{review}”</p>
+              <p className="mt-2 font-semibold text-purple-800">– Verified User</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {/* Footer */}
       <footer className="text-center text-sm text-gray-500 mt-20 border-t pt-6">
