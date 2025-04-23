@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from "react";
 import './globals.css';
+import Link from 'next/link';
 
 export default function Home() {
   const [showResult, setShowResult] = useState(false);
@@ -57,11 +58,9 @@ export default function Home() {
       btn.innerText = 'Scan Now';
       btn.disabled = false;
       btn.classList.remove('animate-pulse');
-
       if (plan === 'onetime') {
         localStorage.setItem('safeswipe_used_once', 'true');
       }
-
       setShowResult(true);
     }, 3000);
   };
@@ -81,7 +80,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Success Message */}
+      {/* Payment Message */}
       {isPaid && (
         <div className="w-full max-w-3xl bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow mb-8">
           ✅ Payment successful! You can now scan again using your credits.
@@ -107,7 +106,7 @@ export default function Home() {
         </form>
       </section>
 
-      {/* Report */}
+      {/* Scan Report */}
       {showResult && (() => {
         const riskFlags = [
           "Multiple dating profiles detected",
@@ -168,7 +167,7 @@ export default function Home() {
             <div className="border-t pt-6 mt-6 text-center text-gray-700 space-y-2">
               <h4 className="text-xl font-semibold text-purple-800">About SafeSwipe</h4>
               <p>At SafeSwipe, our goal is to help people protect themselves from catfishers, scammers, and impersonators online.</p>
-              <p>We scan billions of images and public profiles to give you trusted insights into who you're really dealing with.</p>
+              <p>We scan public profiles and analyze metadata to give you trusted insights into who you're really dealing with.</p>
             </div>
 
             {!isPaid && (
@@ -183,6 +182,17 @@ export default function Home() {
           </div>
         );
       })()}
+
+      {/* Footer */}
+      <footer className="text-center text-sm text-gray-500 mt-20 border-t pt-6">
+        <p>© 2025 SafeSwipe Pty Ltd. All rights reserved.</p>
+        <div className="flex justify-center gap-4 mt-2">
+          <Link href="/about" className="underline">About</Link>
+          <Link href="/privacy" className="underline">Privacy</Link>
+          <Link href="/terms" className="underline">Terms</Link>
+          <Link href="/contact" className="underline">Contact</Link>
+        </div>
+      </footer>
     </div>
   );
 }
