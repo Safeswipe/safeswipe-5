@@ -170,9 +170,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-    </div>
-  );
-
       <footer className="text-center text-sm text-gray-500 mt-20 border-t pt-6">
         <p>© 2025 SafeSwipe Pty Ltd. All rights reserved.</p>
         <div className="flex justify-center gap-4 mt-2">
