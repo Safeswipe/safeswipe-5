@@ -10,14 +10,13 @@ export default function PrivacyPage() {
           <img src="/Safe Swipe.png" alt="Safe Swipe Logo" className="h-10 object-contain" />
         </div>
       </header>
-
       <section className="max-w-3xl w-full space-y-6 text-left mt-10">
         <h1 className="text-4xl font-bold text-purple-800 text-center mb-4">Privacy Policy</h1>
-        <p className="text-gray-700">Your privacy matters. SafeSwipe does not store uploaded images or personal identifiers like emails, usernames, or phone numbers. All scans are ephemeral and processed in real time—without any long-term retention.</p>
-        <p className="text-gray-700">Payments are securely handled by Stripe, which is PCI-compliant. We do not store any billing information on our servers.</p>
-        <p className="text-gray-700">We do not sell your data. We never will.</p>
+        <p className="text-gray-700">At SafeSwipe, your privacy is our top priority. We do not store the photos, usernames, emails, or phone numbers you input into our system. All searches are processed in real-time and are not retained after the session ends.</p>
+        <p className="text-gray-700">We use cookies solely to improve user experience and functionality. You may manage cookie preferences via your browser settings at any time.</p>
+        <p className="text-gray-700">Payment processing is handled by Stripe, a PCI-compliant third-party service. SafeSwipe does not collect or store any of your payment data directly.</p>
+        <p className="text-gray-700">We do not sell, rent, or trade your personal information. Any information shown in reports is sourced from publicly available records and is not gathered through invasive means.</p>
       </section>
-
       <footer className="text-center text-sm text-gray-500 mt-20 border-t pt-6">
         <p>© 2025 SafeSwipe Pty Ltd. All rights reserved.</p>
         <div className="flex justify-center gap-4 mt-2">

@@ -10,14 +10,13 @@ export default function TermsPage() {
           <img src="/Safe Swipe.png" alt="Safe Swipe Logo" className="h-10 object-contain" />
         </div>
       </header>
-
       <section className="max-w-3xl w-full space-y-6 text-left mt-10">
         <h1 className="text-4xl font-bold text-purple-800 text-center mb-4">Terms of Service</h1>
-        <p className="text-gray-700">By using SafeSwipe, you agree to use the platform for lawful purposes only. You must not use the service to harass, harm, or impersonate others.</p>
-        <p className="text-gray-700">All reports are generated based on public data and are for informational purposes. We do not guarantee absolute accuracy and recommend using our results as one component of your verification process.</p>
-        <p className="text-gray-700">We reserve the right to suspend or terminate access for misuse or abuse of our system.</p>
+        <p className="text-gray-700">By accessing or using SafeSwipe, you agree to use our services lawfully. You must be at least 18 years of age and must not use our service to harass, impersonate, or defraud others.</p>
+        <p className="text-gray-700">All data presented is collected from publicly accessible sources and may not always be accurate or complete. Our tools are designed to assist with identity verification, not for employment, credit, housing, or insurance decisions.</p>
+        <p className="text-gray-700">You agree not to redistribute, misuse, or attempt to exploit data retrieved from SafeSwipe. Reports are for personal, informational use only.</p>
+        <p className="text-gray-700">SafeSwipe reserves the right to suspend or terminate your access if you violate these terms.</p>
       </section>
-
       <footer className="text-center text-sm text-gray-500 mt-20 border-t pt-6">
         <p>© 2025 SafeSwipe Pty Ltd. All rights reserved.</p>
         <div className="flex justify-center gap-4 mt-2">

@@ -10,14 +10,12 @@ export default function AboutPage() {
           <img src="/Safe Swipe.png" alt="Safe Swipe Logo" className="h-10 object-contain" />
         </div>
       </header>
-
       <section className="max-w-3xl w-full space-y-6 text-left mt-10">
         <h1 className="text-4xl font-bold text-purple-800 text-center mb-4">About SafeSwipe</h1>
-        <p className="text-gray-700">SafeSwipe was created to empower people to verify who they’re talking to online. Whether it’s a new connection on a dating app, a social profile that seems suspicious, or someone reaching out through a platform—you deserve clarity.</p>
-        <p className="text-gray-700">Using advanced tools and ethical data aggregation, we offer reverse image and identifier lookups that bring transparency to digital conversations. We prioritize privacy and user safety with every scan.</p>
-        <p className="text-gray-700">Our mission is to help you feel confident in your connections—and protect people from scams, impersonation, and catfishing.</p>
+        <p className="text-gray-700">SafeSwipe is a tool built to help people verify online identities, detect catfishing, and make informed digital decisions. We offer reverse image and identifier lookups using public data and AI tools.</p>
+        <p className="text-gray-700">Our mission is to create a safer digital space—one where you can engage with confidence, transparency, and clarity. We believe every user deserves the truth behind the screen.</p>
+        <p className="text-gray-700">We're proudly Australian and committed to privacy-first technology.</p>
       </section>
-
       <footer className="text-center text-sm text-gray-500 mt-20 border-t pt-6">
         <p>© 2025 SafeSwipe Pty Ltd. All rights reserved.</p>
         <div className="flex justify-center gap-4 mt-2">
