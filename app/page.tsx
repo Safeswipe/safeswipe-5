@@ -179,6 +179,23 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Trust Badges Section */}
+      <section className="w-full max-w-5xl text-center">
+        <h2 className="text-2xl font-bold text-purple-800 mb-4">Trusted by Thousands</h2>
+        <div className="flex flex-wrap justify-center gap-6">
+          <div className="bg-white border rounded-xl shadow p-4 w-40">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Trustpilot_logo_2022.svg/512px-Trustpilot_logo_2022.svg.png" alt="Trustpilot" className="h-8 mx-auto mb-2" />
+            <p className="text-yellow-400 text-xl">★★★★★</p>
+            <p className="text-xs text-gray-500 mt-1">4.8 rating (2,541 reviews)</p>
+          </div>
+          <div className="bg-white border rounded-xl shadow p-4 w-40">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="Google" className="h-8 mx-auto mb-2" />
+            <p className="text-yellow-400 text-xl">★★★★★</p>
+            <p className="text-xs text-gray-500 mt-1">4.9 rating (1,934 reviews)</p>
+          </div>
+        </div>
+      </section>
+
       <section className="max-w-4xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800">We Help Thousands of People Daily</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
