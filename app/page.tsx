@@ -150,13 +150,13 @@ export default function Home() {
       <section className="w-full max-w-5xl text-center">
         <h2 className="text-2xl font-bold text-purple-800 mb-4">Trusted by Thousands</h2>
         <div className="flex flex-wrap justify-center gap-6">
-          <div className="bg-white border rounded-xl shadow p-4 w-40">
-            <img src="/trustpilot.png" alt="Trustpilot" className="h-8 mx-auto mb-2" />
+          <div className="bg-white border rounded-xl shadow p-4 w-52">
+            <img src="/trustpilot.png" alt="Trustpilot" className="h-12 mx-auto mb-2" />
             <p className="text-yellow-400 text-xl">★★★★★</p>
             <p className="text-xs text-gray-500 mt-1">4.8 rating (2,541 reviews)</p>
           </div>
-          <div className="bg-white border rounded-xl shadow p-4 w-40">
-            <img src="/google-review.png" alt="Google" className="h-8 mx-auto mb-2" />
+          <div className="bg-white border rounded-xl shadow p-4 w-52">
+            <img src="/google-review.png" alt="Google" className="h-12 mx-auto mb-2" />
             <p className="text-yellow-400 text-xl">★★★★★</p>
             <p className="text-xs text-gray-500 mt-1">4.9 rating (1,934 reviews)</p>
           </div>
