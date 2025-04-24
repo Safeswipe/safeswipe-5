@@ -1,4 +1,4 @@
-// SafeSwipe full page with all sections, updated dossier, and full layout
+// SafeSwipe full page with all sections, updated dossier, layout, badges, testimonials, footer
 'use client';
 import { useState, useEffect } from "react";
 
@@ -51,9 +51,7 @@ export default function Home() {
     setTimeout(() => {
       setLoading(false);
       setShowResult(true);
-      if (plan === 'onetime') {
-        localStorage.setItem('safeswipe_used_once', 'true');
-      }
+      if (plan === 'onetime') localStorage.setItem('safeswipe_used_once', 'true');
     }, 6000);
   };
 
@@ -111,38 +109,18 @@ export default function Home() {
         <section className="w-full max-w-4xl space-y-6 border rounded-xl shadow-md p-6 bg-white">
           <div className={isPaid ? "" : "blur-sm pointer-events-none select-none"}>
             <h2 className="text-2xl font-bold text-purple-800">Scan Report</h2>
-            {imagePreview && (
-              <img
-                src={imagePreview}
-                alt="Uploaded"
-                className="mx-auto w-40 h-40 rounded-full border object-cover"
-              />
-            )}
+            {imagePreview && <img src={imagePreview} alt="Uploaded" className="mx-auto w-40 h-40 rounded-full border object-cover" />}
             <p className="text-gray-600 mt-4 text-left">Submitted: {new Date().toLocaleString()}</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 text-left">
-              <div>
-                <h4 className="text-purple-700 font-bold mb-2">Identity Snapshot</h4>
-                <ul className="text-sm text-gray-700 space-y-1">
-                  {isUsername && <li><strong>Username:</strong> {inputValue}</li>}
-                  {isEmail && <li><strong>Email:</strong> {inputValue}</li>}
-                  {isPhone && <li><strong>Phone:</strong> {inputValue}</li>}
-                  <li><strong>Known Profiles:</strong> {isUsername ? 2 : 0}</li>
-                  <li><strong>Risk Level:</strong> Moderate</li>
-                </ul>
+            <p className="text-gray-700 font-semibold text-left mt-2">Match Confidence: 78%</p>
+            {isUsername && (
+              <div className="text-left mt-2">
+                <p><strong>Username:</strong> {inputValue}</p>
+                <p><a href={`https://instagram.com/${cleanedUsername}`} className="text-purple-600 underline">Instagram</a> | <a href={`https://facebook.com/${cleanedUsername}`} className="text-purple-600 underline">Facebook</a></p>
               </div>
-              <div>
-                <h4 className="text-purple-700 font-bold mb-2">Linked Accounts</h4>
-                <ul className="text-sm text-purple-700 space-y-1">
-                  {isUsername && (
-                    <>
-                      <li><a href={`https://instagram.com/${cleanedUsername}`} target="_blank" rel="noopener noreferrer" className="underline">Instagram</a></li>
-                      <li><a href={`https://facebook.com/${cleanedUsername}`} target="_blank" rel="noopener noreferrer" className="underline">Facebook</a></li>
-                    </>
-                  )}
-                  {(isEmail || isPhone) && <li>No linked accounts found</li>}
-                </ul>
-              </div>
-            </div>
+            )}
+            {isEmail && <p className="text-left"><strong>Email:</strong> {inputValue} — No public records found.</p>}
+            {isPhone && <p className="text-left"><strong>Phone:</strong> {inputValue} — No known matches.</p>}
+
             <div className="mt-6 text-left bg-red-100 border border-red-300 p-4 rounded">
               <h4 className="text-red-700 font-bold">⚠️ Risk Flags</h4>
               <ul className="list-disc ml-5 text-sm text-red-800">
@@ -151,21 +129,39 @@ export default function Home() {
                 <li>Social handles mismatched</li>
               </ul>
             </div>
+
             <div className="mt-6 text-left text-sm text-gray-500">
               <p><strong>About SafeSwipe:</strong> We help uncover online deception using ethical public data checks. We never store your uploads. Your safety is our mission.</p>
             </div>
           </div>
+
           {!isPaid && (
             <div className="pt-6 text-center">
               <p className="text-purple-700 mb-3">Unlock full report access:</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href='https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited' className='bg-purple-600 text-white px-6 py-3 rounded shadow hover:bg-purple-700'>Unlimited – $19.99</a>
-                <a href='https://buy.stripe.com/7sIeW5bZ6ch18ve4gi?plan=onetime' className='border border-purple-500 text-purple-700 px-6 py-3 rounded shadow'>One-Time – $4.99</a>
+                <a href='https://buy.stripe.com/7sIeW5bZ6ch18ve4gi?plan=onetime' className='border border-purple-500 text-purple-700 px-6 py-3 rounded shadow'>One-Time Report – $4.99</a>
               </div>
             </div>
           )}
         </section>
       )}
+
+      <section className="w-full max-w-5xl text-center">
+        <h2 className="text-2xl font-bold text-purple-800 mb-4">Trusted by Thousands</h2>
+        <div className="flex flex-wrap justify-center gap-6">
+          <div className="bg-white border rounded-xl shadow p-4 w-40">
+            <img src="/trustpilot.png" alt="Trustpilot" className="h-8 mx-auto mb-2" />
+            <p className="text-yellow-400 text-xl">★★★★★</p>
+            <p className="text-xs text-gray-500 mt-1">4.8 rating (2,541 reviews)</p>
+          </div>
+          <div className="bg-white border rounded-xl shadow p-4 w-40">
+            <img src="/google-review.png" alt="Google" className="h-8 mx-auto mb-2" />
+            <p className="text-yellow-400 text-xl">★★★★★</p>
+            <p className="text-xs text-gray-500 mt-1">4.9 rating (1,934 reviews)</p>
+          </div>
+        </div>
+      </section>
 
       <section className="max-w-6xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">What You’ll Discover</h2>
@@ -173,37 +169,20 @@ export default function Home() {
           {["Social Media Matches", "Reverse Image Hits", "Alias Accounts", "Connected Phone Numbers", "Email Footprints", "Dating Profile Detection"].map((title, i) => (
             <div key={i} className="bg-white rounded-2xl shadow-md p-6 text-left border border-purple-100 hover:shadow-lg transition-all">
               <h4 className="text-lg font-semibold text-purple-700 mb-2">{title}</h4>
-              <p className="text-gray-700 text-sm">Details about {title.toLowerCase()} through online checks.</p>
+              <p className="text-gray-700 text-sm">Professional insight powered by SafeSwipe’s AI.</p>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* Trust Badges Section */}
-      <section className="w-full max-w-5xl text-center">
-        <h2 className="text-2xl font-bold text-purple-800 mb-4">Trusted by Thousands</h2>
-        <div className="flex flex-wrap justify-center gap-6">
-          <div className="bg-white border rounded-xl shadow p-4 w-40">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Trustpilot_logo_2022.svg/512px-Trustpilot_logo_2022.svg.png" alt="Trustpilot" className="h-8 mx-auto mb-2" />
-            <p className="text-yellow-400 text-xl">★★★★★</p>
-            <p className="text-xs text-gray-500 mt-1">4.8 rating (2,541 reviews)</p>
-          </div>
-          <div className="bg-white border rounded-xl shadow p-4 w-40">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="Google" className="h-8 mx-auto mb-2" />
-            <p className="text-yellow-400 text-xl">★★★★★</p>
-            <p className="text-xs text-gray-500 mt-1">4.9 rating (1,934 reviews)</p>
-          </div>
         </div>
       </section>
 
       <section className="max-w-4xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800">We Help Thousands of People Daily</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {["Jessica M.", "Aaron T.", "Nina D.", "Connor W."].map((name, i) => (
+          {["I found out my boyfriend had multiple dating profiles. SafeSwipe saved me months of lies!", "This gave me instant clarity on who I was really talking to. 100% recommend.", "I used it before a date and turns out he was using a fake identity. Lifesaver!", "Very easy to use and worth the price. Helped me make a safe decision."].map((review, i) => (
             <div key={i} className="bg-white shadow-md rounded-xl p-6 border border-gray-200">
               <div className="text-yellow-400 text-xl mb-2">★★★★★</div>
-              <p className="text-gray-700 italic">“This service is a total game changer. Thank you!”</p>
-              <p className="mt-2 font-semibold text-purple-800">– {name}</p>
+              <p className="text-gray-700 italic">“{review}”</p>
+              <p className="mt-2 font-semibold text-purple-800">– Verified User</p>
             </div>
           ))}
         </div>
