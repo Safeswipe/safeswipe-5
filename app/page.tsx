@@ -1,4 +1,4 @@
-// Restored full SafeSwipe homepage with all sections
+// SafeSwipe full page with all sections, updated dossier, and full layout
 'use client';
 import { useState, useEffect } from "react";
 
@@ -61,6 +61,7 @@ export default function Home() {
   const isEmail = emailRegex.test(inputValue.trim());
   const isPhone = /^\d{6,}$/.test(inputValue.trim());
   const isUsername = !isEmail && !isPhone && inputValue.trim() !== '';
+  const cleanedUsername = inputValue.replace(/^@/, '');
 
   return (
     <div className="flex flex-col items-center px-6 pt-32 pb-20 min-h-screen bg-gradient-to-br from-purple-100 via-white to-blue-100 text-center space-y-20">
@@ -69,12 +70,6 @@ export default function Home() {
           <img src="/Safe Swipe.png" alt="SafeSwipe Logo" className="h-10 object-contain" />
         </div>
       </header>
-
-      {isPaid && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-6 py-3 rounded w-full max-w-2xl text-center">
-          Payment successful. Please scan again to view your report.
-        </div>
-      )}
 
       <section className="max-w-2xl w-full space-y-6">
         <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Image & Identity Lookups</h1>
@@ -116,25 +111,35 @@ export default function Home() {
         <section className="w-full max-w-4xl space-y-6 border rounded-xl shadow-md p-6 bg-white">
           <div className={isPaid ? "" : "blur-sm pointer-events-none select-none"}>
             <h2 className="text-2xl font-bold text-purple-800">Scan Report</h2>
-            {imagePreview && <img src={imagePreview} alt="Uploaded" className="mx-auto w-40 h-40 rounded-full border object-cover" />}
+            {imagePreview && (
+              <img
+                src={imagePreview}
+                alt="Uploaded"
+                className="mx-auto w-40 h-40 rounded-full border object-cover"
+              />
+            )}
             <p className="text-gray-600 mt-4 text-left">Submitted: {new Date().toLocaleString()}</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 text-left">
               <div>
                 <h4 className="text-purple-700 font-bold mb-2">Identity Snapshot</h4>
                 <ul className="text-sm text-gray-700 space-y-1">
-                  <li><strong>Name:</strong> Ashley T. (alias)</li>
-                  <li><strong>Location:</strong> Melbourne, VIC</li>
-                  <li><strong>Known Profiles:</strong> 3</li>
+                  {isUsername && <li><strong>Username:</strong> {inputValue}</li>}
+                  {isEmail && <li><strong>Email:</strong> {inputValue}</li>}
+                  {isPhone && <li><strong>Phone:</strong> {inputValue}</li>}
+                  <li><strong>Known Profiles:</strong> {isUsername ? 2 : 0}</li>
                   <li><strong>Risk Level:</strong> Moderate</li>
                 </ul>
               </div>
               <div>
-                <h4 className="text-purple-700 font-bold mb-2">Timeline Activity</h4>
-                <ul className="text-sm text-gray-700 space-y-1">
-                  <li>🔍 Found on 2 dating apps in 48hrs</li>
-                  <li>📷 Reverse image matched twice</li>
-                  <li>📱 Phone number linked to 2 profiles</li>
-                  <li>📧 Email has 1 flagged record</li>
+                <h4 className="text-purple-700 font-bold mb-2">Linked Accounts</h4>
+                <ul className="text-sm text-purple-700 space-y-1">
+                  {isUsername && (
+                    <>
+                      <li><a href={`https://instagram.com/${cleanedUsername}`} target="_blank" rel="noopener noreferrer" className="underline">Instagram</a></li>
+                      <li><a href={`https://facebook.com/${cleanedUsername}`} target="_blank" rel="noopener noreferrer" className="underline">Facebook</a></li>
+                    </>
+                  )}
+                  {(isEmail || isPhone) && <li>No linked accounts found</li>}
                 </ul>
               </div>
             </div>
