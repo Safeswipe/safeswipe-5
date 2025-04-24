@@ -1,3 +1,4 @@
+// Restored full SafeSwipe homepage with all sections
 'use client';
 import { useState, useEffect } from "react";
 
@@ -36,6 +37,14 @@ export default function Home() {
     reader.readAsDataURL(file);
   };
 
+  const handleClearSearch = () => {
+    setInputValue('');
+    setImagePreview(null);
+    setShowResult(false);
+    localStorage.removeItem('safeswipe_input');
+    localStorage.removeItem('safeswipe_image');
+  };
+
   const handleScan = () => {
     localStorage.setItem('safeswipe_input', inputValue);
     setLoading(true);
@@ -55,6 +64,11 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center px-6 pt-32 pb-20 min-h-screen bg-gradient-to-br from-purple-100 via-white to-blue-100 text-center space-y-20">
+      <header className="fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-br from-purple-100 via-white to-blue-100 border-b border-purple-200 shadow-sm">
+        <div className="max-w-screen-2xl mx-auto px-4 py-3 flex justify-center sm:justify-start items-center">
+          <img src="/Safe Swipe.png" alt="SafeSwipe Logo" className="h-10 object-contain" />
+        </div>
+      </header>
 
       {isPaid && (
         <div className="bg-green-100 border border-green-400 text-green-700 px-6 py-3 rounded w-full max-w-2xl text-center">
@@ -89,9 +103,12 @@ export default function Home() {
             }}
             className="w-full px-4 py-2 border rounded-md"
           />
-          <button id="scanButton" type="button" onClick={handleScan} disabled={loading} className={`w-full py-3 text-lg font-medium rounded-md shadow-md text-white ${loading ? "bg-purple-500 animate-pulse" : "bg-purple-600 hover:bg-purple-700"}`}>
-            {loading ? "Scanning..." : "Scan Now"}
-          </button>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <button id="scanButton" type="button" onClick={handleScan} disabled={loading} className={`w-full py-3 text-lg font-medium rounded-md shadow-md text-white ${loading ? "bg-purple-500 animate-pulse" : "bg-purple-600 hover:bg-purple-700"}`}>
+              {loading ? "Scanning..." : "Scan Now"}
+            </button>
+            <button type="button" onClick={handleClearSearch} className="w-full py-3 text-lg font-medium rounded-md shadow-md text-purple-700 border border-purple-500 hover:bg-purple-50">Clear Search</button>
+          </div>
         </form>
       </section>
 
@@ -133,19 +150,14 @@ export default function Home() {
               <p><strong>About SafeSwipe:</strong> We help uncover online deception using ethical public data checks. We never store your uploads. Your safety is our mission.</p>
             </div>
           </div>
-          {isPaid && showResult && (
-            <button
-              onClick={() => {
-                setImagePreview(null);
-                setInputValue('');
-                setShowResult(false);
-                localStorage.removeItem('safeswipe_image');
-                localStorage.removeItem('safeswipe_input');
-              }}
-              className="mt-6 bg-gray-100 text-gray-800 px-4 py-2 rounded shadow hover:bg-gray-200"
-            >
-              Clear Search
-            </button>
+          {!isPaid && (
+            <div className="pt-6 text-center">
+              <p className="text-purple-700 mb-3">Unlock full report access:</p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href='https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited' className='bg-purple-600 text-white px-6 py-3 rounded shadow hover:bg-purple-700'>Unlimited – $19.99</a>
+                <a href='https://buy.stripe.com/7sIeW5bZ6ch18ve4gi?plan=onetime' className='border border-purple-500 text-purple-700 px-6 py-3 rounded shadow'>One-Time – $4.99</a>
+              </div>
+            </div>
           )}
         </section>
       )}
@@ -153,23 +165,23 @@ export default function Home() {
       <section className="max-w-6xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">What You’ll Discover</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-          {[...Array(6)].map((_, i) => (
+          {["Social Media Matches", "Reverse Image Hits", "Alias Accounts", "Connected Phone Numbers", "Email Footprints", "Dating Profile Detection"].map((title, i) => (
             <div key={i} className="bg-white rounded-2xl shadow-md p-6 text-left border border-purple-100 hover:shadow-lg transition-all">
-              <h4 className="text-lg font-semibold text-purple-700 mb-2">Feature {i + 1}</h4>
-              <p className="text-gray-700 text-sm">Placeholder description for feature {i + 1}.</p>
+              <h4 className="text-lg font-semibold text-purple-700 mb-2">{title}</h4>
+              <p className="text-gray-700 text-sm">Details about {title.toLowerCase()} through online checks.</p>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="max-w-5xl w-full space-y-6">
-        <h2 className="text-3xl font-bold text-purple-800 text-center">We Help Thousands of People Daily</h2>
+      <section className="max-w-4xl w-full space-y-6">
+        <h2 className="text-3xl font-bold text-purple-800">We Help Thousands of People Daily</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {[...Array(4)].map((_, i) => (
+          {["Jessica M.", "Aaron T.", "Nina D.", "Connor W."].map((name, i) => (
             <div key={i} className="bg-white shadow-md rounded-xl p-6 border border-gray-200">
               <div className="text-yellow-400 text-xl mb-2">★★★★★</div>
-              <p className="text-gray-700 italic">“Testimonial {i + 1} placeholder.”</p>
-              <p className="mt-2 font-semibold text-purple-800">– User {i + 1}</p>
+              <p className="text-gray-700 italic">“This service is a total game changer. Thank you!”</p>
+              <p className="mt-2 font-semibold text-purple-800">– {name}</p>
             </div>
           ))}
         </div>
