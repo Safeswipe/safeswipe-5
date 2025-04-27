@@ -1,4 +1,3 @@
-// SafeSwipe full page with all sections, updated dossier, layout, badges, testimonials, footer
 'use client';
 import { useState, useEffect } from "react";
 
@@ -7,6 +6,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
   const isPaid = params?.get('paid') === 'true';
@@ -14,6 +14,11 @@ export default function Home() {
   const usedOneTime = typeof window !== 'undefined' ? localStorage.getItem('safeswipe_used_once') : null;
 
   useEffect(() => {
+    if (isPaid) {
+      setShowSuccessMessage(true);
+      localStorage.removeItem('safeswipe_input');
+      localStorage.removeItem('safeswipe_image');
+    }
     const savedInput = localStorage.getItem('safeswipe_input');
     const savedImage = localStorage.getItem('safeswipe_image');
     if (savedInput) setInputValue(savedInput);
@@ -25,16 +30,16 @@ export default function Home() {
     }
   }, [isPaid, plan]);
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64 = reader.result as string;
-      setImagePreview(base64);
-      localStorage.setItem('safeswipe_image', base64);
-    };
-    reader.readAsDataURL(file);
+  const handleScan = () => {
+    localStorage.setItem('safeswipe_input', inputValue);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setShowResult(true);
+      if (plan === 'onetime') {
+        localStorage.setItem('safeswipe_used_once', 'true');
+      }
+    }, 30000); // 30 seconds
   };
 
   const handleClearSearch = () => {
@@ -45,84 +50,79 @@ export default function Home() {
     localStorage.removeItem('safeswipe_image');
   };
 
-  const handleScan = () => {
-    localStorage.setItem('safeswipe_input', inputValue);
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setShowResult(true);
-      if (plan === 'onetime') localStorage.setItem('safeswipe_used_once', 'true');
-    }, 6000);
-  };
-
   return (
     <div className="flex flex-col items-center px-6 pt-32 pb-20 min-h-screen bg-gradient-to-br from-purple-100 via-white to-blue-100 text-center space-y-20">
+
+      {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-br from-purple-100 via-white to-blue-100 border-b border-purple-200 shadow-sm">
         <div className="max-w-screen-2xl mx-auto px-4 py-3 flex justify-center sm:justify-start items-center">
           <img src="/Safe Swipe.png" alt="SafeSwipe Logo" className="h-10 object-contain" />
         </div>
       </header>
-      {/* Hero Section */}
-<section className="max-w-2xl w-full space-y-6">
-  <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Phone Number Lookups</h1>
-  <p className="text-xl text-gray-700">Instantly uncover profiles, social media, and carrier details linked to any phone number.</p>
-  <div className="space-x-4">
-    <a href="https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited" target="_blank" rel="noopener noreferrer">
-      <button className="text-lg px-6 py-4 bg-purple-600 hover:bg-purple-700 text-white shadow-md rounded">
-        Get Unlimited Access – $19.99
-      </button>
-    </a>
-    <a href="https://buy.stripe.com/7sIeW5bZ6ch18ve4gi?plan=onetime" target="_blank" rel="noopener noreferrer">
-      <button className="text-lg px-6 py-4 text-purple-700 border border-purple-500 rounded">
-        One-Time Report – $9.99
-      </button>
-    </a>
-  </div>
-</section>
 
-{/* Upload Section */}
-<section className="max-w-3xl w-full">
-  <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={(e) => e.preventDefault()}>
-    <label className="block text-purple-800 font-semibold text-lg">Enter a Phone Number:</label>
-    <input
-      type="text"
-      placeholder="e.g. 0412345678"
-      value={inputValue}
-      onChange={(e) => {
-        setInputValue(e.target.value);
-        localStorage.setItem('safeswipe_input', e.target.value);
-      }}
-      className="w-full px-4 py-2 border rounded-md"
-    />
-    <div className="flex gap-4">
-      <button type="button" onClick={handleScan} disabled={loading} className={`w-full py-3 text-lg font-medium rounded-md shadow-md text-white ${loading ? "bg-purple-500 animate-pulse" : "bg-purple-600 hover:bg-purple-700"}`}>
-        {loading ? "Scanning..." : "Scan Now"}
-      </button>
-      <button type="button" onClick={handleClearSearch} className="w-full py-3 text-lg font-medium rounded-md shadow bg-gray-200 hover:bg-gray-300">
-        Clear Search
-      </button>
-    </div>
-  </form>
-</section>
+      {/* Payment Success Message */}
+      {showSuccessMessage && (
+        <div className="bg-green-100 border border-green-400 text-green-700 px-6 py-3 rounded w-full max-w-2xl text-center">
+          Payment successful. Please scan again to view your report.
+        </div>
+      )}
+
+      {/* Hero + Upload Section */}
+      <section className="max-w-3xl w-full space-y-6">
+        <h1 className="text-5xl font-extrabold text-purple-800">Reverse Phone Lookups</h1>
+        <p className="text-xl text-gray-700">Instantly uncover hidden profiles, risk flags, and phone activity. Trusted by thousands worldwide.</p>
+        <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={(e) => e.preventDefault()}>
+          <label className="block text-purple-800 font-semibold text-lg">Enter a Phone Number:</label>
+          <input
+            type="text"
+            placeholder="e.g. 0412345678"
+            value={inputValue}
+            onChange={(e) => {
+              setInputValue(e.target.value);
+              localStorage.setItem('safeswipe_input', e.target.value);
+            }}
+            className="w-full px-4 py-2 border rounded-md"
+          />
+          <div className="flex gap-4">
+            <button type="button" onClick={handleScan} disabled={loading} className={`w-full py-3 text-lg font-medium rounded-md shadow-md text-white ${loading ? "bg-purple-500 animate-pulse" : "bg-purple-600 hover:bg-purple-700"}`}>
+              {loading ? "Scanning..." : "Scan Now"}
+            </button>
+            <button type="button" onClick={handleClearSearch} className="w-full py-3 text-lg font-medium rounded-md shadow bg-gray-200 hover:bg-gray-300">
+              Clear Search
+            </button>
+          </div>
+        </form>
+      </section>
 
       {/* Report Section */}
       {showResult && (
         <section className="w-full max-w-3xl bg-white shadow rounded-2xl p-8 text-left space-y-6">
           <div className={isPaid ? "" : "blur-sm pointer-events-none select-none"}>
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center">
+                <span className="text-2xl font-bold text-purple-700">SS</span>
+              </div>
               <div>
-                <h2 className="text-2xl font-bold">Matches Found</h2>
+                <h2 className="text-2xl font-bold text-purple-800">Phone Report</h2>
                 <p className="text-gray-600">{inputValue}</p>
               </div>
             </div>
 
-            <div className="mt-6 space-y-2">
-              <p><strong>Possible Owner:</strong> Not Identified</p>
-              <p><strong>Associated Usernames:</strong> Not Identified</p>
-              <p><strong>Associated Locations:</strong> AU</p>
-              <p><strong>Carrier:</strong> Telstra</p>
-              <p><strong>Risk Score:</strong> Safe</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <p><span className="font-semibold">Carrier:</span> Telstra</p>
+                <p><span className="font-semibold">Risk Score:</span> Safe</p>
+                <p><span className="font-semibold">Possible Owner:</span> Not Identified</p>
+              </div>
+              <div className="space-y-2">
+                <p><span className="font-semibold">Social Media Matches:</span> Not Identified</p>
+                <p><span className="font-semibold">Location:</span> Australia</p>
+                <p><span className="font-semibold">Line Type:</span> Mobile</p>
+              </div>
+            </div>
+
+            <div className="mt-6 text-sm text-gray-500">
+              <p><strong>About SafeSwipe:</strong> We help uncover online deception using ethical public data checks. We never save your searches. Your safety is our mission.</p>
             </div>
           </div>
 
@@ -138,11 +138,11 @@ export default function Home() {
         </section>
       )}
 
-      {/* What You'll Discover */}
+      {/* What You’ll Discover */}
       <section className="max-w-6xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">What You'll Discover</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-          {[ 
+          {[
             { title: "Social Media Matches", desc: "Find Instagram, Facebook, and dating profiles tied to the number." },
             { title: "Alias Accounts", desc: "Uncover alternative usernames and duplicates." },
             { title: "Location History", desc: "See regions tied to the phone number." },
@@ -162,7 +162,7 @@ export default function Home() {
       <section className="max-w-4xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800">We Help Thousands of People Daily</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {[ 
+          {[
             { name: "Jessica M.", review: "SafeSwipe saved me months of lies!" },
             { name: "Aaron T.", review: "Gave me instant clarity on who I was really talking to." },
             { name: "Nina D.", review: "Found out he was using a fake identity." },
@@ -204,6 +204,7 @@ export default function Home() {
           <a href="/contact" className="underline">Contact</a>
         </div>
       </footer>
+
     </div>
   );
 }
