@@ -102,6 +102,10 @@ export default function Home() {
                 <span className="text-purple-600">📞</span>
                 <p><strong>Phone Number:</strong> {inputValue}</p>
               </div>
+               <div className="flex items-center gap-3">
+          <span className="text-purple-600">👤</span>
+          <p><strong>Possible Owner:</strong> Not Identified</p>
+        </div>
               <div className="flex items-center gap-3">
                 <span className="text-purple-600">📍</span>
                 <p><strong>Location:</strong> AU</p>
