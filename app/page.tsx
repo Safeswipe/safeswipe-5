@@ -64,8 +64,8 @@ export default function Home() {
       </header>
       {/* Hero Section */}
 <section className="max-w-2xl w-full space-y-6">
-  <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Image & Identity Lookups</h1>
-  <p className="text-xl text-gray-700">Instantly uncover profiles, photos, and public data across the internet. SafeSwipe is your AI-powered truth engine.</p>
+  <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Phone Number Lookups</h1>
+  <p className="text-xl text-gray-700">Instantly uncover profiles, social media, and carrier details linked to any phone number.</p>
   <div className="space-x-4">
     <a href="https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited" target="_blank" rel="noopener noreferrer">
       <button className="text-lg px-6 py-4 bg-purple-600 hover:bg-purple-700 text-white shadow-md rounded">
@@ -80,32 +80,30 @@ export default function Home() {
   </div>
 </section>
 
-
-      {/* Upload Section */}
-      <section className="max-w-3xl w-full">
-        <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={(e) => e.preventDefault()}>
-          <label className="block text-purple-800 font-semibold text-lg">Upload a Photo or Enter a Phone Number:</label>
-          <input type="file" accept="image/*" onChange={handleImageUpload} className="w-full px-4 py-2 border rounded-md" />
-          <input
-            type="text"
-            placeholder="e.g. 0412345678"
-            value={inputValue}
-            onChange={(e) => {
-              setInputValue(e.target.value);
-              localStorage.setItem('safeswipe_input', e.target.value);
-            }}
-            className="w-full px-4 py-2 border rounded-md"
-          />
-          <div className="flex gap-4">
-            <button type="button" onClick={handleScan} disabled={loading} className={`w-full py-3 text-lg font-medium rounded-md shadow-md text-white ${loading ? "bg-purple-500 animate-pulse" : "bg-purple-600 hover:bg-purple-700"}`}>
-              {loading ? "Scanning..." : "Scan Now"}
-            </button>
-            <button type="button" onClick={handleClearSearch} className="w-full py-3 text-lg font-medium rounded-md shadow bg-gray-200 hover:bg-gray-300">
-              Clear Search
-            </button>
-          </div>
-        </form>
-      </section>
+{/* Upload Section */}
+<section className="max-w-3xl w-full">
+  <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={(e) => e.preventDefault()}>
+    <label className="block text-purple-800 font-semibold text-lg">Enter a Phone Number:</label>
+    <input
+      type="text"
+      placeholder="e.g. 0412345678"
+      value={inputValue}
+      onChange={(e) => {
+        setInputValue(e.target.value);
+        localStorage.setItem('safeswipe_input', e.target.value);
+      }}
+      className="w-full px-4 py-2 border rounded-md"
+    />
+    <div className="flex gap-4">
+      <button type="button" onClick={handleScan} disabled={loading} className={`w-full py-3 text-lg font-medium rounded-md shadow-md text-white ${loading ? "bg-purple-500 animate-pulse" : "bg-purple-600 hover:bg-purple-700"}`}>
+        {loading ? "Scanning..." : "Scan Now"}
+      </button>
+      <button type="button" onClick={handleClearSearch} className="w-full py-3 text-lg font-medium rounded-md shadow bg-gray-200 hover:bg-gray-300">
+        Clear Search
+      </button>
+    </div>
+  </form>
+</section>
 
       {/* Report Section */}
       {showResult && (
