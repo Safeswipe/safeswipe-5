@@ -85,7 +85,7 @@ export default function Home() {
         </form>
       </section>
 
-      {/* Scan Report Section */}
+{/* Scan Report Section */}
       {showResult && (
         <section className="w-full max-w-4xl bg-white shadow rounded-2xl p-8 text-left space-y-6">
           <div className={isPaid ? "" : "blur-sm pointer-events-none select-none"}>
@@ -137,6 +137,8 @@ export default function Home() {
         </section>
       )}
 
+
+      
       {/* What You'll Discover Section */}
       <section className="max-w-6xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">What You'll Discover</h2>
