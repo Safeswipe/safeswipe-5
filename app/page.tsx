@@ -6,7 +6,6 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
   const isPaid = params?.get('paid') === 'true';
@@ -14,11 +13,6 @@ export default function Home() {
   const usedOneTime = typeof window !== 'undefined' ? localStorage.getItem('safeswipe_used_once') : null;
 
   useEffect(() => {
-    if (isPaid) {
-      setShowSuccessMessage(true);
-      localStorage.removeItem('safeswipe_input');
-      localStorage.removeItem('safeswipe_image');
-    }
     const savedInput = localStorage.getItem('safeswipe_input');
     const savedImage = localStorage.getItem('safeswipe_image');
     if (savedInput) setInputValue(savedInput);
@@ -30,18 +24,6 @@ export default function Home() {
     }
   }, [isPaid, plan]);
 
-  const handleScan = () => {
-    localStorage.setItem('safeswipe_input', inputValue);
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setShowResult(true);
-      if (plan === 'onetime') {
-        localStorage.setItem('safeswipe_used_once', 'true');
-      }
-    }, 30000); // 30 seconds
-  };
-
   const handleClearSearch = () => {
     setInputValue('');
     setImagePreview(null);
@@ -50,10 +32,20 @@ export default function Home() {
     localStorage.removeItem('safeswipe_image');
   };
 
+  const handleScan = () => {
+    localStorage.setItem('safeswipe_input', inputValue);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setShowResult(true);
+      if (plan === 'onetime') localStorage.setItem('safeswipe_used_once', 'true');
+    }, 30000); // 30 seconds scan
+  };
+
   return (
     <div className="flex flex-col items-center px-6 pt-32 pb-20 min-h-screen bg-gradient-to-br from-purple-100 via-white to-blue-100 text-center space-y-20">
-
-      {/* Header */}
+      
+      {/* Sticky Header */}
       <header className="fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-br from-purple-100 via-white to-blue-100 border-b border-purple-200 shadow-sm">
         <div className="max-w-screen-2xl mx-auto px-4 py-3 flex justify-center sm:justify-start items-center">
           <img src="/Safe Swipe.png" alt="SafeSwipe Logo" className="h-10 object-contain" />
@@ -61,21 +53,20 @@ export default function Home() {
       </header>
 
       {/* Payment Success Message */}
-      {showSuccessMessage && (
+      {isPaid && (
         <div className="bg-green-100 border border-green-400 text-green-700 px-6 py-3 rounded w-full max-w-2xl text-center">
           Payment successful. Please scan again to view your report.
         </div>
       )}
 
-      {/* Hero + Upload Section */}
+      {/* Hero Upload Section */}
       <section className="max-w-3xl w-full space-y-6">
-        <h1 className="text-5xl font-extrabold text-purple-800">Reverse Phone Lookups</h1>
-        <p className="text-xl text-gray-700">Instantly uncover hidden profiles, risk flags, and phone activity. Trusted by thousands worldwide.</p>
-        <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={(e) => e.preventDefault()}>
-          <label className="block text-purple-800 font-semibold text-lg">Enter a Phone Number:</label>
+        <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Phone Number Lookup</h1>
+        <p className="text-xl text-gray-700">Find linked profiles, carrier information, risk levels, and more in seconds.</p>
+        <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4" onSubmit={(e) => e.preventDefault()}>
           <input
             type="text"
-            placeholder="e.g. 0412345678"
+            placeholder="Enter a phone number e.g. 0412345678"
             value={inputValue}
             onChange={(e) => {
               setInputValue(e.target.value);
@@ -94,35 +85,43 @@ export default function Home() {
         </form>
       </section>
 
-      {/* Report Section */}
+      {/* Scan Report Section */}
       {showResult && (
-        <section className="w-full max-w-3xl bg-white shadow rounded-2xl p-8 text-left space-y-6">
+        <section className="w-full max-w-4xl bg-white shadow rounded-2xl p-8 text-left space-y-6">
           <div className={isPaid ? "" : "blur-sm pointer-events-none select-none"}>
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center">
-                <span className="text-2xl font-bold text-purple-700">SS</span>
-              </div>
+              <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center text-purple-600 text-2xl font-bold">SS</div>
               <div>
-                <h2 className="text-2xl font-bold text-purple-800">Phone Report</h2>
+                <h2 className="text-2xl font-bold text-purple-800">Scan Report</h2>
                 <p className="text-gray-600">{inputValue}</p>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <p><span className="font-semibold">Carrier:</span> Telstra</p>
-                <p><span className="font-semibold">Risk Score:</span> Safe</p>
-                <p><span className="font-semibold">Possible Owner:</span> Not Identified</p>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <span className="text-purple-600">📞</span>
+                <p><strong>Phone Number:</strong> {inputValue}</p>
               </div>
-              <div className="space-y-2">
-                <p><span className="font-semibold">Social Media Matches:</span> Not Identified</p>
-                <p><span className="font-semibold">Location:</span> Australia</p>
-                <p><span className="font-semibold">Line Type:</span> Mobile</p>
+              <div className="flex items-center gap-3">
+                <span className="text-purple-600">📍</span>
+                <p><strong>Location:</strong> AU</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-purple-600">🏢</span>
+                <p><strong>Carrier:</strong> Telstra</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-purple-600">✅</span>
+                <p><strong>Risk Level:</strong> Safe</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-purple-600">🔎</span>
+                <p><strong>Associated Accounts:</strong> Not Identified</p>
               </div>
             </div>
 
             <div className="mt-6 text-sm text-gray-500">
-              <p><strong>About SafeSwipe:</strong> We help uncover online deception using ethical public data checks. We never save your searches. Your safety is our mission.</p>
+              <p><strong>Note:</strong> SafeSwipe uses publicly available information to build reports. We never save your searches.</p>
             </div>
           </div>
 
@@ -138,17 +137,17 @@ export default function Home() {
         </section>
       )}
 
-      {/* What You’ll Discover */}
+      {/* What You'll Discover Section */}
       <section className="max-w-6xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">What You'll Discover</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
           {[
-            { title: "Social Media Matches", desc: "Find Instagram, Facebook, and dating profiles tied to the number." },
+            { title: "Social Media Matches", desc: "Find linked Instagram, Facebook, and dating profiles tied to the number." },
             { title: "Alias Accounts", desc: "Uncover alternative usernames and duplicates." },
             { title: "Location History", desc: "See regions tied to the phone number." },
-            { title: "Carrier and Line Type", desc: "View phone carrier and number type." },
-            { title: "Data Breaches", desc: "Check if number or emails were leaked." },
-            { title: "Public Risk Score", desc: "Get an online safety rating for the number." }
+            { title: "Carrier and Line Type", desc: "View carrier and line information." },
+            { title: "Data Breaches", desc: "Check if number was involved in leaks." },
+            { title: "Public Risk Score", desc: "Safety score based on public data." }
           ].map((item, i) => (
             <div key={i} className="bg-white rounded-2xl shadow-md p-6 text-left border border-purple-100 hover:shadow-lg transition-all">
               <h4 className="text-lg font-semibold text-purple-700 mb-2">{item.title}</h4>
@@ -204,7 +203,6 @@ export default function Home() {
           <a href="/contact" className="underline">Contact</a>
         </div>
       </footer>
-
     </div>
   );
 }
