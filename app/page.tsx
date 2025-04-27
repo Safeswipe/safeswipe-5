@@ -113,6 +113,57 @@ export default function Home() {
         </form>
       </section>
 
+      {/* Scan Report */}
+{showResult && (
+  <section className="w-full max-w-4xl space-y-6 border rounded-xl shadow-md p-6 bg-white">
+    <div className={isPaid ? "" : "blur-sm pointer-events-none select-none"}>
+      <h2 className="text-2xl font-bold text-purple-800">Scan Report</h2>
+      {imagePreview && (
+        <img src={imagePreview} alt="Uploaded" className="mx-auto w-40 h-40 rounded-full border object-cover" />
+      )}
+      <p className="text-gray-600 mt-4 text-left">Submitted: {new Date().toLocaleString()}</p>
+      <p className="text-gray-700 font-semibold text-left mt-2">Match Confidence: 78%</p>
+
+      {isUsername && (
+        <div className="text-left mt-2">
+          <p><strong>Username:</strong> {inputValue}</p>
+          <p><a href={`https://instagram.com/${cleanedUsername}`} className="text-purple-600 underline">Instagram</a> | <a href={`https://facebook.com/${cleanedUsername}`} className="text-purple-600 underline">Facebook</a></p>
+        </div>
+      )}
+      {isEmail && (
+        <p className="text-left"><strong>Email:</strong> {inputValue} — No public records found.</p>
+      )}
+      {isPhone && (
+        <p className="text-left"><strong>Phone:</strong> {inputValue} — No known matches.</p>
+      )}
+
+      <div className="mt-6 text-left bg-red-100 border border-red-300 p-4 rounded">
+        <h4 className="text-red-700 font-bold">⚠️ Risk Flags</h4>
+        <ul className="list-disc ml-5 text-sm text-red-800">
+          <li>Reports from other users</li>
+          <li>Photo reuse on multiple platforms</li>
+          <li>Social handles mismatched</li>
+        </ul>
+      </div>
+
+      <div className="mt-6 text-left text-sm text-gray-500">
+        <p><strong>About SafeSwipe:</strong> We help uncover online deception using ethical public data checks. We never store your uploads. Your safety is our mission.</p>
+      </div>
+    </div>
+
+    {!isPaid && (
+      <div className="pt-6 text-center">
+        <p className="text-purple-700 mb-3">Unlock full report access:</p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href='https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited' className='bg-purple-600 text-white px-6 py-3 rounded shadow hover:bg-purple-700'>Unlimited – $19.99</a>
+          <a href='https://buy.stripe.com/7sIeW5bZ6ch18ve4gi?plan=onetime' className='border border-purple-500 text-purple-700 px-6 py-3 rounded shadow'>One-Time Report – $9.99</a>
+        </div>
+      </div>
+    )}
+  </section>
+)}
+
+
       {/* What You’ll Discover Section */}
       <section className="max-w-6xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">What You’ll Discover</h2>
