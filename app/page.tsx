@@ -56,23 +56,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center px-6 pt-32 pb-20 min-h-screen bg-gradient-to-br from-purple-100 via-white to-blue-100 text-center space-y-20">
-{isPaid && (
-  <div style={{
-    backgroundColor: '#d4edda',
-    color: '#155724',
-    padding: '15px',
-    borderRadius: '5px',
-    marginTop: '20px',
-    marginBottom: '20px',
-    border: '1px solid #c3e6cb',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    maxWidth: '600px',
-    width: '100%',
-  }}>
-    Payment Complete! You can now scan again using your credits.
-  </div>
-)}
+
       
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-br from-purple-100 via-white to-blue-100 border-b border-purple-200 shadow-sm">
