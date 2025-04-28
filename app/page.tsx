@@ -93,28 +93,70 @@ export default function Home() {
       </section>
 
       {/* Report Section */}
-      {showResult && (
-        <section className="w-full max-w-3xl bg-white shadow rounded-2xl p-8 text-left space-y-6">
-          <div className={isPaid ? "" : "blur-sm pointer-events-none select-none"}>
-            <h2 className="text-2xl font-bold text-purple-800 mb-4">Scan Report</h2>
-            <div className="space-y-2">
-              <p><strong>Possible Owner:</strong> Not Identified</p>
-              <p><strong>Associated Socials:</strong> Not Identified</p>
-              <p><strong>Location:</strong> Australia</p>
-              <p><strong>Carrier:</strong> Telstra</p>
-              <p><strong>Risk Score:</strong> Safe</p>
-            </div>
-          </div>
-          {!isPaid && (
-            <div className="pt-6 text-center">
-              <p className="text-purple-700 mb-3">Unlock full report access:</p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href='https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited' className='bg-purple-600 text-white px-6 py-3 rounded shadow hover:bg-purple-700'>Unlimited – $19.99</a>
-                <a href='https://buy.stripe.com/14k8xH5AI1Cn4eYfZ2?plan=onetime' className='border border-purple-500 text-purple-700 px-6 py-3 rounded shadow'>One-Time Report – $9.99</a>
-              </div>
-            </div>
-          )}
-        </section>
+{showResult && (
+  <section className="w-full max-w-3xl bg-white shadow rounded-2xl p-8 text-left space-y-6">
+    <div className={isPaid ? "" : "blur-sm pointer-events-none select-none"}>
+      <div className="flex items-center gap-4 mb-6">
+        <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center text-2xl text-gray-600">🔍</div>
+        <div>
+          <h2 className="text-2xl font-bold text-purple-800">Phone Report</h2>
+          <p className="text-gray-600">{inputValue}</p>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <div>
+          <p className="flex items-center gap-2 text-gray-700 font-semibold">
+            <span>📞</span> Phone Number:
+          </p>
+          <p className="ml-8 text-gray-600">{inputValue}</p>
+          <hr className="my-2 border-gray-200" />
+        </div>
+
+        <div>
+          <p className="flex items-center gap-2 text-gray-700 font-semibold">
+            <span>🧑</span> Possible Owner:
+          </p>
+          <p className="ml-8 text-gray-600">Not Identified</p>
+          <hr className="my-2 border-gray-200" />
+        </div>
+
+        <div>
+          <p className="flex items-center gap-2 text-gray-700 font-semibold">
+            <span>📍</span> Location:
+          </p>
+          <p className="ml-8 text-gray-600">Australia</p>
+          <hr className="my-2 border-gray-200" />
+        </div>
+
+        <div>
+          <p className="flex items-center gap-2 text-gray-700 font-semibold">
+            <span>🏢</span> Carrier:
+          </p>
+          <p className="ml-8 text-gray-600">Telstra</p>
+          <hr className="my-2 border-gray-200" />
+        </div>
+
+        <div>
+          <p className="flex items-center gap-2 text-gray-700 font-semibold">
+            <span>⚠️</span> Risk Score:
+          </p>
+          <p className="ml-8 text-green-600 font-bold">Safe</p>
+        </div>
+      </div>
+    </div>
+
+    {!isPaid && (
+      <div className="pt-6 text-center">
+        <p className="text-purple-700 mb-3 font-semibold">Unlock full report access:</p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited" className="bg-purple-600 text-white px-6 py-3 rounded shadow hover:bg-purple-700">Unlimited – $19.99</a>
+          <a href="https://buy.stripe.com/14k8xH5AI1Cn4eYfZ2?plan=onetime" className="border border-purple-500 text-purple-700 px-6 py-3 rounded shadow">One-Time Report – $9.99</a>
+        </div>
+      </div>
+    )}
+  </section>
+)}
       )}
 {/* Trust Badges Section */}
       <section className="w-full max-w-5xl text-center space-y-4">
