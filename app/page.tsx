@@ -92,23 +92,6 @@ export default function Home() {
         </form>
       </section>
 
-      {/* Trust Badges Section */}
-      <section className="w-full max-w-5xl text-center space-y-4">
-        <h2 className="text-2xl font-bold text-purple-800">Trusted by over 25,000+ Australians</h2>
-        <div className="flex flex-wrap justify-center gap-6">
-          <div className="bg-white border rounded-xl shadow p-4 w-64">
-            <img src="/trustpilot.png" alt="Trustpilot" className="h-24 mx-auto mb-3" />
-            <p className="text-yellow-400 text-2xl">★★★★★</p>
-            <p className="text-sm text-gray-500 mt-1">4.8 rating (2,541 reviews)</p>
-          </div>
-          <div className="bg-white border rounded-xl shadow p-4 w-64">
-            <img src="/google-review.png" alt="Google" className="h-24 mx-auto mb-3" />
-            <p className="text-yellow-400 text-2xl">★★★★★</p>
-            <p className="text-sm text-gray-500 mt-1">4.9 rating (1,934 reviews)</p>
-          </div>
-        </div>
-      </section>
-
       {/* Report Section */}
       {showResult && (
         <section className="w-full max-w-3xl bg-white shadow rounded-2xl p-8 text-left space-y-6">
@@ -133,6 +116,22 @@ export default function Home() {
           )}
         </section>
       )}
+{/* Trust Badges Section */}
+      <section className="w-full max-w-5xl text-center space-y-4">
+        <h2 className="text-2xl font-bold text-purple-800">Trusted by over 25,000+ Australians</h2>
+        <div className="flex flex-wrap justify-center gap-6">
+          <div className="bg-white border rounded-xl shadow p-4 w-64">
+            <img src="/trustpilot.png" alt="Trustpilot" className="h-24 mx-auto mb-3" />
+            <p className="text-yellow-400 text-2xl">★★★★★</p>
+            <p className="text-sm text-gray-500 mt-1">4.8 rating (2,541 reviews)</p>
+          </div>
+          <div className="bg-white border rounded-xl shadow p-4 w-64">
+            <img src="/google-review.png" alt="Google" className="h-24 mx-auto mb-3" />
+            <p className="text-yellow-400 text-2xl">★★★★★</p>
+            <p className="text-sm text-gray-500 mt-1">4.9 rating (1,934 reviews)</p>
+          </div>
+        </div>
+      </section>
 
       {/* What You'll Discover Section */}
       <section className="max-w-6xl w-full space-y-6">
