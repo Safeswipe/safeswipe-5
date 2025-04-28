@@ -157,7 +157,7 @@ export default function Home() {
     )}
   </section>
 )}
-      )}
+
 {/* Trust Badges Section */}
       <section className="w-full max-w-5xl text-center space-y-4">
         <h2 className="text-2xl font-bold text-purple-800">Trusted by over 25,000+ Australians</h2>
