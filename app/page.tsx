@@ -69,6 +69,11 @@ export default function Home() {
       <section className="max-w-3xl w-full space-y-6">
         <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Phone Lookups</h1>
         <p className="text-xl text-gray-700">Instantly scan and uncover social profiles, risk scores, and carrier data.</p>
+{isPaid && (
+  <div className="bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded w-full max-w-2xl text-center mt-6">
+    Payment successful! Please scan now to unlock your report.
+  </div>
+)}
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={(e) => e.preventDefault()}>
           <label className="block text-purple-800 font-semibold text-lg">Enter a Mobile or Landline Number:</label>
           <input
