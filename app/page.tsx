@@ -1,5 +1,9 @@
 'use client';
 import { useState, useEffect } from "react";
+export const metadata = {
+  title: "SafeSwipe | Reverse Phone Lookup",
+  description: "Instantly scan and uncover phone carrier, risk scores, and social profiles with SafeSwipe. Trusted by thousands of Australians.",
+};
 
 export default function Home() {
   const [showResult, setShowResult] = useState(false);
