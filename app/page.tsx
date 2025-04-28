@@ -134,7 +134,9 @@ export default function Home() {
               <p className="text-purple-700 mb-3">Unlock full report access:</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href='https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited' className='bg-purple-600 text-white px-6 py-3 rounded shadow hover:bg-purple-700'>Unlimited – $19.99</a>
-                <a href='https://buy.stripe.com/7sIeW5bZ6ch18ve4gi?plan=onetime' className='border border-purple-500 text-purple-700 px-6 py-3 rounded shadow'>One-Time Report – $9.99</a>
+<a href='https://buy.stripe.com/14k8xH5AI1Cn4eYfZ2?plan=onetime' className='border border-purple-500 text-purple-700 px-6 py-3 rounded shadow'>
+  One-Time Report – $9.99
+</a>
               </div>
             </div>
           )}
