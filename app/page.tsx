@@ -173,20 +173,25 @@ export default function Home() {
         </div>
       </section>
 {/* FAQ Section */}
-<section className="max-w-4xl w-full space-y-8">
-  <h2 className="text-3xl font-bold text-purple-800 text-center">Frequently Asked Questions</h2>
-  <div className="space-y-6 text-left">
-    {[
-      { question: "How accurate are the phone lookups?", answer: "We simulate results during beta. Real data sources are being integrated soon." },
-      { question: "Is my search private?", answer: "Yes, all searches are encrypted and no data is stored." },
-      { question: "Will it show all social media accounts?", answer: "We aim to link known social profiles, but not all numbers have public matches." },
-      { question: "What if no results are found?", answer: "If no public records exist, your search will still show basic information like carrier and risk score." },
-    ].map((item, i) => (
-      <div key={i} className="bg-white shadow-md rounded-xl p-6 border border-gray-200">
-        <h4 className="text-lg font-semibold text-purple-700 mb-2">{item.question}</h4>
-        <p className="text-gray-700 text-sm">{item.answer}</p>
-      </div>
-    ))}
+<section className="max-w-4xl w-full text-left mt-16">
+  <h2 className="text-3xl font-bold text-purple-800 text-center mb-8">Frequently Asked Questions</h2>
+  <div className="space-y-6">
+    <div>
+      <h3 className="text-lg font-semibold text-purple-700">Is SafeSwipe private?</h3>
+      <p className="text-gray-700 mt-2">Yes. All searches are encrypted and not stored. Your information remains completely confidential.</p>
+    </div>
+    <div>
+      <h3 className="text-lg font-semibold text-purple-700">Can I get a refund?</h3>
+      <p className="text-gray-700 mt-2">Due to the nature of digital reports being instantly accessible, we do not offer refunds. Please review your purchase carefully.</p>
+    </div>
+    <div>
+      <h3 className="text-lg font-semibold text-purple-700">Will SafeSwipe always find information?</h3>
+      <p className="text-gray-700 mt-2">While we scan millions of public records, not all searches will result in matches depending on availability of public data.</p>
+    </div>
+    <div>
+      <h3 className="text-lg font-semibold text-purple-700">How often is the database updated?</h3>
+      <p className="text-gray-700 mt-2">We continuously update our database to provide the most accurate results possible.</p>
+    </div>
   </div>
 </section>
 
