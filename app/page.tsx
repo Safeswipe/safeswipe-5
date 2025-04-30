@@ -1,4 +1,5 @@
 'use client';
+import Script from 'next/script'; // Make sure this is at the top of your file
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -56,6 +57,29 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center px-6 pt-32 pb-20 min-h-screen bg-gradient-to-br from-purple-100 via-white to-blue-100 text-center space-y-20">
+import { useEffect } from 'react';
+import Script from 'next/script';
+
+function MyApp({ Component, pageProps }) {
+  useEffect(() => {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){window.dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17037482508'); // Replace with your tag ID
+  }, []);
+
+  return (
+    <>
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=AW-17037482508"
+        strategy="afterInteractive"
+      />
+      <Component {...pageProps} />
+    </>
+  );
+}
+
+export default MyApp;
 
       
       {/* Header */}
@@ -73,6 +97,19 @@ export default function Home() {
   <div className="bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded w-full max-w-2xl text-center mt-6">
     Payment successful! Please scan now to unlock your report.
   </div>
+  {isPaid && (
+  <Script id="gtag-conversion" strategy="afterInteractive">
+    {`
+      gtag('event', 'conversion', {
+        send_to: 'AW-17037482508/rintCKmXl74aEIy0jbw_',
+        value: 9.99,
+        currency: 'AUD',
+        transaction_id: ''
+      });
+    `}
+  </Script>
+)}
+
 )}
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={(e) => e.preventDefault()}>
           <label className="block text-purple-800 font-semibold text-lg">Enter a Mobile or Landline Number:</label>
