@@ -186,10 +186,78 @@ export default function Home() {
           </section>
         )}
 
-        <section className="w-full max-w-5xl text-center space-y-4"> ... </section>
-        <section className="max-w-6xl w-full space-y-6"> ... </section>
-        <section className="max-w-4xl w-full space-y-6"> ... </section>
-        <section className="max-w-4xl w-full text-left mt-16"> ... </section>
+        <section className="w-full max-w-5xl text-center space-y-4">
+          <h2 className="text-2xl font-bold text-purple-800">Trusted by over 25,000+ Australians</h2>
+          <div className="flex flex-wrap justify-center gap-6">
+            <div className="bg-white border rounded-xl shadow p-4 w-64">
+              <img src="/trustpilot.png" alt="Trustpilot" className="h-24 mx-auto mb-3" />
+              <p className="text-yellow-400 text-2xl">★★★★★</p>
+              <p className="text-sm text-gray-500 mt-1">4.8 rating (2,541 reviews)</p>
+            </div>
+            <div className="bg-white border rounded-xl shadow p-4 w-64">
+              <img src="/google-review.png" alt="Google" className="h-24 mx-auto mb-3" />
+              <p className="text-yellow-400 text-2xl">★★★★★</p>
+              <p className="text-sm text-gray-500 mt-1">4.9 rating (1,934 reviews)</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="max-w-6xl w-full space-y-6">
+          <h2 className="text-3xl font-bold text-purple-800 text-center">What You'll Discover</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+            {[{ title: "Social Media Matches", desc: "Find linked Instagram, Facebook, and dating profiles tied to the number." },
+              { title: "Alias Accounts", desc: "Uncover alternative usernames and duplicates." },
+              { title: "Location History", desc: "See regions tied to the phone number." },
+              { title: "Carrier and Line Type", desc: "View phone carrier and number type." },
+              { title: "Data Breaches", desc: "Check if number or emails were leaked." },
+              { title: "Public Risk Score", desc: "Get an online safety rating for the number." }
+            ].map((item, i) => (
+              <div key={i} className="bg-white rounded-2xl shadow-md p-6 text-left border border-purple-100 hover:shadow-lg transition-all">
+                <h4 className="text-lg font-semibold text-purple-700 mb-2">{item.title}</h4>
+                <p className="text-gray-700 text-sm">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="max-w-4xl w-full space-y-6">
+          <h2 className="text-3xl font-bold text-purple-800">We Help Thousands of People Daily</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[{ name: "Jessica M.", review: "SafeSwipe saved me months of lies!" },
+              { name: "Aaron T.", review: "Gave me instant clarity on who I was really talking to." },
+              { name: "Nina D.", review: "Found out he was using a fake identity." },
+              { name: "Connor W.", review: "Worth the price. Helped me make a safe decision." }
+            ].map((t, i) => (
+              <div key={i} className="bg-white shadow-md rounded-xl p-6 border border-gray-200">
+                <div className="text-yellow-400 text-xl mb-2">★★★★★</div>
+                <p className="text-gray-700 italic">“{t.review}”</p>
+                <p className="mt-2 font-semibold text-purple-800">– {t.name}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="max-w-4xl w-full text-left mt-16">
+          <h2 className="text-3xl font-bold text-purple-800 text-center mb-8">Frequently Asked Questions</h2>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-lg font-semibold text-purple-700">Is SafeSwipe private?</h3>
+              <p className="text-gray-700 mt-2">Yes. All searches are encrypted and not stored. Your information remains completely confidential.</p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-purple-700">Can I get a refund?</h3>
+              <p className="text-gray-700 mt-2">Due to the nature of digital reports being instantly accessible, we do not offer refunds. Please review your purchase carefully.</p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-purple-700">Will SafeSwipe always find information?</h3>
+              <p className="text-gray-700 mt-2">While we scan millions of public records, not all searches will result in matches depending on availability of public data.</p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-purple-700">How often is the database updated?</h3>
+              <p className="text-gray-700 mt-2">We continuously update our database to provide the most accurate results possible.</p>
+            </div>
+          </div>
+        </section>
 
         <footer className="text-center text-sm text-gray-500 mt-20 border-t pt-6">
           <p>© 2025 SafeSwipe Pty Ltd. All rights reserved.</p>
