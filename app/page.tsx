@@ -96,20 +96,21 @@ export default function Home() {
         <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Phone Lookups</h1>
         <p className="text-xl text-gray-700">Instantly scan and uncover social profiles, risk scores, and carrier data.</p>
 {isPaid && (
-  <div className="bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded w-full max-w-2xl text-center mt-6">
-    Payment successful! Please scan now to unlock your report.
-  </div>
-  {isPaid && (
-  <Script id="gtag-conversion" strategy="afterInteractive">
-    {`
-      gtag('event', 'conversion', {
-        send_to: 'AW-17037482508/rintCKmXl74aEIy0jbw_',
-        value: 9.99,
-        currency: 'AUD',
-        transaction_id: ''
-      });
-    `}
-  </Script>
+  <>
+    <div className="bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded w-full max-w-2xl text-center mt-6">
+      Payment successful! Please scan now to unlock your report.
+    </div>
+    <Script id="gtag-conversion" strategy="afterInteractive">
+      {`
+        gtag('event', 'conversion', {
+          send_to: 'AW-17037482508/rintCKmXl74aEIy0jbw_',
+          value: 9.99,
+          currency: 'AUD',
+          transaction_id: ''
+        });
+      `}
+    </Script>
+  </>
 )}
 
 )}
