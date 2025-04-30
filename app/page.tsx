@@ -56,32 +56,31 @@ export default function Home() {
   };
 
   return (
+  <>
+    {/* Google Global Site Tag */}
+    <Script
+      strategy="afterInteractive"
+      src="https://www.googletagmanager.com/gtag/js?id=AW-17037482508"
+    />
+    <Script
+      id="gtag-init"
+      strategy="afterInteractive"
+      dangerouslySetInnerHTML={{
+        __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-17037482508');
+        `,
+      }}
+    />
+
+    {/* Your layout starts here */}
     <div className="flex flex-col items-center px-6 pt-32 pb-20 min-h-screen bg-gradient-to-br from-purple-100 via-white to-blue-100 text-center space-y-20">
-
-<>
-  {/* Google Global Site Tag */}
-  <Script
-    strategy="afterInteractive"
-    src="https://www.googletagmanager.com/gtag/js?id=AW-17037482508"
-  />
-  <Script
-    id="gtag-init"
-    strategy="afterInteractive"
-    dangerouslySetInnerHTML={{
-      __html: `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'AW-17037482508');
-      `,
-    }}
-  />
-
-  {/* Your existing layout starts here */}
-  <div className="flex flex-col items-center ...">
-    {/* existing content */}
-  </div>
-</>
+      {/* existing content here */}
+    </div>
+  </>
+);
 
 
       
