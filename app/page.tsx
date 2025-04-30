@@ -57,8 +57,6 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center px-6 pt-32 pb-20 min-h-screen bg-gradient-to-br from-purple-100 via-white to-blue-100 text-center space-y-20">
-import { useEffect } from 'react';
-import Script from 'next/script';
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
