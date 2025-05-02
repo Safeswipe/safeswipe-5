@@ -186,10 +186,7 @@
            </section>
          )}
  
-         <section className="w-full max-w-5xl text-center space-y-4"> ... </section>
-         <section className="max-w-6xl w-full space-y-6"> ... </section>
-         <section className="max-w-4xl w-full space-y-6"> ... </section>
-         <section className="max-w-4xl w-full text-left mt-16"> ... </section>
+      
          <section className="w-full max-w-5xl text-center space-y-4">
            <h2 className="text-2xl font-bold text-purple-800">Trusted by over 100,000+ People World-Wide</h2>
            <div className="flex flex-wrap justify-center gap-6">
