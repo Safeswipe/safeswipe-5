@@ -66,13 +66,15 @@ export default function Home() {
         id="gtag-init"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
-          __html: 
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'AW-17037482508');
-          ,
-        }}
+         dangerouslySetInnerHTML={{
+  __html: `
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17037482508');
+  `,
+}}
+
       />
 
       {isPaid && (
