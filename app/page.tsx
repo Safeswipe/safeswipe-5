@@ -270,3 +270,6 @@ export default function Home() {
     <a href="/contact" className="underline">Contact</a>
   </div>
 </footer>
+          </>
+)
+
