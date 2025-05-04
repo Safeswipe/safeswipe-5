@@ -1,275 +1,162 @@
 'use client';
- 
- import { useState, useEffect } from 'react';
- import Script from 'next/script';
- 
- export default function Home() {
-   const [showResult, setShowResult] = useState(false);
-   const [loading, setLoading] = useState(false);
-   const [inputValue, setInputValue] = useState('');
-   const [imagePreview, setImagePreview] = useState<string | null>(null);
- 
-   const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
-   const isPaid = params?.get('paid') === 'true';
-   const plan = params?.get('plan');
-   const usedOneTime = typeof window !== 'undefined' ? localStorage.getItem('safeswipe_used_once') : null;
- 
-   useEffect(() => {
-     const savedInput = localStorage.getItem('safeswipe_input');
-     const savedImage = localStorage.getItem('safeswipe_image');
-     if (savedInput) setInputValue(savedInput);
-     if (savedImage) setImagePreview(savedImage);
-     const unlocked = isPaid && (plan === 'unlimited' || (plan === 'onetime' && usedOneTime !== 'true'));
-     if (savedInput && savedImage && unlocked) {
-       setShowResult(true);
-       if (plan === 'onetime') localStorage.setItem('safeswipe_used_once', 'true');
-     }
-   }, [isPaid, plan]);
- 
-   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-     const file = e.target.files?.[0];
-     if (!file) return;
-     const reader = new FileReader();
-     reader.onloadend = () => {
-       const base64 = reader.result as string;
-       setImagePreview(base64);
-       localStorage.setItem('safeswipe_image', base64);
-     };
-     reader.readAsDataURL(file);
-   };
- 
-   const handleClearSearch = () => {
-     setInputValue('');
-     setImagePreview(null);
-     setShowResult(false);
-     localStorage.removeItem('safeswipe_input');
-     localStorage.removeItem('safeswipe_image');
-   };
- 
-   const handleScan = () => {
-     localStorage.setItem('safeswipe_input', inputValue);
-     setLoading(true);
-     setTimeout(() => {
-       setLoading(false);
-       setShowResult(true);
-       if (plan === 'onetime') localStorage.setItem('safeswipe_used_once', 'true');
-     }, 20000);
-   };
- 
-   return (
-     <>
-       <Script
-         strategy="afterInteractive"
-         src="https://www.googletagmanager.com/gtag/js?id=AW-17037482508"
-       />
-       <Script
-         id="gtag-init"
-         strategy="afterInteractive"
-         dangerouslySetInnerHTML={{
-           __html: `
-             window.dataLayer = window.dataLayer || [];
-             function gtag(){dataLayer.push(arguments);}
-             gtag('js', new Date());
-             gtag('config', 'AW-17037482508');
-           `,
-         }}
-       />
- 
-       {isPaid && (
-         <>
-           <div className="bg-green-100 border border-green-400 text-green-700 px-6 py-4 rounded w-full max-w-2xl text-center mt-6">
-             Payment successful! Please scan now to unlock your report.
-           </div>
-           <Script id="gtag-conversion" strategy="afterInteractive">
-             {`
-               gtag('event', 'conversion', {
-                 send_to: 'AW-17037482508/rintCKmXl74aEIy0jbw_',
-                 value: 9.99,
-                 currency: 'AUD',
-                 transaction_id: ''
-               });
-             `}
-           </Script>
-         </>
-       )}
- 
-       <div className="flex flex-col items-center px-6 pt-32 pb-20 min-h-screen bg-gradient-to-br from-purple-100 via-white to-blue-100 text-center space-y-20">
-         <header className="fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-br from-purple-100 via-white to-blue-100 border-b border-purple-200 shadow-sm">
-           <div className="max-w-screen-2xl mx-auto px-4 py-3 flex justify-center sm:justify-start items-center">
-             <img src="/Safe Swipe.png" alt="SafeSwipe Logo" className="h-10 object-contain" />
-           </div>
-         </header>
- 
-         <section className="max-w-3xl w-full space-y-6">
-           <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Phone Lookups</h1>
-           <p className="text-xl text-gray-700">Instantly scan and uncover social profiles, risk scores, and carrier data.</p>
- 
-           <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={(e) => e.preventDefault()}>
-             <label className="block text-purple-800 font-semibold text-lg">Enter a Mobile or Landline Number:</label>
-             <input
-               type="text"
-               placeholder="e.g. 0412345678"
-               value={inputValue}
-               onChange={(e) => {
-                 setInputValue(e.target.value);
-                 localStorage.setItem('safeswipe_input', e.target.value);
-               }}
-               className="w-full px-4 py-2 border rounded-md"
-             />
-             <div className="flex gap-4">
-               <button
-                 type="button"
-                 onClick={handleScan}
-                 disabled={loading}
-                 className={`w-full py-3 text-lg font-medium rounded-md shadow-md text-white ${loading ? 'bg-purple-500 animate-pulse' : 'bg-purple-600 hover:bg-purple-700'}`}
-               >
-                 {loading ? 'Scanning...' : 'Scan Now'}
-               </button>
-               <button
-                 type="button"
-                 onClick={handleClearSearch}
-                 className="w-full py-3 text-lg font-medium rounded-md shadow bg-gray-200 hover:bg-gray-300"
-               >
-                 Clear Search
-               </button>
-             </div>
-             <p className="text-xs text-gray-500 mt-2 text-center">Secure and encrypted. Your searches are 100% private.</p>
-           </form>
-         </section>
- 
-         {showResult && (
-           <section className="w-full max-w-3xl bg-white shadow rounded-2xl p-8 text-left space-y-6">
-             <div className={isPaid ? "" : "blur-sm pointer-events-none select-none"}>
-               <div className="flex items-center gap-4 mb-6">
-                 <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center text-2xl text-gray-600">🔍</div>
-                 <div>
-                   <h2 className="text-2xl font-bold text-purple-800">Phone Report</h2>
-                   <p className="text-gray-600">{inputValue}</p>
-                 </div>
-               </div>
-               <div className="space-y-4">
-                 <div>
-                   <p className="flex items-center gap-2 text-gray-700 font-semibold"><span>📞</span> Phone Number:</p>
-                   <p className="ml-8 text-gray-600">{inputValue}</p>
-                   <hr className="my-2 border-gray-200" />
-                 </div>
-                 <div>
-                   <p className="flex items-center gap-2 text-gray-700 font-semibold"><span>🧑</span> Possible Owner:</p>
-                   <p className="ml-8 text-gray-600">Not Identified</p>
-                   <hr className="my-2 border-gray-200" />
-                 </div>
-                 <div>
-                   <p className="flex items-center gap-2 text-gray-700 font-semibold"><span>📍</span> Location:</p>
-                   <p className="ml-8 text-gray-600">Australia</p>
-                   <hr className="my-2 border-gray-200" />
-                 </div>
-                 <div>
-                   <p className="flex items-center gap-2 text-gray-700 font-semibold"><span>🏢</span> Carrier:</p>
-                   <p className="ml-8 text-gray-600">Telstra</p>
-                   <hr className="my-2 border-gray-200" />
-                 </div>
-                 <div>
-                   <p className="flex items-center gap-2 text-gray-700 font-semibold"><span>⚠️</span> Risk Score:</p>
-                   <p className="ml-8 text-green-600 font-bold">Safe</p>
-                 </div>
-               </div>
-             </div>
-             {!isPaid && (
-               <div className="pt-6 text-center">
-                 <p className="text-purple-700 mb-3 font-semibold">Unlock full report access:</p>
-                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                   <a href="https://buy.stripe.com/aEU9BL4wEep9fXGeUX?plan=unlimited" className="bg-purple-600 text-white px-6 py-3 rounded shadow hover:bg-purple-700">Unlimited – $19.99</a>
-                   <a href="https://buy.stripe.com/14k8xH5AI1Cn4eYfZ2?plan=onetime" className="border border-purple-500 text-purple-700 px-6 py-3 rounded shadow">One-Time Report – $9.99</a>
-                 </div>
-               </div>
-             )}
-           </section>
-         )}
- 
-      
-         <section className="w-full max-w-5xl text-center space-y-4">
-           <h2 className="text-2xl font-bold text-purple-800">Trusted by over 100,000+ People World-Wide</h2>
-           <div className="flex flex-wrap justify-center gap-6">
-             <div className="bg-white border rounded-xl shadow p-4 w-64">
-               <img src="/trustpilot.png" alt="Trustpilot" className="h-24 mx-auto mb-3" />
-               <p className="text-yellow-400 text-2xl">★★★★★</p>
-               <p className="text-sm text-gray-500 mt-1">4.8 rating (9,541 reviews)</p>
-             </div>
-             <div className="bg-white border rounded-xl shadow p-4 w-64">
-               <img src="/google-review.png" alt="Google" className="h-24 mx-auto mb-3" />
-               <p className="text-yellow-400 text-2xl">★★★★★</p>
-               <p className="text-sm text-gray-500 mt-1">4.9 rating (7,934 reviews)</p>
-             </div>
-           </div>
-         </section>
- 
-         <section className="max-w-6xl w-full space-y-6">
-           <h2 className="text-3xl font-bold text-purple-800 text-center">What You'll Discover</h2>
-           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-             {[{ title: "Social Media Matches", desc: "Find linked Instagram, Facebook, and dating profiles tied to the number." },
-               { title: "Alias Accounts", desc: "Uncover alternative usernames and duplicates." },
-               { title: "Location History", desc: "See regions tied to the phone number." },
-               { title: "Carrier and Line Type", desc: "View phone carrier and number type." },
-               { title: "Data Breaches", desc: "Check if number or emails were leaked." },
-               { title: "Public Risk Score", desc: "Get an online safety rating for the number." }
-             ].map((item, i) => (
-               <div key={i} className="bg-white rounded-2xl shadow-md p-6 text-left border border-purple-100 hover:shadow-lg transition-all">
-                 <h4 className="text-lg font-semibold text-purple-700 mb-2">{item.title}</h4>
-                 <p className="text-gray-700 text-sm">{item.desc}</p>
-               </div>
-             ))}
-           </div>
-         </section>
- 
-         <section className="max-w-4xl w-full space-y-6">
-           <h2 className="text-3xl font-bold text-purple-800">We Help Thousands of People Daily</h2>
-           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-             {[{ name: "Jessica M.", review: "SafeSwipe saved me months of lies!" },
-               { name: "Aaron T.", review: "Gave me instant clarity on who I was really talking to." },
-               { name: "Nina D.", review: "Found out he was using a fake identity." },
-               { name: "Connor W.", review: "Worth the price. Helped me make a safe decision." }
-             ].map((t, i) => (
-               <div key={i} className="bg-white shadow-md rounded-xl p-6 border border-gray-200">
-                 <div className="text-yellow-400 text-xl mb-2">★★★★★</div>
-                 <p className="text-gray-700 italic">“{t.review}”</p>
-                 <p className="mt-2 font-semibold text-purple-800">– {t.name}</p>
-               </div>
-             ))}
-           </div>
-         </section>
- 
-         <section className="max-w-4xl w-full text-left mt-16">
-           <h2 className="text-3xl font-bold text-purple-800 text-center mb-8">Frequently Asked Questions</h2>
-           <div className="space-y-6">
-             <div>
-               <h3 className="text-lg font-semibold text-purple-700">Is SafeSwipe private?</h3>
-               <p className="text-gray-700 mt-2">Yes. All searches are encrypted and not stored. Your information remains completely confidential.</p>
-             </div>
-             <div>
-               <h3 className="text-lg font-semibold text-purple-700">Can I get a refund?</h3>
-               <p className="text-gray-700 mt-2">Due to the nature of digital reports being instantly accessible, we do not offer refunds. Please review your purchase carefully.</p>
-             </div>
-             <div>
-               <h3 className="text-lg font-semibold text-purple-700">Will SafeSwipe always find information?</h3>
-               <p className="text-gray-700 mt-2">While we scan millions of public records, not all searches will result in matches depending on availability of public data.</p>
-             </div>
-             <div>
-               <h3 className="text-lg font-semibold text-purple-700">How often is the database updated?</h3>
-               <p className="text-gray-700 mt-2">We continuously update our database to provide the most accurate results possible.</p>
-             </div>
-           </div>
-         </section>
- 
-         <footer className="text-center text-sm text-gray-500 mt-20 border-t pt-6">
-           <p>© 2025 SafeSwipe Pty Ltd. All rights reserved.</p>
-           <div className="flex justify-center gap-4 mt-2">
-             <a href="/about" className="underline">About</a>
-             <a href="/privacy" className="underline">Privacy</a>
-             <a href="/terms" className="underline">Terms</a>
-             <a href="/contact" className="underline">Contact</a>
-           </div>
-         </footer>
-       </div>
-     </>
-   );
- }
+import { useEffect, useState } from "react";
+import './globals.css';
+
+export default function Home() {
+  const [showResult, setShowResult] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+  const plan = params?.get('plan');
+  const isBasic = plan === 'basic';
+  const isPremium = plan === 'premium';
+
+  useEffect(() => {
+    const savedInput = localStorage.getItem('safeswipe_input');
+    const savedImage = localStorage.getItem('safeswipe_image');
+
+    if (savedInput) setInputValue(savedInput);
+    if (savedImage) setImagePreview(savedImage);
+
+    if (savedInput && savedImage) {
+      setShowResult(true);
+    }
+  }, [plan]);
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64 = reader.result as string;
+      setImagePreview(base64);
+      localStorage.setItem('safeswipe_image', base64);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleScan = (e) => {
+    e.preventDefault();
+    const btn = document.querySelector('#scanButton') as HTMLButtonElement;
+    if (!btn) return;
+
+    localStorage.setItem('safeswipe_input', inputValue);
+
+    btn.innerText = 'Scanning...';
+    btn.disabled = true;
+    btn.classList.add('animate-pulse');
+
+    setTimeout(() => {
+      btn.innerText = 'Scan Now';
+      btn.disabled = false;
+      btn.classList.remove('animate-pulse');
+
+      setShowResult(true);
+    }, 3000);
+  };
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isEmail = emailRegex.test(inputValue.trim());
+  const isPhone = /^\d{6,}$/.test(inputValue.trim());
+  const isUsername = !isEmail && !isPhone && inputValue.trim() !== '';
+
+  return (
+    <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 py-20 space-y-32 min-h-screen text-center">
+      {/* Sticky Header */}
+      <header className="w-full fixed top-0 left-0 bg-white shadow-md z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-start items-center">
+          <img src="/Safe Swipe.png" alt="Safe Swipe Logo" className="h-10 object-contain" />
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section className="space-y-6 max-w-3xl mb-10 pt-24">
+        <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Image & Identity Lookups</h1>
+        <p className="text-xl text-gray-700">Instantly uncover profiles, photos, and public data across the internet. SafeSwipe is your AI-powered truth engine.</p>
+        <button onClick={() => window.scrollTo({ top: 800, behavior: 'smooth' })} className="text-lg px-6 py-4 bg-purple-600 hover:bg-purple-700 text-white shadow-md rounded">
+          Start a Scan
+        </button>
+      </section>
+
+      {/* Upload & Scan */}
+      <section className="max-w-3xl w-full">
+        <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={(e) => e.preventDefault()}>
+          <label className="block text-purple-800 font-semibold text-lg">Upload a Photo or Enter a Username, Email or Phone Number:</label>
+          <input type="file" accept="image/*" onChange={handleImageUpload} className="w-full px-4 py-2 border rounded-md" />
+          <input
+            type="text"
+            placeholder="e.g. @username, john@email.com, or 0412345678"
+            value={inputValue}
+            onChange={(e) => {
+              setInputValue(e.target.value);
+              localStorage.setItem('safeswipe_input', e.target.value);
+            }}
+            className="w-full px-4 py-2 border rounded-md"
+          />
+          <button id="scanButton" type="button" className="w-full py-3 text-lg font-medium rounded-md shadow-md text-white bg-purple-600 hover:bg-purple-700" onClick={handleScan}>Scan Now</button>
+        </form>
+
+        {showResult && (
+          <div className="mt-10 w-full bg-white border border-purple-300 rounded-md shadow-md p-6 space-y-4 text-left">
+            <h3 className="text-xl font-bold text-purple-800">Scan Results</h3>
+
+            <div className={(isBasic || isPremium) ? "space-y-4" : "space-y-4 blur-sm pointer-events-none select-none"}>
+              {imagePreview && (
+                <div className="flex justify-center">
+                  <img src={imagePreview} alt="Uploaded" className="max-w-xs rounded-xl border" />
+                </div>
+              )}
+              <div className="text-left text-gray-700 space-y-2">
+                <p><strong>0 matches</strong></p>
+                <p>SafeSwipe searched over <strong>74.6 billion images</strong> but didn’t find any matches for your uploaded photo.</p>
+                <p>That’s probably because we haven’t crawled any pages where this image appears yet.</p>
+              </div>
+
+              {isUsername && (
+                <div className="pt-4">
+                  <p className="text-gray-700">Username match: <strong>{inputValue}</strong></p>
+                  {isPremium ? (
+                    <>
+                      <p><a className="text-purple-700 underline" href={`https://instagram.com/${inputValue.replace('@', '')}`} target="_blank">Instagram Profile</a></p>
+                      <p><a className="text-purple-700 underline" href={`https://facebook.com/${inputValue.replace('@', '')}`} target="_blank">Facebook Profile</a></p>
+                    </>
+                  ) : (
+                    <div className="text-center text-purple-600 italic mt-4">Name & Socials Locked — Upgrade to Premium</div>
+                  )}
+                </div>
+              )}
+
+              {isEmail && (
+                isPremium
+                  ? <p className="text-gray-700">No public data found for <strong>{inputValue}</strong>.</p>
+                  : <p className="text-purple-600 italic">Email data locked. Upgrade to Premium to view.</p>
+              )}
+
+              {isPhone && (
+                isPremium
+                  ? <p className="text-gray-700">No public data found for phone number <strong>{inputValue}</strong>.</p>
+                  : <p className="text-purple-600 italic">Phone data locked. Upgrade to Premium to view.</p>
+              )}
+            </div>
+
+            {!isBasic && !isPremium && (
+              <div className="pt-4 text-center">
+                <p className="text-purple-700 font-medium mb-2">Unlock full access to view results:</p>
+                <a href='https://buy.stripe.com/8wM5mL0Gy5Q19tGcNQ?plan=basic' className='block w-full sm:w-auto px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow'>Unlock Report – 9.99</a>
+              </div>
+            )}
+
+            {isBasic && !isPremium && (
+              <div className="pt-4 text-center">
+                <p className="text-purple-700 font-medium mb-2">Want the full report? Unlock Premium:</p>
+                <a href='https://buy.stripe.com/eVabKp93Y6ZF9tG3cc?plan=premium' className='block w-full sm:w-auto px-6 py-3 bg-purple-700 hover:bg-purple-800 text-white text-center rounded-md font-semibold shadow'>Upgrade to Premium – 19.99</a>
+              </div>
+            )}
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}
