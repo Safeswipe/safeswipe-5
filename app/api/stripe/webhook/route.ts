@@ -4,8 +4,9 @@ import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 import { buffer } from 'node:stream/consumers';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2023-10-16',
+});
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -37,26 +38,24 @@ export async function POST(req: Request) {
   ]);
 
   if (relevantEvents.has(event.type)) {
-    const subscription =
-      event.data.object as Stripe.Subscription | Stripe.Checkout.Session;
+    let customerId: string | null = null;
+    let status: string = 'active';
+    let priceId: string | null = null;
 
-    const customerId =
-      'customer' in subscription
+    if (event.type === 'checkout.session.completed') {
+      const session = event.data.object as Stripe.Checkout.Session;
+      customerId = session.customer as string;
+      priceId = session.metadata?.price_id || null;
+    } else {
+      const subscription = event.data.object as Stripe.Subscription;
+      customerId = typeof subscription.customer === 'string'
         ? subscription.customer
-        : subscription.customer_details?.customer;
+        : subscription.customer.id;
+      status = subscription.status;
+      priceId = subscription.items.data[0].price.id;
+    }
 
-    if (!customerId) return NextResponse.json({ received: true });
-
-    const status =
-      'status' in subscription ? subscription.status : 'active';
-
-    const priceId =
-      'items' in subscription
-        ? subscription.items.data[0].price.id
-        : subscription.metadata?.price_id;
-
-    let currentPlan = null;
-
+    let currentPlan: string | null = null;
     if (priceId === process.env.STRIPE_BASIC_PRICE_ID) currentPlan = 'basic';
     if (priceId === process.env.STRIPE_PREMIUM_PRICE_ID) currentPlan = 'premium';
 
