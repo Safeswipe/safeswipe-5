@@ -74,7 +74,7 @@ export default function Home() {
         </div>
       )}
 {/* Trust Badge Section */}
-        <section className="w-full bg-gradient-to-br from-purple-100 via-white to-blue-100 py-10 text-center shadow-inner">
+        <section className="w-full py-10 text-center shadow-inner">
         <p className="text-gray-800 font-bold text-lg mb-6">Trusted by Over 100,000 Americans</p>
         <div className="flex flex-wrap justify-center items-center gap-8">
           <div className="bg-white rounded-xl p-6 shadow-md w-60">
