@@ -74,22 +74,21 @@ export default function Home() {
         </div>
       )}
 {/* Trust Badge Section */}
-       <section className="w-full bg-white py-10 text-center shadow-inner">
+        <section className="w-full bg-gradient-to-br from-purple-100 via-white to-blue-100 py-10 text-center shadow-inner">
         <p className="text-gray-800 font-bold text-lg mb-6">Trusted by Over 100,000 Americans</p>
         <div className="flex flex-wrap justify-center items-center gap-8">
-          <div className="bg-gray-50 rounded-xl p-6 shadow-md w-60">
+          <div className="bg-white rounded-xl p-6 shadow-md w-60">
             <img src="/google-review.png" alt="Google Reviews" className="h-14 mx-auto mb-2" />
             <p className="text-yellow-500 font-bold text-lg">★★★★☆</p>
             <p className="text-gray-700 text-sm">4.8 based on 8,435 reviews</p>
           </div>
-          <div className="bg-gray-50 rounded-xl p-6 shadow-md w-60">
+          <div className="bg-white rounded-xl p-6 shadow-md w-60">
             <img src="/trustpilot.png" alt="Trustpilot Reviews" className="h-14 mx-auto mb-2" />
             <p className="text-yellow-500 font-bold text-lg">★★★★★</p>
             <p className="text-gray-700 text-sm">4.9 based on 3,912 reviews</p>
           </div>
         </div>
       </section>
-
 
 
       {/* What You’ll Discover */}
