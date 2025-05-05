@@ -65,9 +65,7 @@ export default function Home() {
           >
             Scan Now
           </button>
-          <p className="text-xs text-gray-600 text-center pt-2 font-medium">
-            Trusted by thousands | Private & Secure | No data stored
-          </p>
+          <p className="text-center text-xs text-gray-600 pt-2">Trusted by thousands | Private & Secure | No data stored</p>
         </form>
 
         {showResult && (
@@ -91,7 +89,7 @@ export default function Home() {
         )}
       </section>
 
-      <section className="w-full py-10 text-center shadow-inner">
+      <section className="w-full py-10 text-center">
         <p className="text-gray-800 font-bold text-lg mb-6">Trusted by Over 100,000 Americans</p>
         <div className="flex flex-wrap justify-center items-center gap-8">
           <div className="bg-white rounded-xl p-6 shadow-md w-60">
@@ -111,14 +109,13 @@ export default function Home() {
         <h2 className="text-3xl font-bold text-purple-800 text-center">What You’ll Discover</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
           {[
-  { title: "Social Media Matches", desc: "Find linked Instagram, Facebook, and dating profiles tied to a photo or name." },
-  { title: "Reverse Image Hits", desc: "Detect if someone's photo appears elsewhere using our AI + database checks." },
-  { title: "Alias Accounts", desc: "Uncover alternative usernames, email aliases, and suspicious duplicates." },
-  { title: "Connected Phone Numbers", desc: "See what profiles and apps are tied to the number you searched." },
-  { title: "Email Footprints", desc: "Check if an email is tied to known social or scam activity online." },
-  { title: "Dating Profile Detection", desc: "Reveal hidden profiles on Tinder, Bumble, Hinge, and more." }
-].map((item, i) => (
-
+            { title: "Social Media Matches", desc: "Find linked Instagram, Facebook, and dating profiles tied to a photo or name." },
+            { title: "Reverse Image Hits", desc: "Detect if someone's photo appears elsewhere using our AI + database checks." },
+            { title: "Alias Accounts", desc: "Uncover alternative usernames, email aliases, and suspicious duplicates." },
+            { title: "Connected Phone Numbers", desc: "See what profiles and apps are tied to the number you searched." },
+            { title: "Email Footprints", desc: "Check if an email is tied to known social or scam activity online." },
+            { title: "Dating Profile Detection", desc: "Reveal hidden profiles on Tinder, Bumble, Hinge, and more." }
+          ].map((item, i) => (
             <div key={i} className="bg-white rounded-2xl shadow-md p-6 text-left border border-purple-100 hover:shadow-lg transition-all">
               <h4 className="text-lg font-semibold text-purple-700 mb-2">{item.title}</h4>
               <p className="text-gray-700 text-sm">{item.desc}</p>
@@ -130,7 +127,7 @@ export default function Home() {
       <section className="max-w-4xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">We Help Thousands of People Daily</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {[...
+          {[
             { name: "Jessica M.", review: "I found out my boyfriend had multiple dating profiles. SafeSwipe saved me months of lies!" },
             { name: "Aaron T.", review: "This gave me instant clarity on who I was really talking to. 100% recommend." },
             { name: "Nina D.", review: "I used it before a date and turns out he was using a fake identity. Lifesaver!" },
@@ -145,8 +142,31 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="w-full text-center text-sm text-gray-600 py-10">
+      <section className="max-w-4xl w-full space-y-6 py-10">
+        <h2 className="text-3xl font-bold text-purple-800 text-center">Frequently Asked Questions</h2>
+        <div className="space-y-4 text-left">
+          <div>
+            <h3 className="font-semibold text-purple-700">Is SafeSwipe private and secure?</h3>
+            <p className="text-gray-700 text-sm">Yes. We do not store your scans, and all lookups are encrypted and secure.</p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-purple-700">How does the subscription work?</h3>
+            <p className="text-gray-700 text-sm">You’ll be charged $9.99 weekly. Cancel anytime from your email receipt or account settings.</p>
+          </div>
+          <div>
+            <h3 className="font-semibold text-purple-700">Can I scan again?</h3>
+            <p className="text-gray-700 text-sm">Yes! Your subscription allows unlimited scanning during the billing period.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer className="w-full text-center text-sm text-gray-600 py-10 space-y-2">
         <p>© {new Date().getFullYear()} SafeSwipe. All rights reserved.</p>
+        <div className="space-x-4">
+          <a href="/terms" className="text-purple-600 hover:underline">Terms</a>
+          <a href="/privacy" className="text-purple-600 hover:underline">Privacy</a>
+          <a href="/contact" className="text-purple-600 hover:underline">Contact</a>
+        </div>
       </footer>
     </div>
   );
