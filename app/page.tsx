@@ -49,7 +49,12 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="pt-24 max-w-xl w-full">
+      <section className="pt-32 max-w-3xl w-full space-y-6">
+        <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Phone Identity Scan</h1>
+        <p className="text-xl text-gray-700">Find linked social profiles, images, and public data with one scan.</p>
+      </section>
+
+      <section className="max-w-xl w-full">
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={handleScan}>
           <label className="block text-purple-800 font-semibold text-lg">Enter a US Mobile Number:</label>
           <input
@@ -89,15 +94,15 @@ export default function Home() {
         )}
       </section>
 
-      <section className="w-full py-10 text-center">
-        <p className="text-gray-800 font-bold text-lg mb-6">Trusted by Over 100,000 Americans</p>
+      <section className="w-full py-10 text-center bg-gradient-to-br from-purple-100 via-white to-blue-100">
+        <h2 className="text-3xl font-bold text-purple-800 mb-6">Trusted by Over 100,000 Americans</h2>
         <div className="flex flex-wrap justify-center items-center gap-8">
-          <div className="bg-white rounded-xl p-6 shadow-md w-60">
+          <div className="bg-white rounded-xl p-6 shadow-md w-64">
             <img src="/google-review.png" alt="Google Reviews" className="h-14 mx-auto mb-2" />
             <p className="text-yellow-500 font-bold text-lg">★★★★☆</p>
             <p className="text-gray-700 text-sm">4.8 based on 8,435 reviews</p>
           </div>
-          <div className="bg-white rounded-xl p-6 shadow-md w-60">
+          <div className="bg-white rounded-xl p-6 shadow-md w-64">
             <img src="/trustpilot.png" alt="Trustpilot Reviews" className="h-14 mx-auto mb-2" />
             <p className="text-yellow-500 font-bold text-lg">★★★★★</p>
             <p className="text-gray-700 text-sm">4.9 based on 3,912 reviews</p>
@@ -108,7 +113,7 @@ export default function Home() {
       <section className="max-w-6xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">What You’ll Discover</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-          {[
+          {[...
             { title: "Social Media Matches", desc: "Find linked Instagram, Facebook, and dating profiles tied to a photo or name." },
             { title: "Reverse Image Hits", desc: "Detect if someone's photo appears elsewhere using our AI + database checks." },
             { title: "Alias Accounts", desc: "Uncover alternative usernames, email aliases, and suspicious duplicates." },
@@ -127,7 +132,7 @@ export default function Home() {
       <section className="max-w-4xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">We Help Thousands of People Daily</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {[
+          {[...
             { name: "Jessica M.", review: "I found out my boyfriend had multiple dating profiles. SafeSwipe saved me months of lies!" },
             { name: "Aaron T.", review: "This gave me instant clarity on who I was really talking to. 100% recommend." },
             { name: "Nina D.", review: "I used it before a date and turns out he was using a fake identity. Lifesaver!" },
@@ -145,18 +150,18 @@ export default function Home() {
       <section className="max-w-4xl w-full space-y-6 py-10">
         <h2 className="text-3xl font-bold text-purple-800 text-center">Frequently Asked Questions</h2>
         <div className="space-y-4 text-left">
-          <div>
-            <h3 className="font-semibold text-purple-700">Is SafeSwipe private and secure?</h3>
-            <p className="text-gray-700 text-sm">Yes. We do not store your scans, and all lookups are encrypted and secure.</p>
-          </div>
-          <div>
-            <h3 className="font-semibold text-purple-700">How does the subscription work?</h3>
-            <p className="text-gray-700 text-sm">You’ll be charged $9.99 weekly. Cancel anytime from your email receipt or account settings.</p>
-          </div>
-          <div>
-            <h3 className="font-semibold text-purple-700">Can I scan again?</h3>
-            <p className="text-gray-700 text-sm">Yes! Your subscription allows unlimited scanning during the billing period.</p>
-          </div>
+          {[...
+            { q: "Is SafeSwipe private and secure?", a: "Yes. We do not store your scans, and all lookups are encrypted and secure." },
+            { q: "How does the subscription work?", a: "You’ll be charged $9.99 weekly. Cancel anytime from your email receipt or account settings." },
+            { q: "Can I scan again?", a: "Yes! Your subscription allows unlimited scanning during the billing period." },
+            { q: "Does SafeSwipe work worldwide?", a: "We are optimized for US data, but results may vary in other countries." },
+            { q: "What types of data can SafeSwipe find?", a: "Images, public profiles, phone/email footprints, and alias accounts." }
+          ].map((item, i) => (
+            <div key={i} className="bg-white shadow-sm rounded-md p-4 border">
+              <h3 className="font-semibold text-purple-700">{item.q}</h3>
+              <p className="text-gray-700 text-sm">{item.a}</p>
+            </div>
+          ))}
         </div>
       </section>
 
