@@ -4,8 +4,10 @@ import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 import { buffer } from 'node:stream/consumers';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: '2022-11-15',
+  });
+  
 
 
 const supabase = createClient(
