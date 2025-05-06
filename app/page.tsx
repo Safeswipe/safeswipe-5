@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Lock } from 'lucide-react';
 import './globals.css';
 
 export default function Home() {
@@ -27,7 +28,7 @@ export default function Home() {
 
   const handleScan = (e) => {
     e.preventDefault();
-    if (!/^\+1\s?\d{3}\s?\d{3}\s?\d{4}$/.test(inputValue.trim())) {
+    if (!/^[+]?1\s?\d{3}\s?\d{3}\s?\d{4}$/.test(inputValue.trim())) {
       alert('Please enter a valid US phone number in the format +1 555 123 4567');
       return;
     }
@@ -36,50 +37,18 @@ export default function Home() {
     setShowResult(true);
   };
 
-  const whatYouDiscover = [
-    { title: "Phone Reputation Score", desc: "Get an instant credibility rating for any number based on behavior patterns." },
-    { title: "Connected Social Profiles", desc: "Reveal linked Facebook, Instagram, LinkedIn, and other accounts." },
-    { title: "Dating App Presence", desc: "Check if the number is tied to profiles on Tinder, Bumble, or Hinge." },
-    { title: "Scam History Lookup", desc: "Identify if the number has been flagged for scams, spam, or fraud." },
-    { title: "Carrier and Line Type", desc: "Know if it's a mobile or landline and who the telecom provider is." },
-    { title: "Location & Timezone", desc: "See the general area and timezone associated with the number." }
-  ];
-
-  const faqs = [
-    {
-      q: "Is SafeSwipe free to use?",
-      a: "You can scan for free, but unlocking full reports requires a subscription."
-    },
-    {
-      q: "Do you store my search data?",
-      a: "No. All searches are encrypted and not stored on our servers."
-    },
-    {
-      q: "Can I cancel anytime?",
-      a: "Yes. Subscriptions are cancelable at any time through your account."
-    },
-    {
-      q: "What countries are supported?",
-      a: "Currently, we only support U.S. phone numbers."
-    }
-  ];
-
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 pt-10 space-y-20 min-h-screen text-center">
 
       {/* Header */}
       <header className="w-full fixed top-0 left-0 bg-white shadow-md z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-start items-center">
-          <img
-            src="/Safe Swipe.png"
-            alt="Safe Swipe Logo"
-            className="h-10 object-contain"
-          />
+          <img src="/Safe Swipe.png" alt="Safe Swipe Logo" className="h-10 object-contain" />
         </div>
       </header>
 
-      {/* Hero & Scan Section */}
-      <section className="pt-16 max-w-md w-full space-y-6">
+      {/* Hero Section */}
+      <section className="pt-24 max-w-md w-full space-y-6">
         <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Phone Lookups</h1>
         <p className="text-lg text-gray-700">Instantly scan and uncover social profiles, risk scores, and carrier data.</p>
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={handleScan}>
@@ -99,7 +68,10 @@ export default function Home() {
           </button>
           <p className="text-center text-xs text-gray-600 pt-2">Secure and encrypted. Your searches are 100% private.</p>
         </form>
-       {showResult && (
+      </section>
+
+      {/* Report Section */}
+      {showResult && (
         <section className="mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left">
           <h3 className="text-2xl font-bold text-purple-800 mb-4">Match Report</h3>
 
@@ -155,6 +127,7 @@ export default function Home() {
     </div>
   );
 }
+
       
        {/* Trust Section */}
       <section className="w-full py-10 text-center">
