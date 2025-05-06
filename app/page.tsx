@@ -79,7 +79,7 @@ export default function Home() {
       </header>
 
       {/* Hero & Scan Section */}
-      <section className="pt-32 max-w-md w-full space-y-6">
+      <section className="pt-16 max-w-md w-full space-y-6">
         <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Phone Lookups</h1>
         <p className="text-lg text-gray-700">Instantly scan and uncover social profiles, risk scores, and carrier data.</p>
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={handleScan}>
