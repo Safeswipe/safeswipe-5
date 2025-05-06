@@ -120,8 +120,8 @@ export default function Home() {
         )}
       </section>
 
-      {/* Trust Section */}
-      <section className="w-full py-10 text-center bg-gradient-to-br from-purple-100 via-white to-blue-100">
+       {/* Trust Section */}
+      <section className="w-full py-10 text-center">
         <h2 className="text-3xl font-bold text-purple-800 mb-6">Trusted by Over 100,000 Americans</h2>
         <div className="flex flex-wrap justify-center items-center gap-8">
           <div className="bg-white rounded-xl p-6 shadow-md w-64">
