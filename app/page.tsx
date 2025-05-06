@@ -1,3 +1,4 @@
+// Updated SafeSwipe Landing Page — Clean, Structured, All Sections Included
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -36,24 +37,32 @@ export default function Home() {
     setShowResult(true);
   };
 
+  const whatYouDiscover = [
+    { title: "Social Media Matches", desc: "Find linked Instagram, Facebook, and dating profiles tied to a photo or name." },
+    { title: "Reverse Image Hits", desc: "Detect if someone's photo appears elsewhere using our AI + database checks." },
+    { title: "Alias Accounts", desc: "Uncover alternative usernames, email aliases, and suspicious duplicates." },
+    { title: "Connected Phone Numbers", desc: "See what profiles and apps are tied to the number you searched." },
+    { title: "Email Footprints", desc: "Check if an email is tied to known social or scam activity online." },
+    { title: "Dating Profile Detection", desc: "Reveal hidden profiles on Tinder, Bumble, Hinge, and more." }
+  ];
+
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 py-10 space-y-20 min-h-screen text-center">
 
+      {/* Header */}
       <header className="w-full fixed top-0 left-0 bg-white shadow-md z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-start items-center">
-          <img
-            src="/Safe Swipe.png"
-            alt="Safe Swipe Logo"
-            className="h-10 object-contain"
-          />
+          <img src="/Safe Swipe.png" alt="Safe Swipe Logo" className="h-10 object-contain" />
         </div>
       </header>
 
+      {/* Hero Section */}
       <section className="pt-32 max-w-3xl w-full space-y-6">
         <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Phone Identity Scan</h1>
         <p className="text-xl text-gray-700">Find linked social profiles, images, and public data with one scan.</p>
       </section>
 
+      {/* Scan Section */}
       <section className="max-w-xl w-full">
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={handleScan}>
           <label className="block text-purple-800 font-semibold text-lg">Enter a US Mobile Number:</label>
@@ -73,6 +82,7 @@ export default function Home() {
           <p className="text-center text-xs text-gray-600 pt-2">Trusted by thousands | Private & Secure | No data stored</p>
         </form>
 
+        {/* Result Section */}
         {showResult && (
           <div className="mt-10 w-full bg-white border border-purple-300 rounded-md shadow-md p-6 space-y-4 text-left">
             <h3 className="text-xl font-bold text-purple-800">Scan Results</h3>
@@ -94,6 +104,7 @@ export default function Home() {
         )}
       </section>
 
+      {/* Trust Badge Section */}
       <section className="w-full py-10 text-center bg-gradient-to-br from-purple-100 via-white to-blue-100">
         <h2 className="text-3xl font-bold text-purple-800 mb-6">Trusted by Over 100,000 Americans</h2>
         <div className="flex flex-wrap justify-center items-center gap-8">
@@ -110,17 +121,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* What You’ll Discover Section */}
       <section className="max-w-6xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">What You’ll Discover</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-          {[...
-            { title: "Social Media Matches", desc: "Find linked Instagram, Facebook, and dating profiles tied to a photo or name." },
-            { title: "Reverse Image Hits", desc: "Detect if someone's photo appears elsewhere using our AI + database checks." },
-            { title: "Alias Accounts", desc: "Uncover alternative usernames, email aliases, and suspicious duplicates." },
-            { title: "Connected Phone Numbers", desc: "See what profiles and apps are tied to the number you searched." },
-            { title: "Email Footprints", desc: "Check if an email is tied to known social or scam activity online." },
-            { title: "Dating Profile Detection", desc: "Reveal hidden profiles on Tinder, Bumble, Hinge, and more." }
-          ].map((item, i) => (
+          {whatYouDiscover.map((item, i) => (
             <div key={i} className="bg-white rounded-2xl shadow-md p-6 text-left border border-purple-100 hover:shadow-lg transition-all">
               <h4 className="text-lg font-semibold text-purple-700 mb-2">{item.title}</h4>
               <p className="text-gray-700 text-sm">{item.desc}</p>
@@ -129,10 +134,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Testimonials */}
       <section className="max-w-4xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">We Help Thousands of People Daily</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {[...
+          {[
             { name: "Jessica M.", review: "I found out my boyfriend had multiple dating profiles. SafeSwipe saved me months of lies!" },
             { name: "Aaron T.", review: "This gave me instant clarity on who I was really talking to. 100% recommend." },
             { name: "Nina D.", review: "I used it before a date and turns out he was using a fake identity. Lifesaver!" },
@@ -147,10 +153,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FAQ Section */}
       <section className="max-w-4xl w-full space-y-6 py-10">
         <h2 className="text-3xl font-bold text-purple-800 text-center">Frequently Asked Questions</h2>
         <div className="space-y-4 text-left">
-          {[...
+          {[
             { q: "Is SafeSwipe private and secure?", a: "Yes. We do not store your scans, and all lookups are encrypted and secure." },
             { q: "How does the subscription work?", a: "You’ll be charged $9.99 weekly. Cancel anytime from your email receipt or account settings." },
             { q: "Can I scan again?", a: "Yes! Your subscription allows unlimited scanning during the billing period." },
@@ -165,6 +172,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Footer */}
       <footer className="w-full text-center text-sm text-gray-600 py-10 space-y-2">
         <p>© {new Date().getFullYear()} SafeSwipe. All rights reserved.</p>
         <div className="space-x-4">
