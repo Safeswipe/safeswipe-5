@@ -100,25 +100,57 @@ export default function Home() {
           <p className="text-center text-xs text-gray-600 pt-2">Secure and encrypted. Your searches are 100% private.</p>
         </form>
         {showResult && (
-          <div className="mt-6 w-full bg-white border border-purple-300 rounded-md shadow-md p-6 space-y-4 text-left">
-            <h3 className="text-xl font-bold text-purple-800">Scan Results</h3>
-            <div className="blur-sm select-none pointer-events-none space-y-2">
-              <p>Public profiles, connected emails, phone traces, and social links detected...</p>
-              <p className="text-gray-600 italic text-sm">Unlock full results below.</p>
-            </div>
-            <div className="pt-4 text-center">
-              <a
-                href='https://buy.stripe.com/test_9.99_plan_url'
-                target='_blank'
-                rel='noopener noreferrer'
-                className='block w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow'
-              >
-                $9.99
-              </a>
-            </div>
-          </div>
-        )}
-      </section>
+  <section className="mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left">
+    <h3 className="text-2xl font-bold text-purple-800 mb-4">Match Report</h3>
+
+    <div className="flex items-center space-x-4">
+      <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl">
+        👤
+      </div>
+      <div>
+        <p className="text-sm text-gray-500">Matches found for:</p>
+        <p className="text-xl font-semibold text-gray-800">{inputValue}</p>
+      </div>
+    </div>
+
+    <hr />
+
+    <div className="space-y-4">
+      <div className="flex justify-between items-center">
+        <div>
+          <p className="font-semibold text-gray-700">Possible Owners:</p>
+          <p className="text-gray-600">Connor Rawiri, Facebook, Connor</p>
+        </div>
+        <span className="text-sm text-pink-600 font-bold">Score: 8.5</span>
+      </div>
+
+      <div className="border-t pt-4">
+        <p className="font-semibold text-gray-700">Associated Usernames:</p>
+        <p className="text-gray-600">connorraw</p>
+      </div>
+
+      <div className="border-t pt-4">
+        <p className="font-semibold text-gray-700">Associated Emails:</p>
+        <p className="text-gray-600">Not Identified</p>
+      </div>
+
+      <div className="border-t pt-4">
+        <p className="font-semibold text-gray-700">Associated Locations:</p>
+        <p className="text-gray-600">🇦🇺 AU</p>
+      </div>
+
+      <div className="border-t pt-4">
+        <p className="font-semibold text-gray-700">Potential Date of Birth:</p>
+        <p className="text-gray-600">Not Identified</p>
+      </div>
+    </div>
+
+    <div className="pt-6 text-center">
+      <a href="#" className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-md font-medium shadow">Download PDF Report</a>
+    </div>
+  </section>
+)}
+
 
        {/* Trust Section */}
       <section className="w-full py-10 text-center">
