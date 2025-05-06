@@ -27,7 +27,7 @@ export default function Home() {
 
   const handleScan = (e) => {
     e.preventDefault();
-    if (!/\+1\s?\d{3}\s?\d{3}\s?\d{4}/.test(inputValue.trim())) {
+    if (!/^\+1\s?\d{3}\s?\d{3}\s?\d{4}$/.test(inputValue.trim())) {
       alert('Please enter a valid US phone number in the format +1 555 123 4567');
       return;
     }
@@ -37,32 +37,51 @@ export default function Home() {
   };
 
   const whatYouDiscover = [
-    { title: "Social Media Matches", desc: "Find linked Instagram, Facebook, and dating profiles tied to a photo or name." },
-    { title: "Reverse Image Hits", desc: "Detect if someone's photo appears elsewhere using our AI + database checks." },
-    { title: "Alias Accounts", desc: "Uncover alternative usernames, email aliases, and suspicious duplicates." },
-    { title: "Connected Phone Numbers", desc: "See what profiles and apps are tied to the number you searched." },
-    { title: "Email Footprints", desc: "Check if an email is tied to known social or scam activity online." },
-    { title: "Dating Profile Detection", desc: "Reveal hidden profiles on Tinder, Bumble, Hinge, and more." }
+    { title: "Phone Reputation Score", desc: "Get an instant credibility rating for any number based on behavior patterns." },
+    { title: "Connected Social Profiles", desc: "Reveal linked Facebook, Instagram, LinkedIn, and other accounts." },
+    { title: "Dating App Presence", desc: "Check if the number is tied to profiles on Tinder, Bumble, or Hinge." },
+    { title: "Scam History Lookup", desc: "Identify if the number has been flagged for scams, spam, or fraud." },
+    { title: "Carrier and Line Type", desc: "Know if it's a mobile or landline and who the telecom provider is." },
+    { title: "Location & Timezone", desc: "See the general area and timezone associated with the number." }
+  ];
+
+  const faqs = [
+    {
+      q: "Is SafeSwipe free to use?",
+      a: "You can scan for free, but unlocking full reports requires a subscription."
+    },
+    {
+      q: "Do you store my search data?",
+      a: "No. All searches are encrypted and not stored on our servers."
+    },
+    {
+      q: "Can I cancel anytime?",
+      a: "Yes. Subscriptions are cancelable at any time through your account."
+    },
+    {
+      q: "What countries are supported?",
+      a: "Currently, we only support U.S. phone numbers."
+    }
   ];
 
   return (
-    <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 py-10 space-y-20 min-h-screen text-center">
+    <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 pt-10 space-y-20 min-h-screen text-center">
 
       {/* Header */}
       <header className="w-full fixed top-0 left-0 bg-white shadow-md z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-start items-center">
-          <img src="/Safe Swipe.png" alt="Safe Swipe Logo" className="h-10 object-contain" />
+          <img
+            src="/Safe Swipe.png"
+            alt="Safe Swipe Logo"
+            className="h-10 object-contain"
+          />
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="pt-32 max-w-3xl w-full space-y-6">
+      {/* Hero & Scan Section */}
+      <section className="pt-32 max-w-md w-full space-y-6">
         <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Phone Lookups</h1>
-        <p className="text-xl text-gray-700">Instantly scan and uncover social profiles, risk scores, and carrier data.</p>
-      </section>
-
-      {/* Scan Input Section */}
-      <section className="max-w-xl w-full">
+        <p className="text-lg text-gray-700">Instantly scan and uncover social profiles, risk scores, and carrier data.</p>
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={handleScan}>
           <label className="block text-purple-800 font-semibold text-lg">Enter a Mobile or Landline Number:</label>
           <input
@@ -80,10 +99,8 @@ export default function Home() {
           </button>
           <p className="text-center text-xs text-gray-600 pt-2">Secure and encrypted. Your searches are 100% private.</p>
         </form>
-
-        {/* Scan Result Section */}
         {showResult && (
-          <div className="mt-10 w-full bg-white border border-purple-300 rounded-md shadow-md p-6 space-y-4 text-left">
+          <div className="mt-6 w-full bg-white border border-purple-300 rounded-md shadow-md p-6 space-y-4 text-left">
             <h3 className="text-xl font-bold text-purple-800">Scan Results</h3>
             <div className="blur-sm select-none pointer-events-none space-y-2">
               <p>Public profiles, connected emails, phone traces, and social links detected...</p>
@@ -103,16 +120,16 @@ export default function Home() {
         )}
       </section>
 
-      {/* Trust Badge Section */}
+      {/* Trust Section */}
       <section className="w-full py-10 text-center bg-gradient-to-br from-purple-100 via-white to-blue-100">
         <h2 className="text-3xl font-bold text-purple-800 mb-6">Trusted by Over 100,000 Americans</h2>
         <div className="flex flex-wrap justify-center items-center gap-8">
-          <div className="bg-white rounded-xl p-6 shadow-md w-72">
+          <div className="bg-white rounded-xl p-6 shadow-md w-64">
             <img src="/google-review.png" alt="Google Reviews" className="h-14 mx-auto mb-2" />
             <p className="text-yellow-500 font-bold text-lg">★★★★☆</p>
             <p className="text-gray-700 text-sm">4.8 based on 8,435 reviews</p>
           </div>
-          <div className="bg-white rounded-xl p-6 shadow-md w-72">
+          <div className="bg-white rounded-xl p-6 shadow-md w-64">
             <img src="/trustpilot.png" alt="Trustpilot Reviews" className="h-14 mx-auto mb-2" />
             <p className="text-yellow-500 font-bold text-lg">★★★★★</p>
             <p className="text-gray-700 text-sm">4.9 based on 3,912 reviews</p>
@@ -120,7 +137,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* What You’ll Discover Section */}
+      {/* Discovery Section */}
       <section className="max-w-6xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">What You’ll Discover</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
@@ -133,7 +150,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* FAQ Section */}
+      <section className="max-w-4xl w-full py-12 space-y-6">
+        <h2 className="text-3xl font-bold text-purple-800 text-center">Frequently Asked Questions</h2>
+        <div className="space-y-4">
+          {faqs.map((faq, i) => (
+            <div key={i} className="bg-white p-4 rounded-md shadow border border-purple-100">
+              <p className="font-semibold text-purple-700">Q: {faq.q}</p>
+              <p className="text-gray-700">A: {faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Testimonials */}
       <section className="max-w-4xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">We Help Thousands of People Daily</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -147,25 +177,6 @@ export default function Home() {
               <div className="text-yellow-400 text-xl mb-2">★★★★★</div>
               <p className="text-gray-700 italic">“{t.review}”</p>
               <p className="mt-2 font-semibold text-purple-800">– {t.name}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="max-w-4xl w-full space-y-6 py-10">
-        <h2 className="text-3xl font-bold text-purple-800 text-center">Frequently Asked Questions</h2>
-        <div className="space-y-4 text-left">
-          {[
-            { q: "Is SafeSwipe private and secure?", a: "Yes. We do not store your scans, and all lookups are encrypted and secure." },
-            { q: "How does the subscription work?", a: "You’ll be charged $9.99 weekly. Cancel anytime from your email receipt or account settings." },
-            { q: "Can I scan again?", a: "Yes! Your subscription allows unlimited scanning during the billing period." },
-            { q: "Does SafeSwipe work worldwide?", a: "We are optimized for US data, but results may vary in other countries." },
-            { q: "What types of data can SafeSwipe find?", a: "Images, public profiles, phone/email footprints, and alias accounts." }
-          ].map((item, i) => (
-            <div key={i} className="bg-white shadow-sm rounded-md p-4 border">
-              <h3 className="font-semibold text-purple-700">{item.q}</h3>
-              <p className="text-gray-700 text-sm">{item.a}</p>
             </div>
           ))}
         </div>
