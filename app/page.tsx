@@ -1,4 +1,3 @@
-// Updated SafeSwipe Landing Page — Clean, Structured, All Sections Included
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -58,17 +57,17 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="pt-32 max-w-3xl w-full space-y-6">
-        <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Phone Identity Scan</h1>
-        <p className="text-xl text-gray-700">Find linked social profiles, images, and public data with one scan.</p>
+        <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Phone Lookups</h1>
+        <p className="text-xl text-gray-700">Instantly scan and uncover social profiles, risk scores, and carrier data.</p>
       </section>
 
-      {/* Scan Section */}
+      {/* Scan Input Section */}
       <section className="max-w-xl w-full">
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={handleScan}>
-          <label className="block text-purple-800 font-semibold text-lg">Enter a US Mobile Number:</label>
+          <label className="block text-purple-800 font-semibold text-lg">Enter a Mobile or Landline Number:</label>
           <input
             type="tel"
-            placeholder="e.g. +1 555 123 4567"
+            placeholder="+1 555 123 4567"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             className="w-full px-4 py-2 border rounded-md"
@@ -79,10 +78,10 @@ export default function Home() {
           >
             Scan Now
           </button>
-          <p className="text-center text-xs text-gray-600 pt-2">Trusted by thousands | Private & Secure | No data stored</p>
+          <p className="text-center text-xs text-gray-600 pt-2">Secure and encrypted. Your searches are 100% private.</p>
         </form>
 
-        {/* Result Section */}
+        {/* Scan Result Section */}
         {showResult && (
           <div className="mt-10 w-full bg-white border border-purple-300 rounded-md shadow-md p-6 space-y-4 text-left">
             <h3 className="text-xl font-bold text-purple-800">Scan Results</h3>
@@ -108,12 +107,12 @@ export default function Home() {
       <section className="w-full py-10 text-center bg-gradient-to-br from-purple-100 via-white to-blue-100">
         <h2 className="text-3xl font-bold text-purple-800 mb-6">Trusted by Over 100,000 Americans</h2>
         <div className="flex flex-wrap justify-center items-center gap-8">
-          <div className="bg-white rounded-xl p-6 shadow-md w-64">
+          <div className="bg-white rounded-xl p-6 shadow-md w-72">
             <img src="/google-review.png" alt="Google Reviews" className="h-14 mx-auto mb-2" />
             <p className="text-yellow-500 font-bold text-lg">★★★★☆</p>
             <p className="text-gray-700 text-sm">4.8 based on 8,435 reviews</p>
           </div>
-          <div className="bg-white rounded-xl p-6 shadow-md w-64">
+          <div className="bg-white rounded-xl p-6 shadow-md w-72">
             <img src="/trustpilot.png" alt="Trustpilot Reviews" className="h-14 mx-auto mb-2" />
             <p className="text-yellow-500 font-bold text-lg">★★★★★</p>
             <p className="text-gray-700 text-sm">4.9 based on 3,912 reviews</p>
@@ -134,7 +133,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Testimonials Section */}
       <section className="max-w-4xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">We Help Thousands of People Daily</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
