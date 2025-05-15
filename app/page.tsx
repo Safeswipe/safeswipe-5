@@ -36,7 +36,8 @@ export default function Home() {
     setIsScanning(true);
 
     try {
-      const res = await fetch(/api/fetchReport?phone=${encodeURIComponent(inputValue)});
+     const res = await fetch(`/api/fetchReport?phone=${encodeURIComponent(inputValue)}`);
+
       const data = await res.json();
       setReportData(data);
       localStorage.setItem('safeswipe_report_data', JSON.stringify(data));
