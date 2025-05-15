@@ -109,7 +109,7 @@ export default function Home() {
               {!isPremium && (
                 <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white/80">
                   <a
-                    href="https://buy.stripe.com/YOUR_SECONDARY_PREMIUM_LINK"
+                    href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq"
                     className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded shadow mt-2"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -134,7 +134,7 @@ export default function Home() {
       {!isPaid && showResult && (
         <div className="pt-6 text-center w-full max-w-xl">
           <a
-            href="https://buy.stripe.com/YOUR_PRIMARY_ONE_TIME_LINK"
+            href="https://buy.stripe.com/eVabJT0goa8TdPycMR"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow"
