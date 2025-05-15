@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Lock } from 'lucide-react';
 import './globals.css';
 
 export default function Home() {
@@ -115,7 +114,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow"
               >
-                <Lock className="h-5 w-5" /> Unlock Report - $9.99
+                🔒 Unlock Report - $9.99
               </a>
             </div>
           )}
