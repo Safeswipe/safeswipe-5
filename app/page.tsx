@@ -192,15 +192,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="w-full text-center text-sm text-gray-600 py-10 space-y-2">
-        <p>© {new Date().getFullYear()} SafeSwipe. All rights reserved.</p>
-        <div className="space-x-4">
-          <a href="/terms" className="text-purple-600 hover:underline">Terms</a>
-          <a href="/privacy" className="text-purple-600 hover:underline">Privacy</a>
-          <a href="/contact" className="text-purple-600 hover:underline">Contact</a>
-        </div>
-      </footer>
-    </>
+{/* Footer */}
+<footer className="w-full text-center text-sm text-gray-600 py-10 space-y-2">
+  <p>© {new Date().getFullYear()} SafeSwipe. All rights reserved.</p>
+  <div className="space-x-4">
+    <a href="/terms" className="text-purple-600 hover:underline">Terms</a>
+    <a href="/privacy" className="text-purple-600 hover:underline">Privacy</a>
+    <a href="/contact" className="text-purple-600 hover:underline">Contact</a>
+  </div>
+</footer>
+</div> // closing main wrapper
   );
 }
