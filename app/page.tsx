@@ -147,8 +147,6 @@ export default function Home() {
   );
 }
 
-      
-
       <section className="w-full py-10 text-center">
         <h2 className="text-3xl font-bold text-purple-800 mb-6">Trusted by Over 100,000 Americans</h2>
         <div className="flex flex-wrap justify-center items-center gap-8">
