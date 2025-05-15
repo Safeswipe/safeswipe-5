@@ -10,25 +10,38 @@ export default function Home() {
   const [isPremium, setIsPremium] = useState(false);
   const [reportData, setReportData] = useState(null);
 
-  const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
-  const isPaid = params?.get('paid') === 'true';
+  const hasBasic = typeof window !== 'undefined' && localStorage.getItem('safeswipe_basic_unlocked') === 'true';
+  const hasPremium = typeof window !== 'undefined' && localStorage.getItem('safeswipe_premium_unlocked') === 'true';
 
   useEffect(() => {
-    const savedInput = localStorage.getItem('safeswipe_input');
-    if (savedInput) setInputValue(savedInput);
-    if (savedInput && isPaid) {
+    const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+
+    if (params?.get('plan') === 'basic') {
+      localStorage.setItem('safeswipe_basic_unlocked', 'true');
+    }
+
+    if (params?.get('premium') === 'true') {
+      localStorage.setItem('safeswipe_premium_unlocked', 'true');
+    }
+
+    if (
+      params?.get('plan') === 'basic' ||
+      params?.get('premium') === 'true' ||
+      localStorage.getItem('safeswipe_basic_unlocked') === 'true'
+    ) {
       setShowResult(true);
     }
-    if (params?.get('premium') === 'true') {
-      setIsPremium(true);
-      localStorage.setItem('safeswipe_premium_unlocked', 'true');
-    } else if (localStorage.getItem('safeswipe_premium_unlocked') === 'true') {
+
+    if (localStorage.getItem('safeswipe_premium_unlocked') === 'true') {
       setIsPremium(true);
     }
+
+    const savedInput = localStorage.getItem('safeswipe_input');
+    if (savedInput) setInputValue(savedInput);
 
     const storedReport = localStorage.getItem('safeswipe_report_data');
     if (storedReport) setReportData(JSON.parse(storedReport));
-  }, [isPaid]);
+  }, []);
 
   const handleScan = async (e) => {
     e.preventDefault();
@@ -51,117 +64,111 @@ export default function Home() {
   };
 
   return (
-  <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 pt-10 space-y-20 min-h-screen text-center">
-    <header className="w-full fixed top-0 left-0 bg-white shadow-md z-50">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-start items-center">
-        <img src="/Safe Swipe.png" alt="Safe Swipe Logo" className="h-10 object-contain" />
-      </div>
-    </header>
-
-    {/* ✅ Green success banner */}
-    {isPaid && !isPremium && (
-      <div className="fixed top-16 bg-green-100 border border-green-400 text-green-800 px-4 py-3 rounded shadow-md z-50">
-        ✅ Basic unlocked! Scan again to view report.
-      </div>
-    )}
-
-    {/* Hero */}
-    <section className="pt-24 max-w-md w-full space-y-6">
-      <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Phone Lookups</h1>
-      <p className="text-lg text-gray-700">Instantly scan and uncover social profiles, risk scores, and carrier data.</p>
-      <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={handleScan}>
-        <label className="block text-purple-800 font-semibold text-lg">Enter a Mobile or Landline Number:</label>
-        <input
-          type="tel"
-          placeholder="+1 555 123 4567"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          className="w-full px-4 py-2 border rounded-md"
-        />
-        <button
-          type="submit"
-          disabled={isScanning}
-          className="w-full py-3 text-lg font-medium rounded-md shadow-md text-white bg-purple-600 hover:bg-purple-700"
-        >
-          {isScanning ? '🔍 Scanning Report...' : 'Scan Now'}
-        </button>
-        {isScanning && <p className="text-center text-sm text-gray-600 pt-2 animate-pulse">Scanning in progress...</p>}
-        <p className="text-center text-xs text-gray-600 pt-1">Secure and encrypted. Your searches are 100% private.</p>
-      </form>
-    </section>
-
-    {/* Report Section */}
-   {showResult && (
-  <section className={`mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left ${!isPaid ? 'blur-sm pointer-events-none select-none' : ''}`}>
-    <h3 className="text-2xl font-bold text-purple-800 mb-4">Match Report</h3>
-    <div className="flex items-center space-x-4">
-      <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl">👤</div>
-      <div>
-        <p className="text-sm text-gray-500">Matches found for:</p>
-        <p className="text-xl font-semibold text-gray-800">{inputValue}</p>
-      </div>
-    </div>
-    <hr />
-
-    <div className="space-y-4">
-      {/* 🔐 PREMIUM FIELDS */}
-      {[
-        { icon: '📛', label: 'Associated Names', value: 'Connor Rawiri, Facebook, Connor' },
-        { icon: '🧑‍💻', label: 'Associated Usernames', value: 'connorraw' },
-        { icon: '📧', label: 'Associated Emails', value: 'Not Identified' },
-      ].map((item, i) => (
-        <div key={i} className="border-t pt-4 relative">
-          <p className="font-semibold text-gray-700">{item.icon} {item.label}:</p>
-          <p className={`${!isPremium ? 'blur-sm' : ''}`}>{item.value}</p>
-          {!isPremium && isPaid && (
-            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white/80">
-              <a
-                href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded shadow mt-2"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                🔓 Unlock Premium - $3.99
-              </a>
-            </div>
-          )}
+    <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 pt-10 space-y-20 min-h-screen text-center">
+      <header className="w-full fixed top-0 left-0 bg-white shadow-md z-50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-start items-center">
+          <img src="/Safe Swipe.png" alt="Safe Swipe Logo" className="h-10 object-contain" />
         </div>
-      ))}
+      </header>
 
-      {/* ✅ BASIC FIELDS */}
-      {isPaid && (
-        <>
-          <div className="border-t pt-4">
-            <p className="font-semibold text-gray-700">📡 Carrier:</p>
-            <p className="text-gray-600">Telstra</p>
+      <section className="pt-24 max-w-md w-full space-y-6">
+        <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Phone Lookups</h1>
+        <p className="text-lg text-gray-700">Instantly scan and uncover social profiles, risk scores, and carrier data.</p>
+        <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={handleScan}>
+          <label className="block text-purple-800 font-semibold text-lg">Enter a Mobile or Landline Number:</label>
+          <input
+            type="tel"
+            placeholder="+1 555 123 4567"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            className="w-full px-4 py-2 border rounded-md"
+          />
+          <button
+            type="submit"
+            disabled={isScanning}
+            className="w-full py-3 text-lg font-medium rounded-md shadow-md text-white bg-purple-600 hover:bg-purple-700"
+          >
+            {isScanning ? '🔍 Scanning Report...' : 'Scan Now'}
+          </button>
+          {isScanning && <p className="text-center text-sm text-gray-600 pt-2 animate-pulse">Scanning in progress...</p>}
+          <p className="text-center text-xs text-gray-600 pt-1">Secure and encrypted. Your searches are 100% private.</p>
+        </form>
+      </section>
+
+      {showResult && (
+        <section className={`mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left ${!hasBasic ? 'blur-sm pointer-events-none select-none' : ''}`}>
+          <h3 className="text-2xl font-bold text-purple-800 mb-4">Match Report</h3>
+          <div className="flex items-center space-x-4">
+            <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl">👤</div>
+            <div>
+              <p className="text-sm text-gray-500">Matches found for:</p>
+              <p className="text-xl font-semibold text-gray-800">{inputValue}</p>
+            </div>
           </div>
-          <div className="border-t pt-4">
-            <p className="font-semibold text-gray-700">📞 Line Type:</p>
-            <p className="text-gray-600">Mobile</p>
+          <hr />
+
+          <div className="space-y-4">
+            {[{
+              icon: '📛', label: 'Associated Names', value: 'Connor Rawiri, Facebook, Connor'
+            }, {
+              icon: '🧑‍💻', label: 'Associated Usernames', value: 'connorraw'
+            }, {
+              icon: '📧', label: 'Associated Emails', value: 'Not Identified'
+            }].map((item, i) => (
+              <div key={i} className="border-t pt-4 relative">
+                <p className="font-semibold text-gray-700">{item.icon} {item.label}:</p>
+                <p className={`${!hasPremium ? 'blur-sm' : ''}`}>{item.value}</p>
+                {hasBasic && !hasPremium && (
+                  <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white/80">
+                    <a
+                      href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq"
+                      className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded shadow mt-2"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      🔓 Unlock Premium - $3.99
+                    </a>
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {hasBasic && (
+              <>
+                <div className="border-t pt-4">
+                  <p className="font-semibold text-gray-700">📡 Carrier:</p>
+                  <p className="text-gray-600">Telstra</p>
+                </div>
+                <div className="border-t pt-4">
+                  <p className="font-semibold text-gray-700">📞 Line Type:</p>
+                  <p className="text-gray-600">Mobile</p>
+                </div>
+                <div className="border-t pt-4">
+                  <p className="font-semibold text-gray-700">🎂 Potential Date of Birth:</p>
+                  <p className="text-gray-600">Not Identified</p>
+                </div>
+              </>
+            )}
           </div>
-          <div className="border-t pt-4">
-            <p className="font-semibold text-gray-700">🎂 Potential Date of Birth:</p>
-            <p className="text-gray-600">Not Identified</p>
-          </div>
-        </>
+        </section>
+      )}
+
+      {!hasBasic && showResult && (
+        <div className="pt-6 text-center w-full max-w-xl">
+          <a
+            href="https://buy.stripe.com/eVabJT0goa8TdPycMR"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow"
+          >
+            🔒 Unlock Report - $9.99
+          </a>
+        </div>
       )}
     </div>
-  </section>
-)}
+  );
 
-{/* 🔓 Basic Unlock Button */}
-{!isPaid && showResult && (
-  <div className="pt-6 text-center w-full max-w-xl">
-    <a
-      href="https://buy.stripe.com/eVabJT0goa8TdPycMR"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow"
-    >
-      🔒 Unlock Report - $9.99
-    </a>
-  </div>
-)}
+
 
 
     {/* Trust Section */}
