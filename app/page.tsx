@@ -91,42 +91,46 @@ export default function Home() {
     </section>
 
     {/* Report Section */}
-    {showResult && (
-      <section className={`mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left`}>
-        <h3 className="text-2xl font-bold text-purple-800 mb-4">Match Report</h3>
-        <div className="flex items-center space-x-4">
-          <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl">👤</div>
-          <div>
-            <p className="text-sm text-gray-500">Matches found for:</p>
-            <p className="text-xl font-semibold text-gray-800">{inputValue}</p>
-          </div>
-        </div>
-        <hr />
-        <div className="space-y-4">
-          {[
-            { icon: '📛', label: 'Associated Names', value: 'Connor Rawiri, Facebook, Connor' },
-            { icon: '🧑‍💻', label: 'Associated Usernames', value: 'connorraw' },
-            { icon: '📧', label: 'Associated Emails', value: 'Not Identified' },
-          ].map((item, i) => (
-            <div key={i} className="border-t pt-4 relative">
-              <p className="font-semibold text-gray-700">{item.icon} {item.label}:</p>
-              <p className={`${isPaid ? 'text-gray-800' : 'text-gray-600'} ${!isPremium ? 'blur-sm' : ''}`}>
-                {item.value}
-              </p>
-              {!isPremium && isPaid && (
-                <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white/80">
-                  <a
-                    href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq"
-                    className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded shadow mt-2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    🔓 Unlock Premium - $3.99
-                  </a>
-                </div>
-              )}
+   {showResult && (
+  <section className={`mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left ${!isPaid ? 'blur-sm pointer-events-none select-none' : ''}`}>
+    <h3 className="text-2xl font-bold text-purple-800 mb-4">Match Report</h3>
+    <div className="flex items-center space-x-4">
+      <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl">👤</div>
+      <div>
+        <p className="text-sm text-gray-500">Matches found for:</p>
+        <p className="text-xl font-semibold text-gray-800">{inputValue}</p>
+      </div>
+    </div>
+    <hr />
+
+    <div className="space-y-4">
+      {/* 🔐 PREMIUM FIELDS */}
+      {[
+        { icon: '📛', label: 'Associated Names', value: 'Connor Rawiri, Facebook, Connor' },
+        { icon: '🧑‍💻', label: 'Associated Usernames', value: 'connorraw' },
+        { icon: '📧', label: 'Associated Emails', value: 'Not Identified' },
+      ].map((item, i) => (
+        <div key={i} className="border-t pt-4 relative">
+          <p className="font-semibold text-gray-700">{item.icon} {item.label}:</p>
+          <p className={`${!isPremium ? 'blur-sm' : ''}`}>{item.value}</p>
+          {!isPremium && isPaid && (
+            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white/80">
+              <a
+                href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded shadow mt-2"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                🔓 Unlock Premium - $3.99
+              </a>
             </div>
-          ))}
+          )}
+        </div>
+      ))}
+
+      {/* ✅ BASIC FIELDS */}
+      {isPaid && (
+        <>
           <div className="border-t pt-4">
             <p className="font-semibold text-gray-700">📡 Carrier:</p>
             <p className="text-gray-600">Telstra</p>
@@ -139,22 +143,26 @@ export default function Home() {
             <p className="font-semibold text-gray-700">🎂 Potential Date of Birth:</p>
             <p className="text-gray-600">Not Identified</p>
           </div>
-        </div>
-      </section>
-    )}
+        </>
+      )}
+    </div>
+  </section>
+)}
 
-    {!isPaid && showResult && (
-      <div className="pt-6 text-center w-full max-w-xl">
-        <a
-          href="https://buy.stripe.com/eVabJT0goa8TdPycMR"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow"
-        >
-          🔒 Unlock Report - $9.99
-        </a>
-      </div>
-    )}
+{/* 🔓 Basic Unlock Button */}
+{!isPaid && showResult && (
+  <div className="pt-6 text-center w-full max-w-xl">
+    <a
+      href="https://buy.stripe.com/eVabJT0goa8TdPycMR"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow"
+    >
+      🔒 Unlock Report - $9.99
+    </a>
+  </div>
+)}
+
 
     {/* Trust Section */}
     <section className="w-full py-10 text-center">
