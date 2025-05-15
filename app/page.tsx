@@ -155,9 +155,6 @@ const showUnlockButton = hasBasic && !hasPremium && isPremiumField;
           </a>
         </div>
       )}
-    );
-}
-
 
 
 
