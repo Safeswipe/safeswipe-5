@@ -9,9 +9,6 @@ export default function Home() {
   const [isScanning, setIsScanning] = useState(false);
   const [reportData, setReportData] = useState(null);
 
-  const hasBasic = typeof window !== 'undefined' && localStorage.getItem('safeswipe_basic_unlocked') === 'true';
-  const hasPremium = typeof window !== 'undefined' && localStorage.getItem('safeswipe_premium_unlocked') === 'true';
-
   useEffect(() => {
     const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
 
@@ -58,6 +55,9 @@ export default function Home() {
     }, 15000);
   };
 
+  const hasBasic = typeof window !== 'undefined' && localStorage.getItem('safeswipe_basic_unlocked') === 'true';
+  const hasPremium = typeof window !== 'undefined' && localStorage.getItem('safeswipe_premium_unlocked') === 'true';
+
   const premiumFields = [
     { icon: '📛', label: 'Associated Names', value: 'Connor Rawiri, Facebook, Connor' },
     { icon: '🧑‍💻', label: 'Associated Usernames', value: 'connorraw' },
@@ -67,8 +67,11 @@ export default function Home() {
   const basicFields = [
     { icon: '📡', label: 'Carrier', value: 'Telstra' },
     { icon: '📞', label: 'Line Type', value: 'Mobile' },
+    { icon: '📍', label: 'Location', value: 'Melbourne, VIC' },
     { icon: '🎂', label: 'Potential Date of Birth', value: 'Not Identified' },
   ];
+
+  const showFullReport = hasBasic || hasPremium;
 
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 pt-10 space-y-20 min-h-screen text-center">
@@ -103,7 +106,7 @@ export default function Home() {
       </section>
 
       {showResult && (
-        <section className={`mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left ${!hasBasic ? 'blur-sm pointer-events-none select-none' : ''}`}>
+        <section className={`mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left ${!showFullReport ? 'blur-sm pointer-events-none select-none' : ''}`}>
           <h3 className="text-2xl font-bold text-purple-800 mb-4">Match Report</h3>
           <div className="flex items-center space-x-4">
             <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl">👤</div>
@@ -118,12 +121,14 @@ export default function Home() {
             {premiumFields.map((item, i) => (
               <div key={i} className="border-t pt-4 relative">
                 <p className="font-semibold text-gray-700">{item.icon} {item.label}:</p>
-                <p className={`${hasBasic && !hasPremium ? 'blur-sm' : ''}`}>{item.value}</p>
+                <div className={!hasPremium ? 'blur-sm' : ''}>
+                  <p className="text-gray-600">{item.value}</p>
+                </div>
                 {hasBasic && !hasPremium && (
-                  <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white/80">
+                  <div className="absolute top-0 right-0 mt-1">
                     <a
                       href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq"
-                      className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded shadow mt-2"
+                      className="inline-flex items-center gap-2 px-3 py-1 bg-purple-600 text-white rounded shadow text-sm"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -156,6 +161,7 @@ export default function Home() {
           </a>
         </div>
       )}
+
 
 
 
