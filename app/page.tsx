@@ -96,28 +96,39 @@ export default function Home() {
               </div>
               <span className="text-sm text-pink-600 font-bold">Score: 8.5</span>
             </div>
-            <div className={`border-t pt-4 ${!isPremium ? 'blur-sm relative' : ''}`}>
-              <p className="font-semibold text-gray-700">Associated Usernames:</p>
-              <p className="text-gray-600">connorraw</p>
-              {!isPremium && (
-                <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white/80">
-                  <a href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq" className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded shadow mt-2" target="_blank" rel="noopener noreferrer">
-                    🔓 Unlock Premium - $3.99
-                  </a>
+
+            {isPaid && (
+              <>
+                <div className="border-t pt-4 relative">
+                  <p className="font-semibold text-gray-700">Associated Usernames:</p>
+                  <div className={!isPremium ? 'blur-sm' : ''}>
+                    <p className="text-gray-600">connorraw</p>
+                  </div>
+                  {!isPremium && (
+                    <div className="absolute top-0 right-0 mt-1">
+                      <a href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq" className="inline-flex items-center gap-2 px-3 py-1 bg-purple-600 text-white rounded shadow text-sm" target="_blank" rel="noopener noreferrer">
+                        🔓 Unlock Premium - $3.99
+                      </a>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-            <div className={`border-t pt-4 ${!isPremium ? 'blur-sm relative' : ''}`}>
-              <p className="font-semibold text-gray-700">Associated Emails:</p>
-              <p className="text-gray-600">Not Identified</p>
-              {!isPremium && (
-                <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white/80">
-                  <a href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq" className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded shadow mt-2" target="_blank" rel="noopener noreferrer">
-                    🔓 Unlock Premium - $3.99
-                  </a>
+
+                <div className="border-t pt-4 relative">
+                  <p className="font-semibold text-gray-700">Associated Emails:</p>
+                  <div className={!isPremium ? 'blur-sm' : ''}>
+                    <p className="text-gray-600">Not Identified</p>
+                  </div>
+                  {!isPremium && (
+                    <div className="absolute top-0 right-0 mt-1">
+                      <a href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq" className="inline-flex items-center gap-2 px-3 py-1 bg-purple-600 text-white rounded shadow text-sm" target="_blank" rel="noopener noreferrer">
+                        🔓 Unlock Premium - $3.99
+                      </a>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
+              </>
+            )}
+
             <div className="border-t pt-4">
               <p className="font-semibold text-gray-700">Associated Locations:</p>
               <p className="text-gray-600">🇦🇺 AU</p>
