@@ -201,6 +201,6 @@ export default function Home() {
           <a href="/contact" className="text-purple-600 hover:underline">Contact</a>
         </div>
       </footer>
-    </div>
+    </>
   );
 }
