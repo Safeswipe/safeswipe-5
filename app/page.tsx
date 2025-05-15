@@ -122,9 +122,9 @@ const basicUnlocked = hasBasic;
             {premiumFields.map((item, i) => (
               <div key={i} className="border-t pt-4 relative">
                 <p className="font-semibold text-gray-700">{item.icon} {item.label}:</p>
-                <div className={!hasPremium ? 'blur-sm' : ''}>
-                  <p className="text-gray-600">{item.value}</p>
-                </div>
+                <div className={!hasPremium ? 'blur-sm pointer-events-none select-none' : ''}>
+  <p className="text-gray-600">{item.value}</p>
+</div>
                 {hasBasic && !hasPremium && (
                   <div className="absolute top-0 right-0 mt-1">
                     <a
@@ -162,6 +162,7 @@ const basicUnlocked = hasBasic;
           </a>
         </div>
       )}
+
 
 
 
