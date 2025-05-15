@@ -6,6 +6,7 @@ import './globals.css';
 export default function Home() {
   const [showResult, setShowResult] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [isScanning, setIsScanning] = useState(false);
 
   const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
   const isPaid = params?.get('paid') === 'true';
@@ -21,7 +22,11 @@ export default function Home() {
   const handleScan = (e) => {
     e.preventDefault();
     localStorage.setItem('safeswipe_input', inputValue);
-    setShowResult(true);
+    setIsScanning(true);
+    setTimeout(() => {
+      setShowResult(true);
+      setIsScanning(false);
+    }, 15000);
   };
 
   const whatYouDiscover = [
@@ -62,16 +67,18 @@ export default function Home() {
           />
           <button
             type="submit"
+            disabled={isScanning}
             className="w-full py-3 text-lg font-medium rounded-md shadow-md text-white bg-purple-600 hover:bg-purple-700"
           >
-            Scan Now
+            {isScanning ? '🔍 Scanning Report...' : 'Scan Now'}
           </button>
-          <p className="text-center text-xs text-gray-600 pt-2">Secure and encrypted. Your searches are 100% private.</p>
+          {isScanning && <p className="text-center text-sm text-gray-600 pt-2 animate-pulse">Scanning in progress...</p>}
+          <p className="text-center text-xs text-gray-600 pt-1">Secure and encrypted. Your searches are 100% private.</p>
         </form>
       </section>
 
       {showResult && (
-        <section className="mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left">
+        <section className={`mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left ${!isPaid ? 'blur-sm pointer-events-none select-none' : ''}`}>
           <h3 className="text-2xl font-bold text-purple-800 mb-4">Match Report</h3>
           <div className="flex items-center space-x-4">
             <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl">👤</div>
@@ -120,6 +127,8 @@ export default function Home() {
           )}
         </section>
       )}
+
+      
 
       <section className="w-full py-10 text-center">
         <h2 className="text-3xl font-bold text-purple-800 mb-6">Trusted by Over 100,000 Americans</h2>
