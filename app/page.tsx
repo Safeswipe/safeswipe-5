@@ -107,7 +107,7 @@ const basicUnlocked = hasBasic;
       </section>
 
       {showResult && (
-        <section className={`mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left ${!showFullReport ? 'blur-sm pointer-events-none select-none' : ''}`}>
+        <section className={`mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left`}>
           <h3 className="text-2xl font-bold text-purple-800 mb-4">Match Report</h3>
           <div className="flex items-center space-x-4">
             <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl">👤</div>
@@ -122,7 +122,13 @@ const basicUnlocked = hasBasic;
             {premiumFields.map((item, i) => (
               <div key={i} className="border-t pt-4 relative">
                 <p className="font-semibold text-gray-700">{item.icon} {item.label}:</p>
-                {<div className={hasBasic ? (!hasPremium ? 'blur-sm pointer-events-none select-none' : '') : 'blur-sm pointer-events-none select-none'}>
+                {<div className={`${
+        hasBasic
+          ? !hasPremium
+            ? 'blur-sm pointer-events-none select-none'
+            : ''
+          : 'blur-sm pointer-events-none select-none'
+      }`}>
   <p className="text-gray-600">{item.value}</p>
 </div>}
                 {hasBasic && !hasPremium && (
@@ -162,7 +168,6 @@ const basicUnlocked = hasBasic;
           </a>
         </div>
       )}
-
 
 
 
