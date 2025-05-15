@@ -115,15 +115,16 @@ export default function Home() {
           </div>
           <hr />
 
-          <div className={`${!hasBasic ? 'blur-sm pointer-events-none select-none' : ''}`}>
+          <div>
             {[...premiumFields, ...basicFields].map((item, i) => {
-              const isPremiumField = premiumFields.includes(item);
-              const shouldBlur = (isPremiumField && !hasPremium) || !hasBasic;
+              const isPremiumField = i < premiumFields.length;
+              const shouldBlur = (isPremiumField && !hasPremium) || (!isPremiumField && !hasBasic);
+const showUnlockButton = hasBasic && !hasPremium && isPremiumField;
               return (
                 <div key={i} className={`border-t pt-4 ${shouldBlur ? 'blur-sm pointer-events-none select-none' : ''} relative`}>
                   <p className="font-semibold text-gray-700">{item.icon} {item.label}:</p>
                   <p className="text-gray-600">{item.value}</p>
-                  {hasBasic && !hasPremium && isPremiumField && (
+                  {showUnlockButton && (
                     <div className="absolute top-0 right-0 mt-1">
                       <a
                         href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq"
@@ -154,6 +155,9 @@ export default function Home() {
           </a>
         </div>
       )}
+    );
+}
+
 
 
 
