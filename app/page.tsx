@@ -71,7 +71,8 @@ export default function Home() {
     { icon: '🎂', label: 'Potential Date of Birth', value: 'Not Identified' },
   ];
 
-  const showFullReport = hasBasic || hasPremium;
+  const showFullReport = true;
+const basicUnlocked = hasBasic;
 
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 pt-10 space-y-20 min-h-screen text-center">
@@ -139,12 +140,12 @@ export default function Home() {
               </div>
             ))}
 
-            {hasBasic && basicFields.map((item, i) => (
-              <div key={i} className="border-t pt-4">
-                <p className="font-semibold text-gray-700">{item.icon} {item.label}:</p>
-                <p className="text-gray-600">{item.value}</p>
-              </div>
-            ))}
+            {basicFields.map((item, i) => (
+  <div key={i} className={`border-t pt-4 ${!basicUnlocked ? 'blur-sm pointer-events-none select-none' : ''}`}>
+    <p className="font-semibold text-gray-700">{item.icon} {item.label}:</p>
+    <p className="text-gray-600">{item.value}</p>
+  </div>
+))}
           </div>
         </section>
       )}
@@ -161,7 +162,6 @@ export default function Home() {
           </a>
         </div>
       )}
-
 
 
 
