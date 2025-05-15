@@ -8,6 +8,7 @@ export default function Home() {
   const [inputValue, setInputValue] = useState('');
   const [isScanning, setIsScanning] = useState(false);
   const [isPremium, setIsPremium] = useState(false);
+  const [reportData, setReportData] = useState(null);
 
   const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
   const isPaid = params?.get('paid') === 'true';
@@ -24,35 +25,72 @@ export default function Home() {
     } else if (localStorage.getItem('safeswipe_premium_unlocked') === 'true') {
       setIsPremium(true);
     }
+
+    const storedReport = localStorage.getItem('safeswipe_report_data');
+    if (storedReport) setReportData(JSON.parse(storedReport));
   }, [isPaid]);
 
-  const handleScan = (e) => {
+  const handleScan = async (e) => {
     e.preventDefault();
     localStorage.setItem('safeswipe_input', inputValue);
     setIsScanning(true);
+
+    try {
+      const res = await fetch(`/api/fetchReport?phone=${encodeURIComponent(inputValue)}`);
+      const data = await res.json();
+      setReportData(data);
+      localStorage.setItem('safeswipe_report_data', JSON.stringify(data));
+    } catch (err) {
+      console.error('Error fetching report:', err);
+    }
+
     setTimeout(() => {
       setShowResult(true);
       setIsScanning(false);
     }, 15000);
   };
 
+  const whatYouDiscover = [
+    { title: "Phone Reputation Score", desc: "Get an instant credibility rating for any number based on behavior patterns." },
+    { title: "Connected Social Profiles", desc: "Reveal linked Facebook, Instagram, LinkedIn, and other accounts." },
+    { title: "Dating App Presence", desc: "Check if the number is tied to profiles on Tinder, Bumble, or Hinge." },
+    { title: "Scam History Lookup", desc: "Identify if the number has been flagged for scams, spam, or fraud." },
+    { title: "Carrier and Line Type", desc: "Know if it's a mobile or landline and who the telecom provider is." },
+    { title: "Location & Timezone", desc: "See the general area and timezone associated with the number." }
+  ];
+
+  const faqs = [
+    { q: "Is SafeSwipe free to use?", a: "You can scan for free, but unlocking full reports requires a subscription." },
+    { q: "Do you store my search data?", a: "No. All searches are encrypted and not stored on our servers." },
+    { q: "Can I cancel anytime?", a: "Yes. Subscriptions are cancelable at any time through your account." },
+    { q: "What countries are supported?", a: "Currently, we only support U.S. phone numbers." }
+  ];
+
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 pt-10 space-y-20 min-h-screen text-center">
-      {/* Header */}
       <header className="w-full fixed top-0 left-0 bg-white shadow-md z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-start items-center">
           <img src="/Safe Swipe.png" alt="Safe Swipe Logo" className="h-10 object-contain" />
         </div>
       </header>
 
-      {/* Hero & Scan Section */}
       <section className="pt-24 max-w-md w-full space-y-6">
         <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Phone Lookups</h1>
         <p className="text-lg text-gray-700">Instantly scan and uncover social profiles, risk scores, and carrier data.</p>
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={handleScan}>
           <label className="block text-purple-800 font-semibold text-lg">Enter a Mobile or Landline Number:</label>
-          <input type="tel" placeholder="+1 555 123 4567" value={inputValue} onChange={(e) => setInputValue(e.target.value)} className="w-full px-4 py-2 border rounded-md" />
-          <button type="submit" disabled={isScanning} className="w-full py-3 text-lg font-medium rounded-md shadow-md text-white bg-purple-600 hover:bg-purple-700">
+          <input
+            type="tel"
+            placeholder="+1 555 123 4567"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            className="w-full px-4 py-2 border rounded-md"
+          />
+          <button
+            type="submit"
+            disabled={isScanning}
+            className="w-full py-3 text-lg font-medium rounded-md shadow-md text-white bg-purple-600 hover:bg-purple-700"
+          >
             {isScanning ? '🔍 Scanning Report...' : 'Scan Now'}
           </button>
           {isScanning && <p className="text-center text-sm text-gray-600 pt-2 animate-pulse">Scanning in progress...</p>}
@@ -60,9 +98,8 @@ export default function Home() {
         </form>
       </section>
 
-      {/* Report Section */}
       {showResult && (
-        <section className={`mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left${!isPaid ? ' blur-sm pointer-events-none select-none' : ''}`}>
+        <section className={`mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left` + (!isPaid ? ' blur-sm pointer-events-none select-none' : '')}>
           <h3 className="text-2xl font-bold text-purple-800 mb-4">Match Report</h3>
           <div className="flex items-center space-x-4">
             <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl">👤</div>
@@ -73,62 +110,45 @@ export default function Home() {
           </div>
           <hr />
           <div className="space-y-4">
-            <div className={`border-t pt-4 relative ${!isPremium ? 'blur-sm' : ''}`}>
-              <p className="font-semibold text-gray-700">Possible Owners:</p>
+            <div className={`border-t pt-4 ${!isPremium ? 'blur-sm relative' : ''}`}>
+              <p className="font-semibold text-gray-700">Associated Names:</p>
               <p className="text-gray-600">Connor Rawiri, Facebook, Connor</p>
-              {!isPremium && isPaid && (
-                <div className="absolute top-0 right-0 mt-1">
-                  <a href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq" className="inline-flex items-center gap-2 px-3 py-1 bg-purple-600 text-white rounded shadow text-sm" target="_blank" rel="noopener noreferrer">
+              {!isPremium && (
+                <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white/80">
+                  <a
+                    href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded shadow mt-2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     🔓 Unlock Premium - $3.99
                   </a>
                 </div>
               )}
             </div>
-
-            {isPaid && (
-              <>
-                <div className="border-t pt-4 relative">
-                  <p className="font-semibold text-gray-700">Carrier:</p>
-                  <p className="text-gray-600">Telstra</p>
+            <div className={`border-t pt-4 ${!isPremium ? 'blur-sm relative' : ''}`}>
+              <p className="font-semibold text-gray-700">Associated Usernames:</p>
+              <p className="text-gray-600">connorraw</p>
+              {!isPremium && (
+                <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white/80">
+                  <a
+                    href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded shadow mt-2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    🔓 Unlock Premium - $3.99
+                  </a>
                 </div>
-                <div className="border-t pt-4 relative">
-                  <p className="font-semibold text-gray-700">Line Type:</p>
-                  <p className="text-gray-600">Mobile</p>
-                </div>
-
-                <div className="border-t pt-4 relative">
-                  <p className="font-semibold text-gray-700">Associated Usernames:</p>
-                  <div className={!isPremium ? 'blur-sm' : ''}>
-                    <p className="text-gray-600">connorraw</p>
-                  </div>
-                  {!isPremium && (
-                    <div className="absolute top-0 right-0 mt-1">
-                      <a href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq" className="inline-flex items-center gap-2 px-3 py-1 bg-purple-600 text-white rounded shadow text-sm" target="_blank" rel="noopener noreferrer">
-                        🔓 Unlock Premium - $3.99
-                      </a>
-                    </div>
-                  )}
-                </div>
-
-                <div className="border-t pt-4 relative">
-                  <p className="font-semibold text-gray-700">Associated Emails:</p>
-                  <div className={!isPremium ? 'blur-sm' : ''}>
-                    <p className="text-gray-600">Not Identified</p>
-                  </div>
-                  {!isPremium && (
-                    <div className="absolute top-0 right-0 mt-1">
-                      <a href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq" className="inline-flex items-center gap-2 px-3 py-1 bg-purple-600 text-white rounded shadow text-sm" target="_blank" rel="noopener noreferrer">
-                        🔓 Unlock Premium - $3.99
-                      </a>
-                    </div>
-                  )}
-                </div>
-              </>
-            )}
-
+              )}
+            </div>
             <div className="border-t pt-4">
-              <p className="font-semibold text-gray-700">Associated Locations:</p>
-              <p className="text-gray-600">🇦🇺 AU</p>
+              <p className="font-semibold text-gray-700">Carrier:</p>
+              <p className="text-gray-600">Telstra</p>
+            </div>
+            <div className="border-t pt-4">
+              <p className="font-semibold text-gray-700">Line Type:</p>
+              <p className="text-gray-600">Mobile</p>
             </div>
             <div className="border-t pt-4">
               <p className="font-semibold text-gray-700">Potential Date of Birth:</p>
@@ -138,18 +158,18 @@ export default function Home() {
         </section>
       )}
 
-      {/* Unlock Button */}
       {!isPaid && showResult && (
         <div className="pt-6 text-center w-full max-w-xl">
-          <a href="https://buy.stripe.com/eVabJT0goa8TdPycMR" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow">
+          <a
+            href="https://buy.stripe.com/eVabJT0goa8TdPycMR"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow"
+          >
             🔒 Unlock Report - $9.99
           </a>
         </div>
       )}
-    </div>
-  );
-}
-
 
       {/* Trust Section */}
       <section className="w-full py-10 text-center">
