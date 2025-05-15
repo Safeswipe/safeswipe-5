@@ -118,9 +118,9 @@ export default function Home() {
           <div className={`${!hasBasic ? 'blur-sm pointer-events-none select-none' : ''}`}>
             {[...premiumFields, ...basicFields].map((item, i) => {
               const isPremiumField = premiumFields.includes(item);
-              const shouldBlur = isPremiumField && !hasPremium;
+              const shouldBlur = (isPremiumField && !hasPremium) || !hasBasic;
               return (
-                <div key={i} className={`border-t pt-4 ${shouldBlur ? 'blur-sm pointer-events-none select-none' : ''}`}>
+                <div key={i} className={`border-t pt-4 ${shouldBlur ? 'blur-sm pointer-events-none select-none' : ''} relative`}>
                   <p className="font-semibold text-gray-700">{item.icon} {item.label}:</p>
                   <p className="text-gray-600">{item.value}</p>
                   {hasBasic && !hasPremium && isPremiumField && (
