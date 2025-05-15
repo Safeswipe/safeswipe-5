@@ -78,7 +78,7 @@ export default function Home() {
       </section>
 
       {showResult && (
-        <section className={`mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left ${!isPaid ? 'blur-sm pointer-events-none select-none' : ''}`}>
+        <section className={`mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left` + (!isPaid ? ' blur-sm pointer-events-none select-none' : '')}>
           <h3 className="text-2xl font-bold text-purple-800 mb-4">Match Report</h3>
           <div className="flex items-center space-x-4">
             <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl">👤</div>
@@ -113,19 +113,20 @@ export default function Home() {
               <p className="text-gray-600">Not Identified</p>
             </div>
           </div>
-          {!isPaid && (
-            <div className="pt-6 text-center">
-              <a
-                href="https://buy.stripe.com/YOUR_NEW_ONE_TIME_LINK"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow"
-              >
-                🔒 Unlock Report - $9.99
-              </a>
-            </div>
-          )}
         </section>
+      )}
+
+      {!isPaid && showResult && (
+        <div className="pt-6 text-center w-full max-w-xl">
+          <a
+            href="https://buy.stripe.com/YOUR_NEW_ONE_TIME_LINK"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow"
+          >
+            🔒 Unlock Report - $9.99
+          </a>
+        </div>
       )}
 
       
