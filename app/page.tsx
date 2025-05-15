@@ -36,22 +36,6 @@ export default function Home() {
     }, 15000);
   };
 
-  const whatYouDiscover = [
-    { title: "Phone Reputation Score", desc: "Get an instant credibility rating for any number based on behavior patterns." },
-    { title: "Connected Social Profiles", desc: "Reveal linked Facebook, Instagram, LinkedIn, and other accounts." },
-    { title: "Dating App Presence", desc: "Check if the number is tied to profiles on Tinder, Bumble, or Hinge." },
-    { title: "Scam History Lookup", desc: "Identify if the number has been flagged for scams, spam, or fraud." },
-    { title: "Carrier and Line Type", desc: "Know if it's a mobile or landline and who the telecom provider is." },
-    { title: "Location & Timezone", desc: "See the general area and timezone associated with the number." }
-  ];
-
-  const faqs = [
-    { q: "Is SafeSwipe free to use?", a: "You can scan for free, but unlocking full reports requires a subscription." },
-    { q: "Do you store my search data?", a: "No. All searches are encrypted and not stored on our servers." },
-    { q: "Can I cancel anytime?", a: "Yes. Subscriptions are cancelable at any time through your account." },
-    { q: "What countries are supported?", a: "Currently, we only support U.S. phone numbers." }
-  ];
-
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 pt-10 space-y-20 min-h-screen text-center">
       {/* Header */}
@@ -89,16 +73,29 @@ export default function Home() {
           </div>
           <hr />
           <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <div>
-                <p className="font-semibold text-gray-700">Possible Owners:</p>
-                <p className="text-gray-600">Connor Rawiri, Facebook, Connor</p>
-              </div>
-              <span className="text-sm text-pink-600 font-bold">Score: 8.5</span>
+            <div className={`border-t pt-4 relative ${!isPremium ? 'blur-sm' : ''}`}>
+              <p className="font-semibold text-gray-700">Possible Owners:</p>
+              <p className="text-gray-600">Connor Rawiri, Facebook, Connor</p>
+              {!isPremium && isPaid && (
+                <div className="absolute top-0 right-0 mt-1">
+                  <a href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq" className="inline-flex items-center gap-2 px-3 py-1 bg-purple-600 text-white rounded shadow text-sm" target="_blank" rel="noopener noreferrer">
+                    🔓 Unlock Premium - $3.99
+                  </a>
+                </div>
+              )}
             </div>
 
             {isPaid && (
               <>
+                <div className="border-t pt-4 relative">
+                  <p className="font-semibold text-gray-700">Carrier:</p>
+                  <p className="text-gray-600">Telstra</p>
+                </div>
+                <div className="border-t pt-4 relative">
+                  <p className="font-semibold text-gray-700">Line Type:</p>
+                  <p className="text-gray-600">Mobile</p>
+                </div>
+
                 <div className="border-t pt-4 relative">
                   <p className="font-semibold text-gray-700">Associated Usernames:</p>
                   <div className={!isPremium ? 'blur-sm' : ''}>
@@ -149,6 +146,10 @@ export default function Home() {
           </a>
         </div>
       )}
+    </div>
+  );
+}
+
 
       {/* Trust Section */}
       <section className="w-full py-10 text-center">
