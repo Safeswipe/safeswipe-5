@@ -36,31 +36,40 @@ export default function Home() {
     }, 15000);
   };
 
+  const whatYouDiscover = [
+    { title: "Phone Reputation Score", desc: "Get an instant credibility rating for any number based on behavior patterns." },
+    { title: "Connected Social Profiles", desc: "Reveal linked Facebook, Instagram, LinkedIn, and other accounts." },
+    { title: "Dating App Presence", desc: "Check if the number is tied to profiles on Tinder, Bumble, or Hinge." },
+    { title: "Scam History Lookup", desc: "Identify if the number has been flagged for scams, spam, or fraud." },
+    { title: "Carrier and Line Type", desc: "Know if it's a mobile or landline and who the telecom provider is." },
+    { title: "Location & Timezone", desc: "See the general area and timezone associated with the number." }
+  ];
+
+  const faqs = [
+    { q: "Is SafeSwipe free to use?", a: "You can scan for free, but unlocking full reports requires a subscription." },
+    { q: "Do you store my search data?", a: "No. All searches are encrypted and not stored on our servers." },
+    { q: "Can I cancel anytime?", a: "Yes. Subscriptions are cancelable at any time through your account." },
+    { q: "What countries are supported?", a: "Currently, we only support U.S. phone numbers." }
+  ];
+
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 pt-10 space-y-20 min-h-screen text-center">
+
+      {/* Header */}
       <header className="w-full fixed top-0 left-0 bg-white shadow-md z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-start items-center">
           <img src="/Safe Swipe.png" alt="Safe Swipe Logo" className="h-10 object-contain" />
         </div>
       </header>
 
+      {/* Hero & Scan Section */}
       <section className="pt-24 max-w-md w-full space-y-6">
         <h1 className="text-5xl font-extrabold text-purple-800 leading-tight">Reverse Phone Lookups</h1>
         <p className="text-lg text-gray-700">Instantly scan and uncover social profiles, risk scores, and carrier data.</p>
         <form className="bg-white shadow-lg rounded-2xl p-6 space-y-4 text-left" onSubmit={handleScan}>
           <label className="block text-purple-800 font-semibold text-lg">Enter a Mobile or Landline Number:</label>
-          <input
-            type="tel"
-            placeholder="+1 555 123 4567"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            className="w-full px-4 py-2 border rounded-md"
-          />
-          <button
-            type="submit"
-            disabled={isScanning}
-            className="w-full py-3 text-lg font-medium rounded-md shadow-md text-white bg-purple-600 hover:bg-purple-700"
-          >
+          <input type="tel" placeholder="+1 555 123 4567" value={inputValue} onChange={(e) => setInputValue(e.target.value)} className="w-full px-4 py-2 border rounded-md" />
+          <button type="submit" disabled={isScanning} className="w-full py-3 text-lg font-medium rounded-md shadow-md text-white bg-purple-600 hover:bg-purple-700">
             {isScanning ? '🔍 Scanning Report...' : 'Scan Now'}
           </button>
           {isScanning && <p className="text-center text-sm text-gray-600 pt-2 animate-pulse">Scanning in progress...</p>}
@@ -68,8 +77,9 @@ export default function Home() {
         </form>
       </section>
 
+      {/* Report Section */}
       {showResult && (
-        <section className={`mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left` + (!isPaid ? ' blur-sm pointer-events-none select-none' : '')}>
+        <section className={`mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left${!isPaid ? ' blur-sm pointer-events-none select-none' : ''}`}>
           <h3 className="text-2xl font-bold text-purple-800 mb-4">Match Report</h3>
           <div className="flex items-center space-x-4">
             <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl">👤</div>
@@ -92,12 +102,7 @@ export default function Home() {
               <p className="text-gray-600">connorraw</p>
               {!isPremium && (
                 <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white/80">
-                  <a
-                    href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq"
-                    className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded shadow mt-2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq" className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded shadow mt-2" target="_blank" rel="noopener noreferrer">
                     🔓 Unlock Premium - $3.99
                   </a>
                 </div>
@@ -108,12 +113,7 @@ export default function Home() {
               <p className="text-gray-600">Not Identified</p>
               {!isPremium && (
                 <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white/80">
-                  <a
-                    href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq"
-                    className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded shadow mt-2"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq" className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 text-white rounded shadow mt-2" target="_blank" rel="noopener noreferrer">
                     🔓 Unlock Premium - $3.99
                   </a>
                 </div>
@@ -131,22 +131,16 @@ export default function Home() {
         </section>
       )}
 
+      {/* Unlock Button */}
       {!isPaid && showResult && (
         <div className="pt-6 text-center w-full max-w-xl">
-          <a
-            href="https://buy.stripe.com/eVabJT0goa8TdPycMR"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow"
-          >
+          <a href="https://buy.stripe.com/eVabJT0goa8TdPycMR" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow">
             🔒 Unlock Report - $9.99
           </a>
         </div>
       )}
-    </div>
-  );
-}
 
+      {/* Trust Section */}
       <section className="w-full py-10 text-center">
         <h2 className="text-3xl font-bold text-purple-800 mb-6">Trusted by Over 100,000 Americans</h2>
         <div className="flex flex-wrap justify-center items-center gap-8">
@@ -163,6 +157,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Discovery Section */}
       <section className="max-w-6xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">What You’ll Discover</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
@@ -175,6 +170,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FAQ Section */}
       <section className="max-w-4xl w-full py-12 space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">Frequently Asked Questions</h2>
         <div className="space-y-4">
@@ -187,6 +183,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Testimonials Section */}
       <section className="max-w-4xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">We Help Thousands of People Daily</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -205,6 +202,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Footer */}
       <footer className="w-full text-center text-sm text-gray-600 py-10 space-y-2">
         <p>© {new Date().getFullYear()} SafeSwipe. All rights reserved.</p>
         <div className="space-x-4">
