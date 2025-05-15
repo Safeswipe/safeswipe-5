@@ -36,6 +36,22 @@ export default function Home() {
     }, 15000);
   };
 
+  const whatYouDiscover = [
+    { title: "Phone Reputation Score", desc: "Get an instant credibility rating for any number based on behavior patterns." },
+    { title: "Connected Social Profiles", desc: "Reveal linked Facebook, Instagram, LinkedIn, and other accounts." },
+    { title: "Dating App Presence", desc: "Check if the number is tied to profiles on Tinder, Bumble, or Hinge." },
+    { title: "Scam History Lookup", desc: "Identify if the number has been flagged for scams, spam, or fraud." },
+    { title: "Carrier and Line Type", desc: "Know if it's a mobile or landline and who the telecom provider is." },
+    { title: "Location & Timezone", desc: "See the general area and timezone associated with the number." }
+  ];
+
+  const faqs = [
+    { q: "Is SafeSwipe free to use?", a: "You can scan for free, but unlocking full reports requires a subscription." },
+    { q: "Do you store my search data?", a: "No. All searches are encrypted and not stored on our servers." },
+    { q: "Can I cancel anytime?", a: "Yes. Subscriptions are cancelable at any time through your account." },
+    { q: "What countries are supported?", a: "Currently, we only support U.S. phone numbers." }
+  ];
+
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 pt-10 space-y-20 min-h-screen text-center">
       {/* Header */}
@@ -122,9 +138,6 @@ export default function Home() {
           </a>
         </div>
       )}
-    </div>
-  );
-}
 
       {/* Trust Section */}
       <section className="w-full py-10 text-center">
@@ -169,7 +182,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* Testimonials */}
       <section className="max-w-4xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">We Help Thousands of People Daily</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
