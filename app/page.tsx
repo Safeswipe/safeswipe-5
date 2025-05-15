@@ -129,22 +129,23 @@ export default function Home() {
 }
 
       
-       {/* Trust Section */}
-      <section className="w-full py-10 text-center">
-        <h2 className="text-3xl font-bold text-purple-800 mb-6">Trusted by Over 100,000 Americans</h2>
-        <div className="flex flex-wrap justify-center items-center gap-8">
-          <div className="bg-white rounded-xl p-6 shadow-md w-64">
-            <img src="/google-review.png" alt="Google Reviews" className="h-14 mx-auto mb-2" />
-            <p className="text-yellow-500 font-bold text-lg">★★★★☆</p>
-            <p className="text-gray-700 text-sm">4.8 based on 8,435 reviews</p>
-          </div>
-          <div className="bg-white rounded-xl p-6 shadow-md w-64">
-            <img src="/trustpilot.png" alt="Trustpilot Reviews" className="h-14 mx-auto mb-2" />
-            <p className="text-yellow-500 font-bold text-lg">★★★★★</p>
-            <p className="text-gray-700 text-sm">4.9 based on 3,912 reviews</p>
-          </div>
-        </div>
-      </section>
+      {/* Trust Section */}
+<section className="w-full py-10 text-center">
+  <h2 className="text-3xl font-bold text-purple-800 mb-6">Trusted by Over 100,000 Americans</h2>
+  <div className="flex flex-wrap justify-center items-center gap-8">
+    <div className="bg-white rounded-xl p-6 shadow-md w-64">
+      <img src="/google-review.png" alt="Google Reviews" className="h-14 mx-auto mb-2" />
+      <p className="text-yellow-500 font-bold text-lg">★★★★☆</p>
+      <p className="text-gray-700 text-sm">4.8 based on 8,435 reviews</p>
+    </div>
+    <div className="bg-white rounded-xl p-6 shadow-md w-64">
+      <img src="/trustpilot.png" alt="Trustpilot Reviews" className="h-14 mx-auto mb-2" />
+      <p className="text-yellow-500 font-bold text-lg">★★★★★</p>
+      <p className="text-gray-700 text-sm">4.9 based on 3,912 reviews</p>
+    </div>
+  </div>
+</section>
+
 
       {/* Discovery Section */}
       <section className="max-w-6xl w-full space-y-6">
