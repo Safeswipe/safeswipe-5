@@ -71,9 +71,6 @@ export default function Home() {
     { icon: '🎂', label: 'Potential Date of Birth', value: 'Not Identified' },
   ];
 
-  const showFullReport = true;
-const basicUnlocked = hasBasic;
-
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 pt-10 space-y-20 min-h-screen text-center">
       <header className="w-full fixed top-0 left-0 bg-white shadow-md z-50">
@@ -118,58 +115,29 @@ const basicUnlocked = hasBasic;
           </div>
           <hr />
 
-          <div className="space-y-4">
-  <div className={`${
-    !hasBasic ? 'blur-sm pointer-events-none select-none' : ''
-  }`}>
-    {premiumFields.map((item, i) => (
-      <div key={i} className="border-t pt-4 relative">
-        <p className="font-semibold text-gray-700">{item.icon} {item.label}:</p>
-        <p className="text-gray-600">{item.value}</p>
-        {hasBasic && !hasPremium && (
-          <div className="absolute top-0 right-0 mt-1">
-            <a
-              href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq"
-              className="inline-flex items-center gap-2 px-3 py-1 bg-purple-600 text-white rounded shadow text-sm"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              🔓 Unlock Premium - $3.99
-            </a>
-          </div>
-        )}
-      </div>
-    ))}
-
-    {basicFields.map((item, i) => (
-      <div key={i} className={`border-t pt-4 ${!hasBasic ? 'blur-sm pointer-events-none select-none' : ''}`}>
-        <p className="font-semibold text-gray-700">{item.icon} {item.label}:</p>
-        <p className="text-gray-600">{item.value}</p>
-      </div>
-    ))}
-  </div>
-</div>}
-                {hasBasic && !hasPremium && (
-                  <div className="absolute top-0 right-0 mt-1">
-                    <a
-                      href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq"
-                      className="inline-flex items-center gap-2 px-3 py-1 bg-purple-600 text-white rounded shadow text-sm"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      🔓 Unlock Premium - $3.99
-                    </a>
-                  </div>
-                )}
-              </div>
-            ))}
-
-            {basicFields.map((item, i) => (
-  <div key={i} className={`border-t pt-4 ${!basicUnlocked ? 'blur-sm pointer-events-none select-none' : ''}`}>
-    <p className="font-semibold text-gray-700">{item.icon} {item.label}:</p>
-    <p className="text-gray-600">{item.value}</p>
-  </div>
-))}
+          <div className={`${!hasBasic ? 'blur-sm pointer-events-none select-none' : ''}`}>
+            {[...premiumFields, ...basicFields].map((item, i) => {
+              const isPremiumField = premiumFields.includes(item);
+              const shouldBlur = isPremiumField && !hasPremium;
+              return (
+                <div key={i} className={`border-t pt-4 ${shouldBlur ? 'blur-sm pointer-events-none select-none' : ''}`}>
+                  <p className="font-semibold text-gray-700">{item.icon} {item.label}:</p>
+                  <p className="text-gray-600">{item.value}</p>
+                  {hasBasic && !hasPremium && isPremiumField && (
+                    <div className="absolute top-0 right-0 mt-1">
+                      <a
+                        href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq"
+                        className="inline-flex items-center gap-2 px-3 py-1 bg-purple-600 text-white rounded shadow text-sm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        🔓 Unlock Premium - $3.99
+                      </a>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </section>
       )}
