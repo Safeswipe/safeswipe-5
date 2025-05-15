@@ -7,7 +7,6 @@ export default function Home() {
   const [showResult, setShowResult] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [isScanning, setIsScanning] = useState(false);
-  const [isPremium, setIsPremium] = useState(false);
   const [reportData, setReportData] = useState(null);
 
   const hasBasic = typeof window !== 'undefined' && localStorage.getItem('safeswipe_basic_unlocked') === 'true';
@@ -30,10 +29,6 @@ export default function Home() {
       localStorage.getItem('safeswipe_basic_unlocked') === 'true'
     ) {
       setShowResult(true);
-    }
-
-    if (localStorage.getItem('safeswipe_premium_unlocked') === 'true') {
-      setIsPremium(true);
     }
 
     const savedInput = localStorage.getItem('safeswipe_input');
@@ -62,6 +57,18 @@ export default function Home() {
       setIsScanning(false);
     }, 15000);
   };
+
+  const premiumFields = [
+    { icon: '📛', label: 'Associated Names', value: 'Connor Rawiri, Facebook, Connor' },
+    { icon: '🧑‍💻', label: 'Associated Usernames', value: 'connorraw' },
+    { icon: '📧', label: 'Associated Emails', value: 'Not Identified' },
+  ];
+
+  const basicFields = [
+    { icon: '📡', label: 'Carrier', value: 'Telstra' },
+    { icon: '📞', label: 'Line Type', value: 'Mobile' },
+    { icon: '🎂', label: 'Potential Date of Birth', value: 'Not Identified' },
+  ];
 
   return (
     <div className="flex flex-col items-center bg-gradient-to-br from-purple-100 via-white to-blue-100 px-6 pt-10 space-y-20 min-h-screen text-center">
@@ -108,16 +115,10 @@ export default function Home() {
           <hr />
 
           <div className="space-y-4">
-            {[{
-              icon: '📛', label: 'Associated Names', value: 'Connor Rawiri, Facebook, Connor'
-            }, {
-              icon: '🧑‍💻', label: 'Associated Usernames', value: 'connorraw'
-            }, {
-              icon: '📧', label: 'Associated Emails', value: 'Not Identified'
-            }].map((item, i) => (
+            {premiumFields.map((item, i) => (
               <div key={i} className="border-t pt-4 relative">
                 <p className="font-semibold text-gray-700">{item.icon} {item.label}:</p>
-                <p className={`${!hasPremium ? 'blur-sm' : ''}`}>{item.value}</p>
+                <p className={`${hasBasic && !hasPremium ? 'blur-sm' : ''}`}>{item.value}</p>
                 {hasBasic && !hasPremium && (
                   <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-white/80">
                     <a
@@ -133,22 +134,12 @@ export default function Home() {
               </div>
             ))}
 
-            {hasBasic && (
-              <>
-                <div className="border-t pt-4">
-                  <p className="font-semibold text-gray-700">📡 Carrier:</p>
-                  <p className="text-gray-600">Telstra</p>
-                </div>
-                <div className="border-t pt-4">
-                  <p className="font-semibold text-gray-700">📞 Line Type:</p>
-                  <p className="text-gray-600">Mobile</p>
-                </div>
-                <div className="border-t pt-4">
-                  <p className="font-semibold text-gray-700">🎂 Potential Date of Birth:</p>
-                  <p className="text-gray-600">Not Identified</p>
-                </div>
-              </>
-            )}
+            {hasBasic && basicFields.map((item, i) => (
+              <div key={i} className="border-t pt-4">
+                <p className="font-semibold text-gray-700">{item.icon} {item.label}:</p>
+                <p className="text-gray-600">{item.value}</p>
+              </div>
+            ))}
           </div>
         </section>
       )}
