@@ -118,8 +118,9 @@ export default function Home() {
           <div>
             {[...premiumFields, ...basicFields].map((item, i) => {
               const isPremiumField = premiumFields.some(p => p.label === item.label);
+              console.log({ label: item.label, isPremiumField, hasBasic, hasPremium });
               const shouldBlur = (!hasPremium && isPremiumField) || (!hasBasic && !isPremiumField);
-              const showUnlockButton = hasBasic && !hasPremium && isPremiumField;
+              const showUnlockButton = !hasPremium && hasBasic && isPremiumField;
 
               return (
                 <div key={i} className={`border-t pt-4 ${shouldBlur ? 'blur-sm pointer-events-none select-none' : ''} relative`}>
