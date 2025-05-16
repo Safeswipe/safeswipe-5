@@ -118,7 +118,7 @@ export default function Home() {
           <div>
             {[...premiumFields, ...basicFields].map((item, i) => {
               const isPremiumField = premiumFields.some(p => p.label === item.label);
-              const shouldBlur = (isPremiumField && !hasPremium) || (!isPremiumField && !hasBasic);
+              const shouldBlur = (!hasPremium && isPremiumField) || (!hasBasic && !isPremiumField);
               const showUnlockButton = hasBasic && !hasPremium && isPremiumField;
 
               return (
