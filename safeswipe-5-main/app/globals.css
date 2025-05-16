@@ -1,0 +1,13 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  --safe-top: env(safe-area-inset-top);
+}
+
+.pt-safe-top {
+  padding-top: var(--safe-top);
+  background-color: black; /* covers the top notch space in dark */
+}
+
