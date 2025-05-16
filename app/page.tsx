@@ -137,9 +137,10 @@ export default function Home() {
                       </a>
                     </div>
                   )}
-                </div>
-              );
-            })}
+
+    </div>
+  );
+})}
           </div>
         </section>
       )}
@@ -156,33 +157,18 @@ export default function Home() {
           </a>
         </div>
       )}
-    </div>
-  );
-}
-
-
-      {/* Trust Section */}
-      <section className="w-full py-10 text-center">
-        <h2 className="text-3xl font-bold text-purple-800 mb-6">Trusted by Over 100,000 Americans</h2>
-        <div className="flex flex-wrap justify-center items-center gap-8">
-          <div className="bg-white rounded-xl p-6 shadow-md w-64">
-            <img src="/google-review.png" alt="Google Reviews" className="h-14 mx-auto mb-2" />
-            <p className="text-yellow-500 font-bold text-lg">★★★★☆</p>
-            <p className="text-gray-700 text-sm">4.8 based on 8,435 reviews</p>
-          </div>
-          <div className="bg-white rounded-xl p-6 shadow-md w-64">
-            <img src="/trustpilot.png" alt="Trustpilot Reviews" className="h-14 mx-auto mb-2" />
-            <p className="text-yellow-500 font-bold text-lg">★★★★★</p>
-            <p className="text-gray-700 text-sm">4.9 based on 3,912 reviews</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Discovery Section */}
+          {/* What You’ll Discover Section */}
       <section className="max-w-6xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">What You’ll Discover</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-          {whatYouDiscover.map((item, i) => (
+          {[ 
+            { title: 'Social Media Matches', desc: 'See connected Facebook, Instagram, and other profiles.' },
+            { title: 'Carrier Info', desc: 'Find out which network the number is registered to.' },
+            { title: 'Name Associations', desc: 'View possible names tied to the number.' },
+            { title: 'Risk Score', desc: 'Understand how trustworthy the number is.' },
+            { title: 'Email Links', desc: 'Check if there are emails linked to this phone number.' },
+            { title: 'Usernames & Aliases', desc: 'Reveal any known usernames or aliases used.' },
+          ].map((item, i) => (
             <div key={i} className="bg-white rounded-2xl shadow-md p-6 text-left border border-purple-100 hover:shadow-lg transition-all">
               <h4 className="text-lg font-semibold text-purple-700 mb-2">{item.title}</h4>
               <p className="text-gray-700 text-sm">{item.desc}</p>
@@ -191,20 +177,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="max-w-4xl w-full py-12 space-y-6">
-        <h2 className="text-3xl font-bold text-purple-800 text-center">Frequently Asked Questions</h2>
-        <div className="space-y-4">
-          {faqs.map((faq, i) => (
-            <div key={i} className="bg-white p-4 rounded-md shadow border border-purple-100">
-              <p className="font-semibold text-purple-700">Q: {faq.q}</p>
-              <p className="text-gray-700">A: {faq.a}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Testimonials */}
+      {/* Testimonials Section */}
       <section className="max-w-4xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">We Help Thousands of People Daily</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -223,6 +196,40 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Trust Section */}
+      <section className="w-full py-10 text-center">
+        <h2 className="text-3xl font-bold text-purple-800 mb-6">Trusted by Over 100,000 Americans</h2>
+        <div className="flex flex-wrap justify-center items-center gap-8">
+          <div className="bg-white rounded-xl p-6 shadow-md w-64">
+            <img src="/google-review.png" alt="Google Reviews" className="h-14 mx-auto mb-2" />
+            <p className="text-yellow-500 font-bold text-lg">★★★★☆</p>
+            <p className="text-gray-700 text-sm">4.8 based on 8,435 reviews</p>
+          </div>
+          <div className="bg-white rounded-xl p-6 shadow-md w-64">
+            <img src="/trustpilot.png" alt="Trustpilot Reviews" className="h-14 mx-auto mb-2" />
+            <p className="text-yellow-500 font-bold text-lg">★★★★★</p>
+            <p className="text-gray-700 text-sm">4.9 based on 3,912 reviews</p>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="max-w-4xl w-full py-12 space-y-6">
+        <h2 className="text-3xl font-bold text-purple-800 text-center">Frequently Asked Questions</h2>
+        <div className="space-y-4">
+          {[
+            { q: 'Is SafeSwipe anonymous?', a: 'Yes, all lookups are private and encrypted.' },
+            { q: 'What if I can’t find a match?', a: 'We’re constantly updating our database — try again later or submit a request.' },
+            { q: 'Can I cancel anytime?', a: 'Yes, you can manage or cancel your subscription in your account settings.' }
+          ].map((faq, i) => (
+            <div key={i} className="bg-white p-4 rounded-md shadow border border-purple-100">
+              <p className="font-semibold text-purple-700">Q: {faq.q}</p>
+              <p className="text-gray-700">A: {faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="w-full text-center text-sm text-gray-600 py-10 space-y-2">
         <p>© {new Date().getFullYear()} SafeSwipe. All rights reserved.</p>
@@ -232,6 +239,6 @@ export default function Home() {
           <a href="/contact" className="text-purple-600 hover:underline">Contact</a>
         </div>
       </footer>
+    </div>
   );
 }
-
