@@ -56,8 +56,6 @@ export default function Home() {
 
       setReportData(report);
       localStorage.setItem('safeswipe_report_data', JSON.stringify(report));
-      setReportData(data);
-      localStorage.setItem('safeswipe_report_data', JSON.stringify(data));
     } catch (err) {
       console.error('Error fetching report:', err);
     }
