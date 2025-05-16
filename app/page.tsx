@@ -43,6 +43,19 @@ export default function Home() {
     try {
       const res = await fetch(`/api/fetchReport?phone=${encodeURIComponent(inputValue)}`);
       const data = await res.json();
+
+      const report = {
+        fullName: data.full_name || 'Not Found',
+        usernames: data.usernames?.[0] || 'Not Found',
+        email: data.emails?.[0] || 'Not Found',
+        carrier: data.phone_numbers?.[0]?.carrier || 'Not Identified',
+        lineType: data.phone_numbers?.[0]?.line_type || 'Not Identified',
+        location: data.location?.city ? `${data.location.city}, ${data.location.region}` : 'Not Identified',
+        dob: data.dob || 'Not Identified'
+      };
+
+      setReportData(report);
+      localStorage.setItem('safeswipe_report_data', JSON.stringify(report));
       setReportData(data);
       localStorage.setItem('safeswipe_report_data', JSON.stringify(data));
     } catch (err) {
@@ -59,16 +72,16 @@ export default function Home() {
   const hasPremium = typeof window !== 'undefined' && localStorage.getItem('safeswipe_premium_unlocked') === 'true';
 
   const premiumFields = [
-    { icon: '📛', label: 'Associated Names', value: 'Connor Rawiri, Facebook, Connor' },
-    { icon: '🧑‍💻', label: 'Associated Usernames', value: 'connorraw' },
-    { icon: '📧', label: 'Associated Emails', value: 'Not Identified' },
+    { icon: '📛', label: 'Associated Names', value: reportData?.fullName || 'Loading...' },
+    { icon: '🧑‍💻', label: 'Associated Usernames', value: reportData?.usernames || 'Loading...' },
+    { icon: '📧', label: 'Associated Emails', value: reportData?.email || 'Loading...' },
   ];
 
   const basicFields = [
-    { icon: '📡', label: 'Carrier', value: 'Telstra' },
-    { icon: '📞', label: 'Line Type', value: 'Mobile' },
-    { icon: '📍', label: 'Location', value: 'Melbourne, VIC' },
-    { icon: '🎂', label: 'Potential Date of Birth', value: 'Not Identified' },
+    { icon: '📡', label: 'Carrier', value: reportData?.carrier || 'Loading...' },
+    { icon: '📞', label: 'Line Type', value: reportData?.lineType || 'Loading...' },
+    { icon: '📍', label: 'Location', value: reportData?.location || 'Loading...' },
+    { icon: '🎂', label: 'Potential Date of Birth', value: reportData?.dob || 'Loading...' },
   ];
 
   return (
