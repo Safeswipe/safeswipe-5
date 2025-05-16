@@ -1,3 +1,4 @@
+// /app/api/fetchReport/route.js
 import { NextResponse } from 'next/server';
 
 export async function GET(req) {
@@ -5,15 +6,14 @@ export async function GET(req) {
   const phone = searchParams.get('phone');
 
   const res = await fetch('https://api.peopledatalabs.com/v5/person/identify', {
-    method: 'POST',
+    method: 'POST', // <- keep POST to PDL
     headers: {
       'Content-Type': 'application/json',
-      'X-api-key': process.env.PDL_API_KEY
+      'X-api-key': process.env.PDL_API_KEY,
     },
-    body: JSON.stringify({ phone })
+    body: JSON.stringify({ phone }),
   });
 
   const data = await res.json();
   return NextResponse.json(data);
 }
-
