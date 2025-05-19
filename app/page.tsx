@@ -134,7 +134,7 @@ export default function Home() {
                   {showUnlockButton && (
                     <div className="absolute top-1 right-1">
                       <a
-                        href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq"
+                        href="https://buy.stripe.com/00w14o3y5aj75544TM2oE08"
                         className="inline-flex items-center gap-2 px-3 py-1 bg-purple-600 text-white rounded shadow text-sm"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -153,7 +153,7 @@ export default function Home() {
       {!hasBasic && showResult && (
         <div className="pt-6 text-center w-full max-w-xl">
           <a
-            href="https://buy.stripe.com/eVabJT0goa8TdPycMR"
+            href="https://buy.stripe.com/14A6oI6Kh3UJ7dcgCu2oE07"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow"
@@ -162,6 +162,7 @@ export default function Home() {
           </a>
         </div>
       )}
+
 
           {/* What You’ll Discover Section */}
       <section className="max-w-6xl w-full space-y-6">
