@@ -132,7 +132,7 @@ export default function Home() {
                     <p className="text-gray-600">{item.value}</p>
                   </div>
                   {showUnlockButton && (
-                    <div className=\"absolute top-24 right-0 sm:right-2\">
+                    <div className="absolute top-24 right-0 sm:right-2">
                       <a
                         href="https://buy.stripe.com/00w14o3y5aj75544TM2oE08"
                         className="inline-flex items-center gap-2 px-3 py-1 bg-purple-600 text-white rounded shadow text-sm"
@@ -162,6 +162,7 @@ export default function Home() {
           </a>
         </div>
       )}
+
 
           {/* What You’ll Discover Section */}
       <section className="max-w-6xl w-full space-y-6">
