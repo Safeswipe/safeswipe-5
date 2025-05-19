@@ -108,7 +108,7 @@ export default function Home() {
       </section>
 
       {showResult && (
-        <section className={`mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left`}>
+        <section className="mt-6 w-full max-w-xl bg-white border border-purple-300 rounded-2xl shadow-md p-6 space-y-4 text-left">
           <h3 className="text-2xl font-bold text-purple-800 mb-4">Match Report</h3>
           <div className="flex items-center space-x-4">
             <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl">👤</div>
@@ -162,9 +162,7 @@ export default function Home() {
           </a>
         </div>
       )}
-    </div>
-  );
-}
+
 
           {/* What You’ll Discover Section */}
       <section className="max-w-6xl w-full space-y-6">
@@ -251,4 +249,5 @@ export default function Home() {
     </div>
   );
 }
+
 
