@@ -63,16 +63,16 @@ export default function Home() {
   const hasPremium = typeof window !== 'undefined' && localStorage.getItem('safeswipe_premium_unlocked') === 'true';
 
   const premiumFields = [
-    { icon: '📛', label: 'Associated Names', value: reportData?.fullName || 'Loading...' },
-    { icon: '🧑‍💻', label: 'Associated Usernames', value: reportData?.usernames || 'Loading...' },
-    { icon: '📧', label: 'Associated Emails', value: reportData?.email || 'Loading...' },
+    { icon: '📛', label: 'Associated Names', value: reportData?.fullName },
+    { icon: '🧑‍💻', label: 'Associated Usernames', value: reportData?.usernames },
+    { icon: '📧', label: 'Associated Emails', value: reportData?.email },
   ];
 
   const basicFields = [
-    { icon: '📡', label: 'Carrier', value: reportData?.carrier || 'Loading...' },
-    { icon: '📞', label: 'Line Type', value: reportData?.lineType || 'Loading...' },
-    { icon: '📍', label: 'Location', value: reportData?.location || 'Loading...' },
-    { icon: '🎂', label: 'Potential Date of Birth', value: reportData?.dob || 'Loading...' },
+    { icon: '📡', label: 'Carrier', value: reportData?.carrier },
+    { icon: '📞', label: 'Line Type', value: reportData?.lineType },
+    { icon: '📍', label: 'Location', value: reportData?.location },
+    { icon: '🎂', label: 'Potential Date of Birth', value: reportData?.dob },
   ];
 
   return (
