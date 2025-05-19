@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -41,32 +40,23 @@ export default function Home() {
     localStorage.setItem('safeswipe_input', inputValue);
     setIsScanning(true);
 
-    try {
-      const res = await fetch(`/api/fetchReport?phone=${encodeURIComponent(inputValue)}`);
-      const data = await res.json();
-
-      const report = {
-        fullName: data.full_name || 'Not Found',
-        usernames: data.usernames?.[0] || 'Not Found',
-        email: data.emails?.[0] || 'Not Found',
-        carrier: data.phone_numbers?.[0]?.carrier || 'Not Identified',
-        lineType: data.phone_numbers?.[0]?.line_type || 'Not Identified',
-        location: data.location?.city ? `${data.location.city}, ${data.location.region}` : 'Not Identified',
-        dob: data.dob || 'Not Identified'
-      };
-
-      setReportData(report);
-      localStorage.setItem('safeswipe_report_data', JSON.stringify(report));
-      setReportData(data);
-      localStorage.setItem('safeswipe_report_data', JSON.stringify(data));
-    } catch (err) {
-      console.error('Error fetching report:', err);
-    }
+    // Fake report data
+    const report = {
+      fullName: 'Not Identified',
+      usernames: 'Not Identified',
+      email: 'Not Identified',
+      carrier: 'Verizon',
+      lineType: 'Mobile',
+      location: 'United States',
+      dob: 'Not Identified'
+    };
 
     setTimeout(() => {
+      setReportData(report);
+      localStorage.setItem('safeswipe_report_data', JSON.stringify(report));
       setShowResult(true);
       setIsScanning(false);
-    }, 15000);
+    }, 1000);
   };
 
   const hasBasic = typeof window !== 'undefined' && localStorage.getItem('safeswipe_basic_unlocked') === 'true';
@@ -132,7 +122,6 @@ export default function Home() {
           <div>
             {[...premiumFields, ...basicFields].map((item, i) => {
               const isPremiumField = premiumFields.some(p => p.label === item.label);
-              console.log({ label: item.label, isPremiumField, hasBasic, hasPremium });
               const shouldBlur = (!hasPremium && isPremiumField) || (!hasBasic && !isPremiumField);
               const showUnlockButton = !hasPremium && hasBasic && isPremiumField;
 
@@ -154,10 +143,9 @@ export default function Home() {
                       </a>
                     </div>
                   )}
-
-    </div>
-  );
-})}
+                </div>
+              );
+            })}
           </div>
         </section>
       )}
@@ -174,6 +162,10 @@ export default function Home() {
           </a>
         </div>
       )}
+    </div>
+  );
+}
+
           {/* What You’ll Discover Section */}
       <section className="max-w-6xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">What You’ll Discover</h2>
