@@ -40,7 +40,6 @@ export default function Home() {
     localStorage.setItem('safeswipe_input', inputValue);
     setIsScanning(true);
 
-    // Fake report data
     const report = {
       fullName: 'Not Identified',
       usernames: 'Not Identified',
@@ -123,7 +122,6 @@ export default function Home() {
             {[...premiumFields, ...basicFields].map((item, i) => {
               const isPremiumField = premiumFields.some(p => p.label === item.label);
               const shouldBlur = (!hasPremium && isPremiumField) || (!hasBasic && !isPremiumField);
-              const showUnlockButton = !hasPremium && hasBasic && isPremiumField;
 
               return (
                 <div key={i} className="border-t pt-4 relative">
@@ -131,7 +129,6 @@ export default function Home() {
                   <div className={shouldBlur ? 'blur-sm pointer-events-none select-none' : ''}>
                     <p className="text-gray-600">{item.value}</p>
                   </div>
-                  
                 </div>
               );
             })}
@@ -140,32 +137,30 @@ export default function Home() {
       )}
 
       {showResult && (
-  <div className="pt-6 text-center w-full max-w-xl">
-    {!hasBasic && (
-      <a
-        href="https://buy.stripe.com/14A6oI6Kh3UJ7dcgCu2oE07"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow"
-      >
-        🔒 Unlock Report - $9.99
-      </a>
-    )}
-    {hasBasic && !hasPremium && (
-      <a
-        href="https://buy.stripe.com/00w14o3y5aj75544TM2oE08"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow mt-4"
-      >
-        🔓 Unlock Premium - $3.99
-      </a>
-    )}
-  </div>
-)}
-  
-</div>
+        <div className="pt-6 text-center w-full max-w-xl">
+          {!hasBasic && (
+            <a
+              href="https://buy.stripe.com/14A6oI6Kh3UJ7dcgCu2oE07"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow"
+            >
+              🔒 Unlock Report - $9.99
+            </a>
+          )}
+          {hasBasic && !hasPremium && (
+            <a
+              href="https://buy.stripe.com/00w14o3y5aj75544TM2oE08"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-md font-semibold shadow mt-4"
+            >
+              🔓 Unlock Premium - $3.99
+            </a>
+          )}
+        </div>
       )}
+
 
 
 
