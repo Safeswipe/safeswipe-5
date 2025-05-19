@@ -132,7 +132,7 @@ export default function Home() {
                     <p className="text-gray-600">{item.value}</p>
                   </div>
                   {showUnlockButton && (
-                    <div className="absolute top-0 right-0 mt-1">
+                    <div className="absolute top-1 right-1">
                       <a
                         href="https://buy.stripe.com/bIYeW5fbiftdbHq5kq"
                         className="inline-flex items-center gap-2 px-3 py-1 bg-purple-600 text-white rounded shadow text-sm"
