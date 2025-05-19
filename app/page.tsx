@@ -56,7 +56,7 @@ export default function Home() {
       localStorage.setItem('safeswipe_report_data', JSON.stringify(report));
       setShowResult(true);
       setIsScanning(false);
-    }, 1000);
+    }, 12000);
   };
 
   const hasBasic = typeof window !== 'undefined' && localStorage.getItem('safeswipe_basic_unlocked') === 'true';
@@ -162,7 +162,6 @@ export default function Home() {
           </a>
         </div>
       )}
-
 
           {/* What You’ll Discover Section */}
       <section className="max-w-6xl w-full space-y-6">
