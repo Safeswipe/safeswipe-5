@@ -163,7 +163,6 @@ export default function Home() {
         </div>
       )}
 
-
           {/* What You’ll Discover Section */}
       <section className="max-w-6xl w-full space-y-6">
         <h2 className="text-3xl font-bold text-purple-800 text-center">What You’ll Discover</h2>
